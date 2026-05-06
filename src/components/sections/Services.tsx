@@ -35,13 +35,13 @@ const Services = () => {
         </AnimatedContent>
 
         {/* Services Grid: Grid on desktop/tablet, scroll on mobile */}
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-6 lg:gap-8 pb-12 pt-8 px-4 -mx-4 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-8 pb-12 pt-8 px-4 -mx-4 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
           {SERVICES.map((service, index) => (
             <AnimatedContent 
               key={index} 
               direction="up" 
               delay={index * 0.05}
-              className="min-w-[240px] xs:min-w-[280px] md:min-w-0 snap-center shrink-0 flex flex-col"
+              className="min-w-[200px] xs:min-w-[240px] md:min-w-0 snap-center shrink-0 flex flex-col"
             >
               <BorderGlow
                 className="h-full w-full"
@@ -51,14 +51,14 @@ const Services = () => {
                 colors={['#22c55e', '#10b981', '#06b6d4']}
                 glowIntensity={0.8}
               >
-                <div className="group p-8 h-full flex flex-col">
+                <div className="group p-5 sm:p-8 h-full flex flex-col">
                   {/* Number Watermark */}
                   <div className="absolute top-6 right-8 text-4xl font-mono font-bold text-white/[0.03] group-hover:text-green-500/[0.08] transition-colors duration-500 select-none">
                     {service.number}
                   </div>
 
                   {/* Lottie Icon */}
-                  <div className="w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-green-500/10 group-hover:border-green-500/20 transition-all duration-500">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 group-hover:bg-green-500/10 group-hover:border-green-500/20 transition-all duration-500">
                     {SERVICE_ICONS[service.title] ? (
                       <LottieIcon
                         animationData={SERVICE_ICONS[service.title]}
@@ -70,10 +70,10 @@ const Services = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors">
+                  <h3 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-4 group-hover:text-green-400 transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-8 flex-1">
+                  <p className="text-gray-400 text-xs sm:text-base leading-relaxed mb-6 sm:mb-8 flex-1">
                     {service.description}
                   </p>
 
