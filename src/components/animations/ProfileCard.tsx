@@ -526,7 +526,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   return (
     <div
       ref={wrapRef}
-      className={`relative touch-pan-y group/wrap hover:z-50 ${className}`.trim()}
+      className={`relative group/wrap hover:z-50 ${className}`.trim()}
       style={{ perspective: '500px', transform: 'translate3d(0, 0, 0.1px)', zIndex: 1, ...cardStyle } as React.CSSProperties}
     >
       {behindGlowEnabled && (

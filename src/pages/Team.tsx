@@ -114,23 +114,25 @@ const Team = () => {
         <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[#030303] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#030303] to-transparent z-10 pointer-events-none" />
 
-        {/* Scroll track */}
+        {/* Snap-scroll track */}
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 py-4"
-          style={{
-            /* Center first/last card visually */
-            paddingLeft: 'calc(50vw - 140px)',
-            paddingRight: 'calc(50vw - 140px)',
-            scrollPaddingLeft: 'calc(50vw - 140px)',
+          className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-6 pt-2 scroll-smooth"
+          style={{ 
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            touchAction: 'pan-x pan-y'
           }}
         >
+          {/* Invisible spacers for centering first/last card */}
+          <div className="shrink-0 w-[calc(50vw-140px)]" />
+          
           {TEAM_MEMBERS.map((member) => (
             <div
               key={member.id}
-              className="snap-center shrink-0"
-              style={{ width: '280px' }}
+              className="snap-center shrink-0 flex justify-center"
+              style={{ width: '280px', touchAction: 'pan-y' }}
             >
               <ProfileCard
                 name={member.name}
@@ -140,9 +142,12 @@ const Team = () => {
                 avatarUrl={member.image}
                 instagramUrl={member.instagram}
                 linkedInUrl={member.linkedin}
+                className="pointer-events-auto"
               />
             </div>
           ))}
+
+          <div className="shrink-0 w-[calc(50vw-140px)]" />
         </div>
 
         {/* Dot indicators */}
