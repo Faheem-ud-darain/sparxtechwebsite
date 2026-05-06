@@ -87,11 +87,11 @@ const Process = () => {
     <section 
       id="process" 
       ref={containerRef} 
-      className="relative bg-[#030303] overflow-visible"
+      className="relative bg-[#030303]"
       style={{ height: '500vh' }}
     >
-      {/* Sticky Container - Forced to stick to top */}
-      <div className="sticky top-0 left-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center z-20">
+      {/* Sticky Container - Forced pinning */}
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden z-20" style={{ willChange: 'transform' }}>
         <FloatingParticles count={10} color="rgba(34, 197, 94, 0.08)" minSize={2} maxSize={5} />
         
         {/* Background Visuals */}
@@ -104,7 +104,7 @@ const Process = () => {
         </motion.div>
 
         {/* Floating Header */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-30 text-center w-full px-6">
+        <div className="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 z-30 text-center w-full px-6">
           <span className="pill-badge mb-4">
             <span className="glow-dot" />
             THE ROADMAP
@@ -127,9 +127,9 @@ const Process = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 z-30">
+        <div className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 z-30">
           <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase">Scroll to Discover</span>
-          <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
+          <div className="w-24 md:w-32 h-[1px] bg-white/10 relative overflow-hidden">
             <motion.div 
               className="absolute inset-y-0 left-0 bg-green-500"
               style={{ width: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
@@ -138,7 +138,7 @@ const Process = () => {
         </div>
 
         {/* Progress Dots (Side) */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30 hidden md:flex">
+        <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30 hidden sm:flex">
           {PROCESS_STEPS.map((_, i) => {
             const stepStart = i * 0.25;
             const stepEnd = (i + 1) * 0.25;
@@ -148,7 +148,7 @@ const Process = () => {
                 key={i} 
                 className="w-1 rounded-full bg-white/10"
                 style={{ 
-                  height: '40px',
+                  height: '30px',
                   backgroundColor: useTransform(
                     smoothProgress,
                     [stepStart, stepStart + 0.1, stepEnd - 0.1, stepEnd],
