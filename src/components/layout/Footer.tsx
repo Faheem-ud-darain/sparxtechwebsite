@@ -17,8 +17,8 @@ const Footer = () => {
         {/* Glow */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[800px] h-[400px] bg-green-500/[0.06] blur-[150px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16">
             {/* Left: Contact Info */}
             <div>
               <AnimatedContent direction="up">
@@ -26,7 +26,7 @@ const Footer = () => {
                   <span className="glow-dot" />
                   GET IN TOUCH
                 </span>
-                <h2 className="text-4xl md:text-5xl font-bold text-white mt-4 tracking-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-4 tracking-tight">
                   Let's Build Something<br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
                     Extraordinary
@@ -197,7 +197,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/[0.06]">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-center">
             <img 
               src={Logo} 

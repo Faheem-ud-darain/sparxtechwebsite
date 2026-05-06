@@ -30,23 +30,23 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
   const usePlaceholders = !projects || projects.length === 0;
 
   return (
-    <section id="portfolio" className="relative py-32 bg-[#030303] overflow-hidden">
+    <section id="portfolio" className="relative py-20 sm:py-24 md:py-32 bg-[#030303] overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
       <div className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slower" />
       <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-blue-600/[0.08] blur-[120px] pointer-events-none animate-float-slow" />
       <FloatingParticles count={20} color="rgba(85, 173, 247, 0.2)" minSize={2} maxSize={6} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <AnimatedContent direction="up">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-20">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 md:mb-20">
             <div>
               <span className="pill-badge mb-4">
                 <span className="glow-dot" />
                 PORTFOLIO
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 tracking-tight">
                 Selected <span className="text-green-500">Works</span>
               </h2>
             </div>
@@ -74,7 +74,7 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
 
         {/* Project Bento Grid with TiltedCard */}
         {!loading && (
-          <div className="grid grid-cols-1 md:grid-cols-6 auto-rows-[240px] gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-6 auto-rows-[300px] sm:auto-rows-[320px] md:auto-rows-[240px] gap-4 sm:gap-5 md:gap-6">
             {displayProjects.map((project, index) => (
               <AnimatedContent 
                 key={project._id} 
@@ -133,7 +133,7 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                     {/* 3D Pop-out Image (WEBP) */}
                     {(project as any).image3D && (
                       <div 
-                        className="absolute -top-16 bottom-0 -right-6 w-[95%] md:-top-24 md:bottom-2 md:-right-10 md:w-[85%] pointer-events-none"
+                        className="absolute -top-8 bottom-0 -right-1 w-[85%] sm:-top-12 sm:-right-2 sm:w-[88%] md:-top-24 md:bottom-2 md:-right-10 md:w-[85%] pointer-events-none"
                         style={{ transform: 'translateZ(60px)' }}
                       >
                         <img

@@ -48,6 +48,7 @@ body {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ── Selection ──────────────────────────────────────────────────── */
@@ -77,6 +78,13 @@ body {
 @keyframes grid-pan {
   0% { background-position: 0 0; }
   100% { background-position: 0 60px; }
+}
+
+/* Pause grid animation on low-power devices / small screens */
+@media (max-width: 640px) {
+  .grid-bg-fade {
+    animation: none;
+  }
 }
 
 @keyframes float-slow {

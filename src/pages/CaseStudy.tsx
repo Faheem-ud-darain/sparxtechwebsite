@@ -43,9 +43,9 @@ const CaseStudy = () => {
         <div className="absolute inset-0 grid-bg-fade opacity-30" />
       </div>
 
-      <main className="relative z-10 pt-32 pb-32">
+      <main className="relative z-10 pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-28 md:pb-32">
         {loading && !isMockup && (
-          <div className="max-w-6xl mx-auto px-6 animate-pulse">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 animate-pulse">
             <div className="h-4 w-24 bg-white/5 rounded-full mb-8" />
             <div className="h-16 w-2/3 bg-white/5 rounded-2xl mb-6" />
             <div className="h-6 w-1/3 bg-white/5 rounded-full mb-12" />
@@ -54,7 +54,7 @@ const CaseStudy = () => {
         )}
 
         {activeProject && (
-          <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Breadcrumb */}
             <AnimatedContent direction="up">
               <HashLink 
@@ -78,7 +78,7 @@ const CaseStudy = () => {
                     <span className="w-1 h-1 rounded-full bg-white/20" />
                     <span className="text-gray-500 text-[10px] font-bold tracking-widest uppercase">Case Study</span>
                   </div>
-                  <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
                     {activeProject.title}
                   </h1>
                 </AnimatedContent>
@@ -94,7 +94,7 @@ const CaseStudy = () => {
 
             {/* Hero Image */}
             <AnimatedContent direction="up" delay={0.3}>
-              <div className="relative aspect-[21/9] rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-32 bg-[#050505]">
+              <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-16 sm:mb-24 md:mb-32 bg-[#050505]">
                 {activeProject.coverImage ? (
                   <img
                     src={urlFor(activeProject.coverImage).width(1600).url()}

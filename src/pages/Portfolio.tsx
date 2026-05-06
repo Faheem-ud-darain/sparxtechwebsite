@@ -15,14 +15,14 @@ const Portfolio = () => {
         <div className="absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-blue-600/[0.02] blur-[150px]" />
       </div>
 
-      <main className="relative z-10 pt-48 pb-32">
-        <div className="container mx-auto px-6 mb-24">
+      <main className="relative z-10 pt-28 sm:pt-36 md:pt-48 pb-20 sm:pb-28 md:pb-32">
+        <div className="container mx-auto px-4 sm:px-6 mb-12 sm:mb-16 md:mb-24">
           <AnimatedContent direction="up">
             <span className="text-green-500 font-mono text-sm tracking-[0.3em] uppercase mb-6 block text-center">Our Work</span>
-            <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-center mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter text-center mb-6 sm:mb-8">
               Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Excellence</span>
             </h1>
-            <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-center text-lg leading-relaxed">
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-center text-base sm:text-lg leading-relaxed">
               A curated showcase of our most complex digital transformations, high-performance web systems, and innovative user experiences.
             </p>
           </AnimatedContent>

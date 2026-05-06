@@ -64,13 +64,30 @@ const TEAM_MEMBERS = [
 ];
 
 const Team = () => {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.scrollWidth / TEAM_MEMBERS.length;
+    const idx = Math.round(el.scrollLeft / cardWidth);
+    setActiveIndex(Math.min(Math.max(idx, 0), TEAM_MEMBERS.length - 1));
+  };
+
+  const scrollTo = (idx: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.scrollWidth / TEAM_MEMBERS.length;
+    el.scrollTo({ left: cardWidth * idx, behavior: 'smooth' });
+  };
+
   return (
     <main className="min-h-screen bg-[#030303] text-white">
       <Header />
-      
+
       {/* Hero Section */}
-      <section className="relative pt-40 pb-20 px-6 overflow-hidden">
-        {/* Background elements */}
+      <section className="relative pt-28 sm:pt-36 md:pt-40 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 overflow-hidden">
         <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
         <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slow" />
 
@@ -80,20 +97,85 @@ const Team = () => {
               <span className="glow-dot" />
               THE MINDS BEHIND SPARX
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 sm:mb-6">
               Meet Our <span className="text-green-500">Team</span>
             </h1>
-            <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-              We are a collective of designers, engineers, and strategists united by a shared passion for building extraordinary digital products.
+            <p className="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
+              We are a collective of designers, engineers, and strategists united by a shared passion for
+              building extraordinary digital products.
             </p>
           </AnimatedContent>
         </div>
       </section>
 
-      {/* Team Grid */}
-      <section className="py-20 px-6">
+      {/* ─── MOBILE: horizontal snap carousel ─── */}
+      <section className="md:hidden relative pb-12 overflow-hidden">
+        {/* Gradient fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[#030303] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#030303] to-transparent z-10 pointer-events-none" />
+
+        {/* Scroll track */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 py-4"
+          style={{
+            /* Center first/last card visually */
+            paddingLeft: 'calc(50vw - 140px)',
+            paddingRight: 'calc(50vw - 140px)',
+            scrollPaddingLeft: 'calc(50vw - 140px)',
+          }}
+        >
+          {TEAM_MEMBERS.map((member) => (
+            <div
+              key={member.id}
+              className="snap-center shrink-0"
+              style={{ width: '280px' }}
+            >
+              <ProfileCard
+                name={member.name}
+                title={member.title}
+                handle={member.handle}
+                status={member.status}
+                avatarUrl={member.image}
+                instagramUrl={member.instagram}
+                linkedInUrl={member.linkedin}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center items-center gap-2 mt-4">
+          {TEAM_MEMBERS.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollTo(idx)}
+              aria-label={`View ${TEAM_MEMBERS[idx].name}`}
+              className={`rounded-full transition-all duration-300 ${
+                idx === activeIndex
+                  ? 'w-7 h-2 bg-green-400 shadow-[0_0_10px_rgba(34,197,94,0.7)]'
+                  : 'w-2 h-2 bg-white/20 hover:bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Active member label */}
+        <div className="text-center mt-3 min-h-[36px]">
+          <p className="text-sm font-medium text-white/70 transition-all duration-300">
+            {TEAM_MEMBERS[activeIndex].name}
+          </p>
+          <p className="text-xs text-green-500/60 uppercase tracking-widest mt-0.5">
+            {TEAM_MEMBERS[activeIndex].title}
+          </p>
+        </div>
+      </section>
+
+      {/* ─── DESKTOP: 4-column grid ─── */}
+      <section className="hidden md:block py-12 sm:py-16 md:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-10 sm:gap-y-12">
             {TEAM_MEMBERS.map((member, index) => (
               <AnimatedContent key={member.id} direction="up" delay={index * 0.1} className="relative z-10 hover:z-50">
                 <div className="flex justify-center">

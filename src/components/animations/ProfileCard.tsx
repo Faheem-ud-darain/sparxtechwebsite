@@ -64,6 +64,54 @@ if (typeof document !== 'undefined' && !document.getElementById(KEYFRAMES_ID)) {
       0% { background-position: 0 var(--background-y), 0 0, center; }
       100% { background-position: 0 var(--background-y), 90% 90%, center; }
     }
+    @keyframes pc-watermark-slide {
+      0%   { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(-25%) translateY(-25%); }
+    }
+    .pc-watermark {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: inherit;
+      mix-blend-mode: color-dodge;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .pc-shell.active .pc-watermark {
+      opacity: 1;
+    }
+    .pc-watermark-inner {
+      position: absolute;
+      inset: -60% -40%;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      transform: rotate(-42deg) translateX(calc((var(--pointer-from-left, 0.5) - 0.5) * -40px)) translateY(calc((var(--pointer-from-top, 0.5) - 0.5) * -40px));
+      transition: transform 0.15s ease-out;
+    }
+    .pc-watermark-row {
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+      text-shadow: 0 0 12px rgba(34,197,94,0.15);
+      user-select: none;
+    }
+    .pc-watermark-row span {
+      display: inline-block;
+      padding-right: 3em;
+      -webkit-text-stroke: 0.6px rgba(255,255,255,0.28);
+      text-shadow: 0 0 20px rgba(34,197,94,0.2);
+    }
+    .pc-watermark-row span.accent {
+      -webkit-text-stroke: 0.6px rgba(34,197,94,0.55);
+      color: transparent;
+      text-shadow: 0 0 14px rgba(34,197,94,0.4);
+    }
   `;
   document.head.appendChild(style);
 }
@@ -478,7 +526,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   return (
     <div
       ref={wrapRef}
-      className={`relative touch-none group/wrap hover:z-50 ${className}`.trim()}
+      className={`relative touch-pan-y group/wrap hover:z-50 ${className}`.trim()}
       style={{ perspective: '500px', transform: 'translate3d(0, 0, 0.1px)', zIndex: 1, ...cardStyle } as React.CSSProperties}
     >
       {behindGlowEnabled && (
@@ -491,7 +539,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
           }}
         />
       )}
-      <div ref={shellRef} className="relative z-[1] group">
+      <div ref={shellRef} className="pc-shell relative z-[1] group">
         <section
           className="grid relative overflow-hidden"
           style={{
@@ -549,6 +597,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 backfaceVisibility: 'hidden'
               }}
             >
+              {/* Avatar image */}
               <img
                 className="w-full absolute left-1/2 bottom-[-1px] will-change-transform transition-all duration-[120ms] ease-out opacity-80 group-hover:opacity-100"
                 src={avatarUrl}
@@ -567,6 +616,21 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                   t.style.display = 'none';
                 }}
               />
+
+              {/* === Reflective Diagonal Watermark Layer (over photo) === */}
+              <div className="pc-watermark">
+                <div className="pc-watermark-inner">
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className="pc-watermark-row">
+                      {Array.from({ length: 6 }).map((_, j) => (
+                        <span key={j} className={j % 3 === 1 ? 'accent' : ''}>
+                          {j % 3 === 1 ? '✦' : 'SPARX STUDIOZ'}
+                        </span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
               {showUserInfo && (
                 <div
                   className="absolute z-[2] flex items-center justify-between backdrop-blur-[30px] border border-white/10 pointer-events-auto"
