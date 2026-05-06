@@ -41,7 +41,7 @@ const Services = () => {
               key={index} 
               direction="up" 
               delay={index * 0.05}
-              className="min-w-[300px] sm:min-w-[340px] md:min-w-0 snap-center shrink-0 flex flex-col"
+              className="min-w-[240px] xs:min-w-[280px] md:min-w-0 snap-center shrink-0 flex flex-col"
             >
               <BorderGlow
                 className="h-full w-full"

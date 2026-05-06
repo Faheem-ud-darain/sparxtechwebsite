@@ -32,26 +32,26 @@ const ProcessStep = ({ step, index, progress }: { step: any, index: number, prog
   return (
     <motion.div
       style={{ opacity, scale, y }}
-      className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-12"
+      className="absolute inset-0 flex items-center justify-center p-3 sm:p-6"
     >
-      <div className="glass-card max-w-4xl w-full p-8 md:p-16 relative overflow-hidden group">
+      <div className="glass-card max-w-4xl w-full p-6 sm:p-10 md:p-16 relative overflow-hidden group">
         {/* Large background number */}
-        <span className="absolute -top-10 -right-10 text-[150px] md:text-[200px] font-black text-white/[0.03] leading-none select-none pointer-events-none group-hover:text-green-500/[0.05] transition-colors duration-700">
+        <span className="absolute -top-6 -right-6 text-[100px] md:text-[200px] font-black text-white/[0.03] leading-none select-none pointer-events-none group-hover:text-green-500/[0.05] transition-colors duration-700">
           {step.number}
         </span>
 
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-8 items-center">
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-green-500/30 flex items-center justify-center text-2xl md:text-3xl font-bold text-green-500 bg-green-500/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 items-center">
+          <div className="flex flex-row md:flex-col items-center justify-start md:justify-center gap-4 md:gap-0">
+            <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border-2 border-green-500/30 flex items-center justify-center text-xl md:text-3xl font-bold text-green-500 bg-green-500/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
               {step.number}
             </div>
-            <div className="h-20 w-[2px] bg-gradient-to-b from-green-500/50 to-transparent mt-4 hidden md:block" />
+            <div className="h-10 md:h-20 w-[1px] md:w-[2px] bg-gradient-to-b from-green-500/50 to-transparent mt-0 md:mt-4 hidden sm:block" />
           </div>
           
           <div>
-            <span className="text-green-400 text-sm font-mono tracking-widest uppercase mb-4 block">Phase {step.number}</span>
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">{step.title}</h3>
-            <p className="text-gray-400 text-base md:text-xl leading-relaxed">
+            <span className="text-green-400 text-[10px] md:text-sm font-mono tracking-widest uppercase mb-2 md:mb-4 block">Phase {step.number}</span>
+            <h3 className="text-xl md:text-5xl font-bold text-white mb-2 md:mb-6 tracking-tight">{step.title}</h3>
+            <p className="text-gray-400 text-sm md:text-xl leading-relaxed">
               {step.description}
             </p>
           </div>
@@ -87,11 +87,11 @@ const Process = () => {
     <section 
       id="process" 
       ref={containerRef} 
-      className="relative bg-[#030303]"
-      style={{ height: '500vh' }} // Forced height for the scroll duration
+      className="relative bg-[#030303] overflow-visible"
+      style={{ height: '500vh' }}
     >
-      {/* Sticky Container - This is what stays pinned */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center z-30">
+      {/* Sticky Container - Forced to stick to top */}
+      <div className="sticky top-0 left-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center z-20">
         <FloatingParticles count={10} color="rgba(34, 197, 94, 0.08)" minSize={2} maxSize={5} />
         
         {/* Background Visuals */}
@@ -104,7 +104,7 @@ const Process = () => {
         </motion.div>
 
         {/* Floating Header */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-40 text-center w-full px-6">
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-30 text-center w-full px-6">
           <span className="pill-badge mb-4">
             <span className="glow-dot" />
             THE ROADMAP
@@ -112,9 +112,9 @@ const Process = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-white mt-2 tracking-tight">How we bring ideas to life</h2>
         </div>
 
-        {/* The Stacked Cards */}
-        <div className="relative h-full w-full max-w-7xl mx-auto px-6 mt-20">
-          <div className="relative h-full">
+        {/* The Stacked Cards Container */}
+        <div className="relative h-full w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="relative h-full flex items-center justify-center">
             {PROCESS_STEPS.map((step, index) => (
               <ProcessStep 
                 key={index} 
@@ -127,7 +127,7 @@ const Process = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 z-40">
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 z-30">
           <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase">Scroll to Discover</span>
           <div className="w-32 h-[1px] bg-white/10 relative overflow-hidden">
             <motion.div 
@@ -138,7 +138,7 @@ const Process = () => {
         </div>
 
         {/* Progress Dots (Side) */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40 hidden md:flex">
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30 hidden md:flex">
           {PROCESS_STEPS.map((_, i) => {
             const stepStart = i * 0.25;
             const stepEnd = (i + 1) * 0.25;
