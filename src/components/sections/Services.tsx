@@ -34,14 +34,14 @@ const Services = () => {
           </div>
         </AnimatedContent>
 
-        {/* Services Stackable Row with BorderGlow */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 lg:gap-8 pb-12 pt-8 px-4 -mx-4 hide-scrollbar">
+        {/* Services Grid: Grid on desktop/tablet, scroll on mobile */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-6 lg:gap-8 pb-12 pt-8 px-4 -mx-4 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
           {SERVICES.map((service, index) => (
             <AnimatedContent 
               key={index} 
               direction="up" 
               delay={index * 0.05}
-              className="min-w-[320px] md:min-w-[380px] lg:min-w-[420px] snap-center shrink-0 flex flex-col"
+              className="min-w-[300px] sm:min-w-[340px] md:min-w-0 snap-center shrink-0 flex flex-col"
             >
               <BorderGlow
                 className="h-full w-full"
