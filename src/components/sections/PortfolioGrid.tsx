@@ -133,13 +133,13 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                     {/* 3D Pop-out Image (WEBP) */}
                     {(project as any).image3D && (
                       <div 
-                        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                        style={{ transform: 'translateZ(50px)' }}
+                        className="absolute -top-[10%] -bottom-[10%] -right-10 w-[80%] md:-right-16 md:w-[75%] pointer-events-none flex items-center justify-end"
+                        style={{ transform: 'translateZ(60px)' }}
                       >
                         <img
                           src={(project as any).image3D}
                           alt={`${project.title} 3D Preview`}
-                          className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl opacity-90 group-hover:opacity-100"
+                          className="w-full h-full object-contain object-right transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl opacity-95 group-hover:opacity-100"
                         />
                       </div>
                     )}
