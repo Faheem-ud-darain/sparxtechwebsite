@@ -102,14 +102,36 @@ const CaseStudy = () => {
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
                 ) : activeProject.image3D ? (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-black to-blue-900/20" />
-                    <img
-                      src={activeProject.image3D}
-                      alt={`${activeProject.title} 3D Preview`}
-                      className="absolute inset-0 w-full h-full object-contain p-8 md:p-16 transition-transform duration-1000 group-hover:scale-105 drop-shadow-[0_30px_50px_rgba(0,0,0,0.8)]"
-                    />
-                  </>
+                  <div className="absolute inset-0 w-full h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#050505] via-[#0A0A0A] to-green-900/20" />
+                    <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+
+                    {/* Left Side Props */}
+                    <div className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center pointer-events-none z-10">
+                      <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-transparent mb-6 md:mb-8" />
+                      <div className="text-white/[0.04] font-black text-5xl md:text-8xl tracking-tighter uppercase leading-[0.85] break-words">
+                        {activeProject.category.split('/')[0].trim()}<br/>
+                        Overview
+                      </div>
+                      
+                      <div className="mt-8 md:mt-12 flex flex-wrap gap-2 md:gap-3">
+                        {activeProject.techStack?.slice(0, 4).map((t: string) => (
+                          <div key={t} className="px-3 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-md text-white/40 text-[10px] md:text-xs font-mono uppercase tracking-widest shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                            {t}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right Side 3D Image */}
+                    <div className="absolute top-0 bottom-0 -right-4 md:-right-10 w-[80%] md:w-[60%] flex items-center justify-end pointer-events-none z-20">
+                      <img
+                        src={activeProject.image3D}
+                        alt={`${activeProject.title} 3D Preview`}
+                        className="w-full h-[120%] object-contain object-right transition-transform duration-1000 group-hover:scale-105 group-hover:-translate-x-2 md:group-hover:-translate-x-4 drop-shadow-[0_40px_60px_rgba(0,0,0,0.8)]"
+                      />
+                    </div>
+                  </div>
                 ) : activeProject.image ? (
                   <img
                     src={activeProject.image}

@@ -152,12 +152,12 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                             {project.category}
                           </span>
                           {(project as any).techStack?.slice(0, 2).map((t: string) => (
-                            <span key={t} className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/10 group-hover:backdrop-blur-md group-hover:border-white/20 group-hover:text-white">
+                            <span key={t} className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/[0.15] group-hover:backdrop-blur-xl group-hover:border-white/30 group-hover:text-white group-hover:shadow-[0_4px_12px_rgba(255,255,255,0.05)]">
                               {t}
                             </span>
                           ))}
                           {((project as any).techStack?.length || 0) > 2 && (
-                            <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/10 group-hover:backdrop-blur-md group-hover:border-white/20 group-hover:text-gray-300">
+                            <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/[0.15] group-hover:backdrop-blur-xl group-hover:border-white/30 group-hover:text-gray-200 group-hover:shadow-[0_4px_12px_rgba(255,255,255,0.05)]">
                               +{(project as any).techStack.length - 2}
                             </span>
                           )}
