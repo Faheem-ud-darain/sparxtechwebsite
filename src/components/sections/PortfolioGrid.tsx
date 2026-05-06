@@ -145,30 +145,35 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                     )}
 
                     {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 pointer-events-none" style={{ transform: 'translateZ(30px)' }}>
-                      <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-green-400 bg-green-500/10 border border-green-500/20 rounded-full">
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 md:p-8 pointer-events-none" style={{ transform: 'translateZ(30px)' }}>
+                      <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500 w-[90%] sm:w-[85%] md:w-[75%]">
+                        <div className="flex flex-wrap gap-1.5 mb-2 sm:mb-3">
+                          <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-green-400 bg-green-500/10 border border-green-500/20 rounded-full whitespace-nowrap">
                             {project.category}
                           </span>
-                          {(project as any).techStack?.map((t: string) => (
-                            <span key={t} className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full">
+                          {(project as any).techStack?.slice(0, 2).map((t: string) => (
+                            <span key={t} className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full whitespace-nowrap">
                               {t}
                             </span>
                           ))}
+                          {((project as any).techStack?.length || 0) > 2 && (
+                            <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-white/5 border border-white/10 rounded-full whitespace-nowrap">
+                              +{(project as any).techStack.length - 2}
+                            </span>
+                          )}
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight drop-shadow-md">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1.5 sm:mb-2 leading-tight drop-shadow-md line-clamp-2">
                           {project.title}
                         </h3>
-                        <p className="text-gray-400 text-sm line-clamp-2 max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 drop-shadow">
+                        <p className="text-gray-400 text-[11px] sm:text-xs md:text-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 drop-shadow">
                           High-performance digital solution crafted with precision, focusing on {project.category.toLowerCase()} and user-centric design.
                         </p>
                       </div>
                     </div>
 
                     {/* Corner Arrow */}
-                    <div className="absolute top-8 right-8 w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0" style={{ transform: 'translateZ(40px)' }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                    <div className="absolute top-5 right-5 sm:top-6 sm:right-6 md:top-8 md:right-8 w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0" style={{ transform: 'translateZ(40px)' }}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
                     </div>
 
                     {/* Bottom Line Glow */}
