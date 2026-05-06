@@ -133,13 +133,13 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                     {/* 3D Pop-out Image (WEBP) */}
                     {(project as any).image3D && (
                       <div 
-                        className="absolute -top-12 bottom-4 -right-4 w-[85%] md:-top-20 md:bottom-8 md:-right-8 md:w-[70%] pointer-events-none"
+                        className="absolute -top-16 bottom-0 -right-6 w-[95%] md:-top-24 md:bottom-2 md:-right-10 md:w-[85%] pointer-events-none"
                         style={{ transform: 'translateZ(60px)' }}
                       >
                         <img
                           src={(project as any).image3D}
                           alt={`${project.title} 3D Preview`}
-                          className="w-full h-full object-contain object-right-top transition-transform duration-1000 group-hover:scale-105 group-hover:-translate-y-2 drop-shadow-2xl"
+                          className="w-full h-full object-contain object-right-top transition-transform duration-1000 group-hover:scale-110 group-hover:-translate-y-2 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
                         />
                       </div>
                     )}
@@ -152,12 +152,12 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                             {project.category}
                           </span>
                           {(project as any).techStack?.slice(0, 2).map((t: string) => (
-                            <span key={t} className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full whitespace-nowrap">
+                            <span key={t} className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/10 group-hover:backdrop-blur-md group-hover:border-white/20 group-hover:text-white">
                               {t}
                             </span>
                           ))}
                           {((project as any).techStack?.length || 0) > 2 && (
-                            <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-white/5 border border-white/10 rounded-full whitespace-nowrap">
+                            <span className="px-2.5 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-white/5 border border-white/10 rounded-full whitespace-nowrap transition-all duration-500 group-hover:bg-white/10 group-hover:backdrop-blur-md group-hover:border-white/20 group-hover:text-gray-300">
                               +{(project as any).techStack.length - 2}
                             </span>
                           )}

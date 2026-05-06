@@ -94,13 +94,22 @@ const CaseStudy = () => {
 
             {/* Hero Image */}
             <AnimatedContent direction="up" delay={0.3}>
-              <div className="relative aspect-[21/9] rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-32">
+              <div className="relative aspect-[21/9] rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-32 bg-[#050505]">
                 {activeProject.coverImage ? (
                   <img
                     src={urlFor(activeProject.coverImage).width(1600).url()}
                     alt={activeProject.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
+                ) : activeProject.image3D ? (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-black to-blue-900/20" />
+                    <img
+                      src={activeProject.image3D}
+                      alt={`${activeProject.title} 3D Preview`}
+                      className="absolute inset-0 w-full h-full object-contain p-8 md:p-16 transition-transform duration-1000 group-hover:scale-105 drop-shadow-[0_30px_50px_rgba(0,0,0,0.8)]"
+                    />
+                  </>
                 ) : activeProject.image ? (
                   <img
                     src={activeProject.image}
@@ -112,7 +121,7 @@ const CaseStudy = () => {
                     <span className="text-gray-500 font-mono text-xs tracking-widest uppercase italic">High-Fidelity Preview: {activeProject.title}</span>
                   </div>
                 ) : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
               </div>
             </AnimatedContent>
 
