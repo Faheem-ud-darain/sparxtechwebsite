@@ -66,46 +66,9 @@ const Process = () => {
   const rotate = useTransform(smoothProgress, [0, 1], [0, 15]);
 
   return (
-    <section id="process" ref={containerRef} className="relative md:h-[450vh] bg-[#030303] py-16 sm:py-20 md:py-0">
-      
-      {/* Mobile View (Static List) */}
-      <div className="block md:hidden px-4 sm:px-6 relative overflow-hidden">
-        <FloatingParticles count={5} color="rgba(34, 197, 94, 0.08)" minSize={2} maxSize={5} />
-        <div className="mb-12 sm:mb-16 text-center relative z-10">
-          <span className="pill-badge mb-4">
-            <span className="glow-dot" />
-            THE ROADMAP
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2 tracking-tight">How we bring ideas to life</h2>
-        </div>
-        
-        <div className="flex flex-col gap-8 relative z-10">
-          {PROCESS_STEPS.map((step, index) => (
-            <AnimatedContent key={index} direction="up" delay={index * 0.1}>
-              <div className="glass-card w-full p-5 sm:p-8 relative overflow-hidden group border border-white/[0.05] rounded-[1.5rem] sm:rounded-[2rem]">
-                <span className="absolute -top-6 -right-6 text-[100px] font-black text-white/[0.03] leading-none pointer-events-none">
-                  {step.number}
-                </span>
-                <div className="relative z-10 flex flex-col gap-6">
-                  <div className="w-16 h-16 rounded-full border-2 border-green-500/30 flex items-center justify-center text-2xl font-bold text-green-500 bg-green-500/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
-                    {step.number}
-                  </div>
-                  <div>
-                    <span className="text-green-400 text-xs font-mono tracking-widest uppercase mb-2 block">Phase {step.number}</span>
-                    <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{step.title}</h3>
-                    <p className="text-gray-400 text-base leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </AnimatedContent>
-          ))}
-        </div>
-      </div>
-
-      {/* Desktop View (Sticky Scroll) */}
-      <div className="hidden md:flex sticky top-0 h-screen w-full overflow-hidden flex-col items-center justify-center">
+    <section id="process" ref={containerRef} className="relative h-[450vh] bg-[#030303]">
+      {/* Sticky Container */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         <FloatingParticles count={10} color="rgba(34, 197, 94, 0.08)" minSize={2} maxSize={5} />
         <motion.div 
           style={{ y: backgroundY, rotate }}

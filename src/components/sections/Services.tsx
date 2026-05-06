@@ -9,7 +9,7 @@ import { HashLink } from 'react-router-hash-link';
 
 const Services = () => {
   return (
-    <section id="services" className="relative py-20 sm:py-24 md:py-32 bg-[#030303] overflow-hidden">
+    <section id="services" className="relative py-32 bg-[#030303] overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
       <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slow" />
@@ -24,24 +24,24 @@ const Services = () => {
               <span className="glow-dot" />
               EXPERTISE
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4 tracking-tight">
               Our Specialized <span className="text-green-500">Services</span>
             </h2>
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-base sm:text-lg">
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-lg">
               We combine creative vision with technical excellence to deliver
               impactful digital solutions that scale with your business.
             </p>
           </div>
         </AnimatedContent>
 
-        {/* Services Grid: stacked on mobile, horizontal scroll on sm+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:overflow-x-auto lg:snap-x lg:snap-mandatory gap-5 sm:gap-6 pb-4 lg:pb-8 pt-2 lg:px-4 lg:-mx-4 hide-scrollbar">
+        {/* Services Stackable Row with BorderGlow */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 lg:gap-8 pb-12 pt-8 px-4 -mx-4 hide-scrollbar">
           {SERVICES.map((service, index) => (
             <AnimatedContent 
               key={index} 
               direction="up" 
               delay={index * 0.05}
-              className="w-full lg:min-w-[380px] xl:min-w-[420px] lg:snap-center shrink-0 flex flex-col"
+              className="min-w-[320px] md:min-w-[380px] lg:min-w-[420px] snap-center shrink-0 flex flex-col"
             >
               <BorderGlow
                 className="h-full w-full"
