@@ -91,43 +91,61 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                 >
                   <Link
                     to={`/project/${project.slug?.current || '#'}`}
-                    className="group relative block h-full rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/[0.05] hover:border-green-500/30 transition-all duration-700 shadow-2xl"
+                    className="group relative block h-full rounded-[2rem] bg-[#0A0A0A] border border-white/[0.05] hover:border-green-500/30 transition-all duration-700 shadow-2xl"
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    {/* Image or gradient placeholder */}
-                    {(!usePlaceholders && (project as any).coverImage) ? (
-                      <img
-                        src={urlFor((project as any).coverImage).width(1200).height(800).url()}
-                        alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
-                        loading="lazy"
-                      />
-                    ) : (project as any).image ? (
-                      <img
-                        src={(project as any).image}
-                        alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className={`absolute inset-0 transition-opacity duration-700 group-hover:opacity-40 ${
-                        index === 0 ? 'bg-gradient-to-br from-green-900/40 to-black' :
-                        index === 1 ? 'bg-gradient-to-br from-blue-900/40 to-black' :
-                        index === 2 ? 'bg-gradient-to-br from-purple-900/40 to-black' :
-                        index === 3 ? 'bg-gradient-to-br from-orange-900/40 to-black' :
-                        'bg-gradient-to-br from-emerald-900/40 to-black'
-                      }`} />
-                    )}
+                    {/* Inner container for background and standard images that must be clipped */}
+                    <div className="absolute inset-0 rounded-[2rem] overflow-hidden pointer-events-none">
+                      {/* Image or gradient placeholder */}
+                      {(!usePlaceholders && (project as any).coverImage) ? (
+                        <img
+                          src={urlFor((project as any).coverImage).width(1200).height(800).url()}
+                          alt={project.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+                          loading="lazy"
+                        />
+                      ) : (project as any).image ? (
+                        <img
+                          src={(project as any).image}
+                          alt={project.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className={`absolute inset-0 transition-opacity duration-700 group-hover:opacity-40 ${
+                          index === 0 ? 'bg-gradient-to-br from-green-900/40 to-black' :
+                          index === 1 ? 'bg-gradient-to-br from-blue-900/40 to-black' :
+                          index === 2 ? 'bg-gradient-to-br from-purple-900/40 to-black' :
+                          index === 3 ? 'bg-gradient-to-br from-orange-900/40 to-black' :
+                          'bg-gradient-to-br from-emerald-900/40 to-black'
+                        }`} />
+                      )}
 
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 transition-opacity duration-500" />
+                      {/* Overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90" />
 
-                    {/* Animated shimmer on hover (magic bento effect) */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
+                      {/* Animated shimmer on hover (magic bento effect) */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
+                      </div>
                     </div>
 
+                    {/* 3D Pop-out Image (WEBP) */}
+                    {(project as any).image3D && (
+                      <div 
+                        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                        style={{ transform: 'translateZ(50px)' }}
+                      >
+                        <img
+                          src={(project as any).image3D}
+                          alt={`${project.title} 3D Preview`}
+                          className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110 drop-shadow-2xl opacity-90 group-hover:opacity-100"
+                        />
+                      </div>
+                    )}
+
                     {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10">
+                    <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 pointer-events-none" style={{ transform: 'translateZ(30px)' }}>
                       <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                         <div className="flex flex-wrap gap-2 mb-4">
                           <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-green-400 bg-green-500/10 border border-green-500/20 rounded-full">
@@ -139,22 +157,22 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                             </span>
                           ))}
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight drop-shadow-md">
                           {project.title}
                         </h3>
-                        <p className="text-gray-500 text-sm line-clamp-2 max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p className="text-gray-400 text-sm line-clamp-2 max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 drop-shadow">
                           High-performance digital solution crafted with precision, focusing on {project.category.toLowerCase()} and user-centric design.
                         </p>
                       </div>
                     </div>
 
                     {/* Corner Arrow */}
-                    <div className="absolute top-8 right-8 w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0">
+                    <div className="absolute top-8 right-8 w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0" style={{ transform: 'translateZ(40px)' }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
                     </div>
 
                     {/* Bottom Line Glow */}
-                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-700" />
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-700 rounded-b-[2rem]" />
                   </Link>
                 </TiltedCard>
               </AnimatedContent>

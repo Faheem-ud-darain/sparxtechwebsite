@@ -356,15 +356,72 @@ SPARX Studioz & Technologies developed Car Wash Pro, a comprehensive management 
 
 ---
 
+## Project 14: SPARX Studioz & Technologies - Company Website & Digital Headquarters
+
+**Title:** SPARX Studioz & Technologies - Corporate Website & Portfolio Showcase
+
+**Slug:** `sparx-studioz-corporate-website-portfolio`
+
+**Category:** Web Development / UI/UX Design / Branding
+
+**Challenge:**
+As a growing IT firm and creative agency, SPARX Studioz & Technologies needed a powerful online presence that would serve multiple purposes: showcase our diverse service portfolio, establish credibility with potential clients, and differentiate our brand in a competitive market. The challenge was to create a website that balanced professionalism with creativity, clearly communicated our "Technology That Sparks Tomorrow" philosophy, and made it effortless for clients to explore services, view our portfolio, and connect with our team.
+
+**Solution:**
+SPARX Studioz & Technologies built our own corporate website from the ground up, serving as both our digital headquarters and a live demonstration of our web development capabilities. The website features a modern, visually striking design that reflects our dual identity as both a tech solutions provider and creative agency. We implemented comprehensive service pages detailing our offerings across web development, UI/UX design, SEO, social media marketing, e-commerce solutions, content creation, and custom software development. A dynamic portfolio section showcases our completed projects with detailed case studies, demonstrating real results for real clients. The site includes a professional team section highlighting our core members and clear calls-to-action throughout the user journey. The website is fully responsive, optimized for all devices, and built with SEO best practices to ensure strong search engine visibility. Fast loading times, intuitive navigation, and strategically placed contact forms make it easy for prospects to reach out and start projects.
+
+The SPARX website isn't just a marketing tool - it's a functional platform that supports our business operations while showcasing exactly what we can do for our clients. It serves as the perfect proof of concept: if we can build this for ourselves, imagine what we can create for you.
+
+**Tech Stack:**
+- React.js / Next.js
+- Tailwind CSS
+- Vercel (Hosting)
+- Figma (UI/UX Design)
+- Adobe Photoshop / Illustrator
+- Google Analytics
+- SEO Optimization
+
+**Cover Image Suggestion:** Multi-device mockup showing the SPARX website homepage on desktop, tablet, and mobile, highlighting the modern design and portfolio section
+
+**Impact:**
+The SPARX Studioz & Technologies website serves as our primary lead generation tool, attracting clients from Pakistan and internationally. It establishes instant credibility, provides a centralized platform for showcasing our work, and makes it easy for potential clients to discover our services and initiate projects.
+
+---
+
+## Project 15: Albatross Edvisors - Social Media Content Creation
+
+**Title:** Albatross Edvisors - Social Media Graphics for Achievements & Celebrations
+
+**Slug:** `albatross-edvisors-social-media-graphics`
+
+**Category:** Graphics Design / Social Media Marketing
+
+**Challenge:**
+Albatross Edvisors, an educational consultancy based in Abbottabad, needed consistent, professional social media content to celebrate student achievements, company milestones, and special occasions. They required eye-catching graphics that would engage their audience, build brand recognition, and showcase their success stories while maintaining a professional image that resonates with students and parents alike.
+
+**Solution:**
+SPARX Studioz & Technologies created over 10 custom social media posts for Albatross Edvisors, each designed to highlight their achievements, celebrations, and key moments. We crafted visually appealing graphics featuring student success stories, educational milestones, festive greetings, and company announcements. Each post was designed with consistent branding elements including their color palette, logo placement, and professional typography, while keeping the content fresh and engaging. The graphics were optimized for Facebook and Instagram, ensuring maximum visual impact and engagement across platforms.
+
+**Tech Stack:**
+- Adobe Photoshop
+- Adobe Illustrator
+- Canva Pro
+- Figma
+
+**Cover Image Suggestion:** Grid layout showcasing 4-6 different social media posts with variety in themes (achievements, celebrations, announcements)
+
+---
+
 ## Summary
 
-Total Projects: 13  
+Total Projects: 15  
 Categories Covered:
 - Social Media Advertising (2 projects)
 - Artificial Intelligence / Machine Learning (1 project)
-- Graphics Design (1 project)
-- Web Development & E-Commerce (5 projects)
+- Graphics Design (2 projects)
+- Web Development & E-Commerce (6 projects)
 - Content Creation & Video Production (4 projects)
 - Custom Software Development (2 projects)
+- UI/UX Design / Branding (1 project)
 
 Geographic Reach: Pakistan, USA, UK, India, South Korea

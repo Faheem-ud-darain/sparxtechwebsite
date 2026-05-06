@@ -2,6 +2,16 @@ import EcomImg from '@/assets/ecommerce-mockup.png';
 import SaasImg from '@/assets/saas-mockup.png';
 import MobileImg from '@/assets/mobile-mockup.png';
 
+// New specific project assets
+import AgencyManagementImg from '@/assets/Agency Management App.webp';
+import AlbatrossImg from '@/assets/Albatross Edvisors.png';
+import CarWashImg from '@/assets/Car wash App.webp';
+import DaehanImg from '@/assets/Daehan Links.png';
+import KingdomImg from '@/assets/Kingdom Watch Company.png';
+import NMAImg from '@/assets/NMA Watch Guy.webp';
+import SparxWebsiteImg from '@/assets/Sparx tech Agency Website.webp';
+import GoldOfHimalayaImg from '@/assets/gold of himalaya.png';
+
 export const mockProjects = [
   {
     _id: '1',
@@ -45,7 +55,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies became Kingdom Watch Company\'s dedicated design partner, creating over 200 premium graphics including Instagram posts, Facebook ads, promotional banners, and custom YouTube thumbnails.' }] }
     ],
-    image: MobileImg,
+    image: KingdomImg,
     gridClass: 'md:col-span-2 md:row-span-1'
   },
   {
@@ -60,7 +70,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies built a fully functional, visually appealing website using GoDaddy Website Builder, optimized for the watch retail business.' }] }
     ],
-    image: EcomImg,
+    image3D: NMAImg,
     gridClass: 'md:col-span-2 md:row-span-1'
   },
   {
@@ -75,7 +85,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies delivered a 360-degree digital marketing solution for Daehan Links. We produced 16 high-quality reels from concept to completion and managed their entire social media presence.' }] }
     ],
-    image: SaasImg,
+    image: DaehanImg,
     gridClass: 'md:col-span-2 md:row-span-1'
   },
   {
@@ -105,7 +115,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies built a fully functional Shopify store for Gold Of Himalaya, featuring custom theme design, product catalog setup, and secure payment gateway integration.' }] }
     ],
-    image: EcomImg,
+    image: GoldOfHimalayaImg,
     gridClass: 'md:col-span-2 md:row-span-1'
   },
   {
@@ -180,7 +190,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We developed SPARX Hub, a comprehensive internal management application custom-built for our agency\'s unique needs.' }] }
     ],
-    image: MobileImg,
+    image3D: AgencyManagementImg,
     gridClass: 'md:col-span-4 md:row-span-2'
   },
   {
@@ -195,7 +205,37 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed Car Wash Pro, a comprehensive management application tailored for car wash businesses of all sizes.' }] }
     ],
-    image: SaasImg,
+    image3D: CarWashImg,
     gridClass: 'md:col-span-2 md:row-span-2'
+  },
+  {
+    _id: '14',
+    title: 'SPARX Studioz & Technologies - Corporate Website',
+    slug: { current: 'sparx-studioz-corporate-website-portfolio' },
+    category: 'Web Development',
+    techStack: ['React.js / Next.js', 'Tailwind CSS', 'Vercel', 'Figma'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'As a growing IT firm and creative agency, SPARX Studioz & Technologies needed a powerful online presence that would serve multiple purposes: showcase our diverse service portfolio, establish credibility with potential clients, and differentiate our brand.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies built our own corporate website from the ground up, serving as both our digital headquarters and a live demonstration of our web development capabilities.' }] }
+    ],
+    image3D: SparxWebsiteImg,
+    gridClass: 'md:col-span-2 md:row-span-1'
+  },
+  {
+    _id: '15',
+    title: 'Albatross Edvisors - Social Media Graphics',
+    slug: { current: 'albatross-edvisors-social-media-graphics' },
+    category: 'Graphics Design',
+    techStack: ['Adobe Photoshop', 'Adobe Illustrator', 'Canva Pro', 'Figma'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'Albatross Edvisors, an educational consultancy based in Abbottabad, needed consistent, professional social media content to celebrate student achievements, company milestones, and special occasions.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies created over 10 custom social media posts for Albatross Edvisors, each designed to highlight their achievements, celebrations, and key moments.' }] }
+    ],
+    image: AlbatrossImg,
+    gridClass: 'md:col-span-2 md:row-span-1'
   }
 ];
