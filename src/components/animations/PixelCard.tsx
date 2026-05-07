@@ -57,11 +57,7 @@ class Pixel {
   draw() {
     const centerOffset = this.maxSizeInteger * 0.5 - this.size * 0.5;
     this.ctx.fillStyle = this.color;
-    // Add a slight glow to pixels
-    this.ctx.shadowBlur = this.size * 2;
-    this.ctx.shadowColor = this.color;
     this.ctx.fillRect(this.x + centerOffset, this.y + centerOffset, this.size, this.size);
-    this.ctx.shadowBlur = 0;
   }
 
   appear() {
@@ -152,7 +148,7 @@ const VARIANTS = {
   },
   green: {
     activeColor: '#22c55e',
-    gap: 4,
+    gap: 6,
     speed: 60,
     colors: '#22c55e88,#10b98166,#ffffff22',
     noFocus: false
@@ -297,7 +293,8 @@ export default function PixelCard({
       ref={containerRef}
       className={`relative overflow-hidden grid place-items-center aspect-[4/5] border border-white/5 rounded-[30px] isolate transition-all duration-500 ease-out select-none bg-black/20 ${className}`}
       style={{
-        '--active-color': variantCfg.activeColor ? `${variantCfg.activeColor}11` : 'transparent'
+        '--active-color': variantCfg.activeColor ? `${variantCfg.activeColor}11` : 'transparent',
+        willChange: 'transform, background-color'
       } as React.CSSProperties}
       onMouseEnter={e => {
         onMouseEnter();

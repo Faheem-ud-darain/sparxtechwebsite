@@ -56,21 +56,34 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   className = '',
 }) => {
   const shellRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!shellRef.current) return;
-    const { left, top, width, height } = shellRef.current.getBoundingClientRect();
-    const x = (e.clientX - left) / width;
-    const y = (e.clientY - top) / height;
     
-    const rotateX = (y - 0.5) * -15; 
-    const rotateY = (x - 0.5) * 15;
-    
-    shellRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+
+    frameRef.current = requestAnimationFrame(() => {
+      if (!shellRef.current) return;
+      const { left, top, width, height } = shellRef.current.getBoundingClientRect();
+      const x = (e.clientX - left) / width;
+      const y = (e.clientY - top) / height;
+      
+      const rotateX = (y - 0.5) * -15; 
+      const rotateY = (x - 0.5) * 15;
+      
+      // Remove transition class for immediate response
+      shellRef.current.style.transition = 'none';
+      shellRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
   };
 
   const handleMouseLeave = () => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
     if (!shellRef.current) return;
+    
+    // Add transition back for smooth reset
+    shellRef.current.style.transition = 'transform 0.5s ease-out';
     shellRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
   };
 
@@ -83,8 +96,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     >
       <div 
         ref={shellRef}
-        className="relative w-full h-full transition-transform duration-500 ease-out"
-        style={{ transformStyle: 'preserve-3d' }}
+        className="relative w-full h-full"
+        style={{ 
+          transformStyle: 'preserve-3d',
+          willChange: 'transform'
+        }}
       >
         {/* 1. Background Image - Contained and rounded here */}
         <div className="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem] border border-white/5">
