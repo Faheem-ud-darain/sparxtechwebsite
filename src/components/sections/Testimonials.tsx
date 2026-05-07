@@ -17,7 +17,7 @@ const TESTIMONIALS = [
     author: "Ijaz Ur Rehman",
     designation: "CEO, Gold of Himalaya",
     service: "SMM & Graphics Design",
-    rating: 5
+    rating: 4.3
   },
   {
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
@@ -33,7 +33,7 @@ const TESTIMONIALS = [
     author: "Hassan",
     designation: "CEO, Mofasa Organics",
     service: "Model Services & Studio Rental",
-    rating: 5
+    rating: 4.7
   }
 ];
 

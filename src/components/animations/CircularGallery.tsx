@@ -53,12 +53,55 @@ function createCardTexture(
   context.lineWidth = 2;
   context.strokeRect(5, 5, width - 10, height - 10);
 
-  // 3. Draw Stars
-  const stars = '★'.repeat(data.rating || 5);
-  context.font = '30px serif';
-  context.fillStyle = '#22c55e'; // Green stars
+  // 3. Draw Stars (Yellow with Glow)
+  const rating = data.rating || 5;
+  const starX = 60;
+  const starY = 100;
+  const starSize = 35;
+  const starGap = 40;
+
+  context.font = `${starSize}px serif`;
   context.textAlign = 'left';
-  context.fillText(stars, 60, 100);
+  context.textBaseline = 'middle';
+
+  // Glow settings
+  context.shadowBlur = 15;
+  context.shadowColor = 'rgba(250, 204, 21, 0.4)';
+  context.fillStyle = '#facc15'; // Yellow-400
+
+  for (let i = 0; i < 5; i++) {
+    const x = starX + i * starGap;
+    const diff = rating - i;
+    
+    if (diff >= 1) {
+      // Full star
+      context.fillText('★', x, starY);
+    } else if (diff > 0) {
+      // Partial star using clipping
+      context.save();
+      context.beginPath();
+      context.rect(x, starY - starSize/2, starSize * diff, starSize);
+      context.clip();
+      context.fillText('★', x, starY);
+      context.restore();
+      
+      // Draw empty star outline for the remainder
+      context.save();
+      context.shadowBlur = 0;
+      context.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      context.lineWidth = 1;
+      context.strokeText('★', x, starY);
+      context.restore();
+    } else {
+      // Empty star
+      context.save();
+      context.shadowBlur = 0;
+      context.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      context.fillText('★', x, starY);
+      context.restore();
+    }
+  }
+  context.shadowBlur = 0; // Reset shadow
 
   // 4. Draw Service Taken
   context.font = 'bold 24px sans-serif';
