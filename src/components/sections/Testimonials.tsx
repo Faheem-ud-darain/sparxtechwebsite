@@ -63,7 +63,7 @@ const Testimonials = () => {
         </AnimatedContent>
       </div>
 
-      <div className="relative h-[500px] md:h-[600px] w-full">
+      <div className="relative h-[500px] md:h-[750px] w-full">
         <CircularGallery 
           items={TESTIMONIALS}
           bend={3}
