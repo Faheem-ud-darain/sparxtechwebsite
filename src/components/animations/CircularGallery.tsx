@@ -73,30 +73,27 @@ function createCardTexture(
     const x = starX + i * starGap;
     const diff = rating - i;
     
-    if (diff >= 1) {
-      // Full star
-      context.fillText('★', x, starY);
-    } else if (diff > 0) {
-      // Partial star using clipping
+    // 1. Draw Background Star (Faint empty star)
+    context.save();
+    context.shadowBlur = 0;
+    context.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    context.fillText('★', x, starY);
+    context.restore();
+
+    // 2. Draw Filled Star (Yellow with Glow)
+    if (diff > 0) {
       context.save();
-      context.beginPath();
-      context.rect(x, starY - starSize/2, starSize * diff, starSize);
-      context.clip();
-      context.fillText('★', x, starY);
-      context.restore();
+      context.shadowBlur = 15;
+      context.shadowColor = 'rgba(250, 204, 21, 0.6)';
+      context.fillStyle = '#facc15';
       
-      // Draw empty star outline for the remainder
-      context.save();
-      context.shadowBlur = 0;
-      context.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-      context.lineWidth = 1;
-      context.strokeText('★', x, starY);
-      context.restore();
-    } else {
-      // Empty star
-      context.save();
-      context.shadowBlur = 0;
-      context.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      if (diff < 1) {
+        // Partial fill for fractional ratings
+        context.beginPath();
+        context.rect(x, starY - starSize, starSize * diff, starSize * 2);
+        context.clip();
+      }
+      
       context.fillText('★', x, starY);
       context.restore();
     }
