@@ -8,7 +8,7 @@ const TESTIMONIALS = [
     text: "I couldn't be happier with the results from the marketing firm I've partnered with! Their expert team has significantly boosted my watch business, implementing creative strategies that truly resonate with our audience. They understand my vision and have delivered exceptional campaigns.",
     author: "Nate Apodaca",
     designation: "Founder, Kingdom Watch Company",
-    service: "Graphics Design & Marketing",
+    service: "Marketing & Strategy",
     rating: 5
   },
   {
@@ -24,23 +24,15 @@ const TESTIMONIALS = [
     text: "I had a great experience working with him on my assignments and projects. The work was always well structured, original, and delivered on time. He understands requirements very clearly.",
     author: "Abdullah Tariq",
     designation: "Student, United Kingdom",
-    service: "Academic & Professional Consulting",
+    service: "Academic Consulting",
     rating: 5
   },
   {
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-    text: "Innovative solutions and a dedicated support team. Partnering with SPARX was the best decision for our startup's digital presence and growth strategy.",
-    author: "Emily Watson",
-    designation: "Founder of GreenPulse",
-    service: "Mobile App Development",
-    rating: 5
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop',
-    text: "Their UI/UX expertise significantly improved our user engagement metrics. Truly a world-class agency for modern digital products and creative excellence.",
-    author: "David Miller",
-    designation: "Creative Head at PixelPerfect",
-    service: "Product Design",
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
+    text: "Excellent service from SparX! We utilized both their model services and their studio space for our latest project. The models were punctual and talented, and the location itself was decent, spacious, and very well-maintained.",
+    author: "Hassan",
+    designation: "CEO, Mofasa Organics",
+    service: "Model Services & Studio Rental",
     rating: 5
   }
 ];

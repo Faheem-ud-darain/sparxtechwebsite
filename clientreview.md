@@ -61,12 +61,29 @@
 - Brand Development
 - Sales-Driven Digital Marketing
 
+
+
+## Client Review #4
+
+**Client Name:** Hassan  
+**Company:** Mofasa Organics  
+**Location:** Pakistan
+**Designation:** CEO  
+**Star Rating:** ⭐⭐⭐⭐⭐ (4.7/5)  
+
+### Review
+"Excellent service from SparX! We utilized both their model services and their studio space for our latest project. The models were punctual and talented, and the location itself was decent, spacious, and very well-maintained. It’s rare to find an agency that handles both talent and facilities so professionally. Highly recommended!"
+
+### Services Provided
+- Model Services
+- Studio Rental
+
 ---
 
 ## Summary
 
-**Total Reviews:** 3  
-**Average Rating:** ⭐⭐⭐⭐⭐ 5.0/5.0  
+**Total Reviews:** 4  
+**Average Rating:** ⭐⭐⭐⭐⭐ 4.9/5.0  
 **Client Satisfaction Rate:** 100%
 
 ### Industries Served
