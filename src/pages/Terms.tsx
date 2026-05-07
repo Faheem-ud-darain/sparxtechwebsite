@@ -84,6 +84,7 @@ const Terms = () => {
                   <br /><br />
                   Email: {CONTACT_INFO.email}<br />
                   Phone: {CONTACT_INFO.phone}<br />
+                  WhatsApp: {CONTACT_INFO.whatsapp}<br />
                   Address: {CONTACT_INFO.address}
                 </p>
               </section>

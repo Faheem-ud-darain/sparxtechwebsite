@@ -5,11 +5,12 @@ import { LogoWall } from '@/components/animations/LogoWall';
 import Services from '@/components/sections/Services';
 import PortfolioGrid from '@/components/sections/PortfolioGrid';
 import Process from '@/components/sections/Process';
+import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/layout/Footer';
 
 const Home = () => {
   return (
-    <div className="bg-[#030303] min-h-screen text-white">
+    <div className="min-h-screen text-white">
       <Header />
       <main>
         <Hero />
@@ -17,6 +18,7 @@ const Home = () => {
         <Services />
         <PortfolioGrid />
         <Process />
+        <Testimonials />
       </main>
       <Footer />
     </div>

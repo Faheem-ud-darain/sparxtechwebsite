@@ -59,5 +59,6 @@ export const TECH_STACK = [
 export const CONTACT_INFO = {
   email: "studiozsparx@gmail.com",
   phone: "+92 3095843733",
+  whatsapp: "+90 548 828 1864",
   address: "2nd floor, Shammal News office, Plot: No 6-A, Small industry state, mandian, Abbottabad, KPK, Pakistan",
 };

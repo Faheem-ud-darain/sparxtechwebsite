@@ -109,7 +109,7 @@ const CaseStudy = () => {
                     {/* Left Side Props */}
                     <div className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center pointer-events-none z-10">
                       <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-transparent mb-6 md:mb-8" />
-                      <div className="text-white/[0.04] font-black text-5xl md:text-8xl tracking-tighter uppercase leading-[0.85] break-words">
+                      <div className="text-white/[0.04] font-black text-4xl xs:text-5xl md:text-8xl tracking-tighter uppercase leading-[0.85] break-words">
                         {activeProject.category.split('/')[0].trim()}<br/>
                         Overview
                       </div>

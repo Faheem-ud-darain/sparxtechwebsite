@@ -2,17 +2,26 @@ import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PortfolioGrid from '@/components/sections/PortfolioGrid';
+import { motion } from 'framer-motion';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 
 const Portfolio = () => {
   return (
-    <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
+    <div className="min-h-screen text-white selection:bg-green-500/30">
       <Header />
       
-      {/* Background Decor */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[-5%] w-[600px] h-[600px] bg-green-500/[0.02] blur-[150px]" />
-        <div className="absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-blue-600/[0.02] blur-[150px]" />
+      {/* Decorative Props */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <motion.div
+          animate={{ x: [0, 20, 0], y: [0, 15, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[15%] left-[10%] w-24 h-24 border border-green-500/5 rounded-full"
+        />
+        <motion.div
+          animate={{ x: [0, -15, 0], y: [0, 25, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[40%] right-[12%] w-32 h-32 border border-blue-500/5 rounded-2xl rotate-12"
+        />
       </div>
 
       <main className="relative z-10 pt-28 sm:pt-36 md:pt-48 pb-20 sm:pb-28 md:pb-32">

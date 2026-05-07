@@ -3,6 +3,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import ProfileCard from '@/components/animations/ProfileCard';
+import { motion } from 'framer-motion';
+import PixelCard from '@/components/animations/PixelCard';
 
 import FaheemImg from '@/assets/Faheem Jadoon.png';
 import ZainImg from '@/assets/Zain Jadoon.png';
@@ -63,6 +65,8 @@ const TEAM_MEMBERS = [
   }
 ];
 
+
+
 const Team = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -83,13 +87,25 @@ const Team = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#030303] text-white">
+    <main className="min-h-screen text-white">
       <Header />
+
+      {/* Decorative Props */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <motion.div
+          animate={{ y: [0, -25, 0], x: [0, 10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] left-[5%] w-32 h-32 border border-green-500/5 rounded-full"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[20%] right-[10%] w-48 h-48 border border-emerald-500/5 rounded-3xl rotate-45"
+        />
+      </div>
 
       {/* Hero Section */}
       <section className="relative pt-28 sm:pt-36 md:pt-40 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 overflow-hidden">
-        <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
-        <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slow" />
 
         <div className="relative z-10 max-w-7xl mx-auto text-center">
           <AnimatedContent direction="up">
@@ -126,28 +142,30 @@ const Team = () => {
           }}
         >
           {/* Invisible spacers for centering first/last card */}
-          <div className="shrink-0 w-[calc(50vw-140px)]" />
+          <div className="shrink-0 w-[calc(50vw-130px)]" />
           
           {TEAM_MEMBERS.map((member) => (
             <div
               key={member.id}
               className="snap-center shrink-0 flex justify-center"
-              style={{ width: '280px', touchAction: 'pan-y' }}
+              style={{ width: '260px', touchAction: 'pan-y' }}
             >
-              <ProfileCard
-                name={member.name}
-                title={member.title}
-                handle={member.handle}
-                status={member.status}
-                avatarUrl={member.image}
-                instagramUrl={member.instagram}
-                linkedInUrl={member.linkedin}
-                className="pointer-events-auto"
-              />
+              <PixelCard variant="green" className="w-full h-full">
+                <ProfileCard
+                  name={member.name}
+                  title={member.title}
+                  handle={member.handle}
+                  status={member.status}
+                  avatarUrl={member.image}
+                  instagramUrl={member.instagram}
+                  linkedInUrl={member.linkedin}
+                  className="pointer-events-auto"
+                />
+              </PixelCard>
             </div>
           ))}
 
-          <div className="shrink-0 w-[calc(50vw-140px)]" />
+          <div className="shrink-0 w-[calc(50vw-130px)]" />
         </div>
 
         {/* Dot indicators */}
@@ -177,22 +195,28 @@ const Team = () => {
         </div>
       </section>
 
-      {/* ─── DESKTOP: 4-column grid ─── */}
       <section className="hidden md:block py-12 sm:py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-10 sm:gap-y-12">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-wrap justify-center -space-x-12 gap-y-16">
             {TEAM_MEMBERS.map((member, index) => (
-              <AnimatedContent key={member.id} direction="up" delay={index * 0.1} className="relative z-10 hover:z-50">
-                <div className="flex justify-center">
-                  <ProfileCard
-                    name={member.name}
-                    title={member.title}
-                    handle={member.handle}
-                    status={member.status}
-                    avatarUrl={member.image}
-                    instagramUrl={member.instagram}
-                    linkedInUrl={member.linkedin}
-                  />
+              <AnimatedContent 
+                key={member.id} 
+                direction="up" 
+                delay={index * 0.1} 
+                className="relative transition-all duration-500 hover:z-50 hover:scale-105 group"
+              >
+                <div className="w-[380px] aspect-[4/5.5]">
+                  <PixelCard variant="green" className="w-full h-full">
+                    <ProfileCard
+                      name={member.name}
+                      title={member.title}
+                      handle={member.handle}
+                      status={member.status}
+                      avatarUrl={member.image}
+                      instagramUrl={member.instagram}
+                      linkedInUrl={member.linkedin}
+                    />
+                  </PixelCard>
                 </div>
               </AnimatedContent>
             ))}

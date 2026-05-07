@@ -6,6 +6,7 @@ import Logo from '@/assets/Full Logo Tranparent.png';
 
 const navLinks = [
   { label: "Services", href: "/#services" },
+  { label: "About", href: "/about" },
   { label: "Portfolio", href: "/#portfolio" },
   { label: "Team", href: "/team" },
 ];
@@ -53,14 +54,24 @@ const Header = () => {
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
-                <HashLink
-                  smooth
-                  key={link.label}
-                  to={link.href}
-                  className="text-sm text-gray-400 hover:text-white transition-colors duration-300 tracking-wide"
-                >
-                  {link.label}
-                </HashLink>
+                link.href.startsWith('/#') ? (
+                  <HashLink
+                    smooth
+                    key={link.label}
+                    to={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-300 tracking-wide"
+                  >
+                    {link.label}
+                  </HashLink>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-300 tracking-wide"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </nav>
 
@@ -109,19 +120,30 @@ const Header = () => {
           >
             <nav className="flex flex-col items-center gap-10">
               {navLinks.map((link, i) => (
-                <HashLink
-                  smooth
-                  key={link.label}
-                  to={link.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="text-4xl font-bold text-white hover:text-green-400 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </HashLink>
+                link.href.startsWith('/#') ? (
+                  <HashLink
+                    smooth
+                    key={link.label}
+                    to={link.href}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    className="text-4xl font-bold text-white hover:text-green-400 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </HashLink>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="text-4xl font-bold text-white hover:text-green-400 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}

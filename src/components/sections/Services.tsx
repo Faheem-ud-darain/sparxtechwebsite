@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SERVICES } from '@/data/constants';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import BorderGlow from '@/components/animations/BorderGlow';
@@ -8,6 +8,21 @@ import { SERVICE_ICONS } from '@/data/lottieIcons';
 import { HashLink } from 'react-router-hash-link';
 
 const Services = () => {
+  const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Show 6 services initially on desktop, all services on mobile
+  const displayedServices = showAll || isMobile ? SERVICES : SERVICES.slice(0, 6);
+
   return (
     <section id="services" className="relative py-32 bg-[#030303] overflow-hidden">
       {/* Background elements */}
@@ -35,17 +50,18 @@ const Services = () => {
         </AnimatedContent>
 
         {/* Services Grid: Grid on desktop/tablet, scroll on mobile */}
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-4 md:gap-8 pb-12 pt-8 px-4 -mx-4 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
-          {SERVICES.map((service, index) => (
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-5 md:gap-8 pb-4 pt-8 px-6 -mx-6 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
+          {displayedServices.map((service, index) => (
             <AnimatedContent 
               key={index} 
               direction="up" 
               delay={index * 0.05}
-              className="min-w-[200px] xs:min-w-[240px] md:min-w-0 snap-center shrink-0 flex flex-col"
+              className="w-[82vw] sm:w-[320px] md:w-auto snap-center shrink-0 flex flex-col"
             >
               <BorderGlow
                 className="h-full w-full"
                 borderRadius={24}
+                glowRadius={30}
                 backgroundColor="#0A0A0A"
                 glowColor="142 72 55"
                 colors={['#22c55e', '#10b981', '#06b6d4']}
@@ -106,6 +122,29 @@ const Services = () => {
             </AnimatedContent>
           ))}
         </div>
+
+        {/* See All Button - Desktop only */}
+        {!isMobile && !showAll && SERVICES.length > 6 && (
+          <AnimatedContent direction="up" delay={0.2}>
+            <div className="mt-16 text-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="group relative px-8 py-4 bg-white/[0.03] border border-white/10 hover:border-green-500/50 rounded-full transition-all duration-500"
+              >
+                <div className="absolute inset-0 bg-green-500/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
+                <span className="relative z-10 flex items-center gap-3 text-sm font-semibold text-white group-hover:text-green-400 transition-colors">
+                  Explore All {SERVICES.length} Services
+                  <svg 
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                    className="group-hover:translate-y-0.5 transition-transform"
+                  >
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </AnimatedContent>
+        )}
       </div>
     </section>
   );
