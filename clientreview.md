@@ -9,7 +9,7 @@
 **Client Name:** Ijaz Ur Rehman  
 **Company:** Gold of Himalaya  
 **Designation:** CEO  
-**Star Rating:** ⭐⭐⭐⭐ (4.3/5)
+**Star Rating:** (4.3/5)
 
 ### Review
 "You really work hard and it was really helpful for us, as a team work i really appreciate your efforts"
@@ -27,7 +27,7 @@
 **Client Name:** Abdullah Tariq  
 **Location:** United Kingdom
 **Designation:** Student
-**Star Rating:** ⭐⭐⭐⭐⭐ (5/5)
+**Star Rating:** (5/5)
 
 ### Review
 "I had a great experience working with him on my assignments and projects. The work was always well structured, original, and delivered on time. He understands requirements very clearly and is very professional to work with. I would definitely recommend him for academic projects."
@@ -46,7 +46,7 @@
 **Company:** Kingdom Watch Company  
 **Location:** United States
 **Designation:** Founder  
-**Star Rating:** ⭐⭐⭐⭐⭐ (5/5)  
+**Star Rating:** (5/5)  
 **Date of Experience:** April 02, 2025
 
 ### Review
@@ -69,7 +69,7 @@
 **Company:** Mofasa Organics  
 **Location:** Pakistan
 **Designation:** CEO  
-**Star Rating:** ⭐⭐⭐⭐⭐ (4.7/5)  
+**Star Rating:** (4.7/5)  
 
 ### Review
 "Excellent service from SparX! We utilized both their model services and their studio space for our latest project. The models were punctual and talented, and the location itself was decent, spacious, and very well-maintained. It’s rare to find an agency that handles both talent and facilities so professionally. Highly recommended!"

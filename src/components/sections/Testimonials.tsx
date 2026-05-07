@@ -5,7 +5,7 @@ import { AnimatedContent } from '@/components/animations/AnimatedContent';
 const TESTIMONIALS = [
   {
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop',
-    text: "I couldn't be happier with the results from the marketing firm I've partnered with! Their expert team has significantly boosted my watch business, implementing creative strategies that truly resonate with our audience. They understand my vision and have delivered exceptional campaigns.",
+    text: "I couldn't be happier with the results from the marketing firm I've partnered with! Their expert team has significantly boosted my watch business, implementing creative strategies that truly resonate with our audience. They understand my vision and have delivered exceptional campaigns that not only increased engagement but also drove sales. Their professionalism and dedication have made a noticeable impact on my brand, and I highly recommend them to anyone looking to elevate their marketing efforts!",
     author: "Nate Apodaca",
     designation: "Founder, Kingdom Watch Company",
     service: "Marketing & Strategy",
@@ -21,7 +21,7 @@ const TESTIMONIALS = [
   },
   {
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop',
-    text: "I had a great experience working with him on my assignments and projects. The work was always well structured, original, and delivered on time. He understands requirements very clearly.",
+    text: "I had a great experience working with him on my assignments and projects. The work was always well structured, original, and delivered on time. He understands requirements very clearly and is very professional to work with. I would definitely recommend him for academic projects.",
     author: "Abdullah Tariq",
     designation: "Student, United Kingdom",
     service: "Academic Consulting",
@@ -29,7 +29,7 @@ const TESTIMONIALS = [
   },
   {
     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
-    text: "Excellent service from SparX! We utilized both their model services and their studio space for our latest project. The models were punctual and talented, and the location itself was decent, spacious, and very well-maintained.",
+    text: "Excellent service from SparX! We utilized both their model services and their studio space for our latest project. The models were punctual and talented, and the location itself was decent, spacious, and very well-maintained. It's rare to find an agency that handles both talent and facilities so professionally. Highly recommended!",
     author: "Hassan",
     designation: "CEO, Mofasa Organics",
     service: "Model Services & Studio Rental",
