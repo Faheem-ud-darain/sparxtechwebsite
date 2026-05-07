@@ -54,46 +54,41 @@ function createCardTexture(
   context.strokeRect(5, 5, width - 10, height - 10);
 
   // 3. Draw Stars (Yellow with Glow)
-  const rating = data.rating || 5;
+  const rating = Number(data.rating) || 5;
   const starX = 60;
   const starY = 100;
-  const starSize = 35;
-  const starGap = 40;
+  const starSize = 32;
+  const starGap = 45; // Increased gap to prevent overlap
 
-  context.font = `${starSize}px serif`;
+  context.font = `${starSize}px sans-serif`;
   context.textAlign = 'left';
   context.textBaseline = 'middle';
 
-  // Glow settings
-  context.shadowBlur = 15;
-  context.shadowColor = 'rgba(250, 204, 21, 0.4)';
-  context.fillStyle = '#facc15'; // Yellow-400
-
   for (let i = 0; i < 5; i++) {
     const x = starX + i * starGap;
-    const diff = rating - i;
+    const diff = Math.max(0, Math.min(1, rating - i));
     
-    // 1. Draw Background Star (Faint empty star)
+    // 1. Draw Background Star (More visible empty star)
     context.save();
     context.shadowBlur = 0;
-    context.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    context.fillStyle = 'rgba(255, 255, 255, 0.25)';
     context.fillText('★', x, starY);
     context.restore();
 
     // 2. Draw Filled Star (Yellow with Glow)
     if (diff > 0) {
       context.save();
+      // Precise clipping based on measured width
+      const metrics = context.measureText('★');
+      const starWidth = metrics.width;
+      
+      context.beginPath();
+      context.rect(x, starY - starSize, starWidth * diff, starSize * 2);
+      context.clip();
+      
       context.shadowBlur = 15;
-      context.shadowColor = 'rgba(250, 204, 21, 0.6)';
+      context.shadowColor = 'rgba(250, 204, 21, 0.8)';
       context.fillStyle = '#facc15';
-      
-      if (diff < 1) {
-        // Partial fill for fractional ratings
-        context.beginPath();
-        context.rect(x, starY - starSize, starSize * diff, starSize * 2);
-        context.clip();
-      }
-      
       context.fillText('★', x, starY);
       context.restore();
     }
