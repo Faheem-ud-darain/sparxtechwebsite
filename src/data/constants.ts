@@ -62,3 +62,10 @@ export const CONTACT_INFO = {
   whatsapp: "+90 548 828 1864",
   address: "2nd floor, Shammal News office, Plot: No 6-A, Small industry state, mandian, Abbottabad, KPK, Pakistan",
 };
+
+export const SOCIAL_LINKS = {
+  facebook: "https://www.facebook.com/sparxstudiozandtechnologies",
+  instagram: "https://www.instagram.com/sparxstudioz",
+  linkedin: "https://www.linkedin.com/company/sparxtechnologies",
+};
+
