@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PortfolioGrid from '@/components/sections/PortfolioGrid';
@@ -7,7 +6,7 @@ import { AnimatedContent } from '@/components/animations/AnimatedContent';
 
 const Portfolio = () => {
   return (
-    <div className="min-h-screen text-white selection:bg-green-500/30">
+    <div className="relative min-h-screen text-white selection:bg-green-500/30">
       <Header />
       
       {/* Decorative Props */}

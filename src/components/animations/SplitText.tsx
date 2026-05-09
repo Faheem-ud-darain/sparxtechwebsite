@@ -21,6 +21,7 @@ export interface SplitTextProps {
   tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
   textAlign?: React.CSSProperties['textAlign'];
   onLetterAnimationComplete?: () => void;
+  entryDelay?: number;
 }
 
 const SplitText: React.FC<SplitTextProps> = ({
@@ -37,7 +38,8 @@ const SplitText: React.FC<SplitTextProps> = ({
   rootMargin = '-100px',
   tag = 'p',
   textAlign = 'center',
-  onLetterAnimationComplete
+  onLetterAnimationComplete,
+  entryDelay = 0
 }) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const animationCompletedRef = useRef(false);
@@ -111,6 +113,7 @@ const SplitText: React.FC<SplitTextProps> = ({
               ...to,
               duration,
               ease,
+              delay: entryDelay,
               stagger: delay / 1000,
               scrollTrigger: {
                 trigger: el,

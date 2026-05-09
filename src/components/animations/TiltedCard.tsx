@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
 
 interface TiltedCardProps {
   children: React.ReactNode;
@@ -19,11 +19,21 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
   borderRadius = '2rem',
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
-
+  
+  // Use MotionValues for high-performance tracking
   const rotateX = useSpring(0, { stiffness: 200, damping: 30 });
   const rotateY = useSpring(0, { stiffness: 200, damping: 30 });
   const scaleVal = useSpring(1, { stiffness: 200, damping: 30 });
+  
+  const glareX = useMotionValue(50);
+  const glareY = useMotionValue(50);
+  const glareOpacity = useSpring(0, { stiffness: 300, damping: 40 });
+
+  // Transform coordinates into a radial gradient string
+  const glareBackground = useTransform(
+    [glareX, glareY],
+    ([x, y]) => `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.08) 0%, transparent 60%)`
+  );
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
@@ -33,24 +43,29 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
 
     rotateX.set((y - 0.5) * -tiltMax);
     rotateY.set((x - 0.5) * tiltMax);
-    setGlarePos({ x: x * 100, y: y * 100 });
+    
+    glareX.set(x * 100);
+    glareY.set(y * 100);
   };
 
   const handleMouseEnter = () => {
     scaleVal.set(scale);
+    glareOpacity.set(1);
   };
 
   const handleMouseLeave = () => {
     rotateX.set(0);
     rotateY.set(0);
     scaleVal.set(1);
-    setGlarePos({ x: 50, y: 50 });
+    glareX.set(50);
+    glareY.set(50);
+    glareOpacity.set(0);
   };
 
   return (
     <motion.div
       ref={ref}
-      className={`relative ${className}`}
+      className={`relative ${className} group/tilted`}
       style={{
         perspective: 1000,
         transformStyle: 'preserve-3d',
@@ -58,19 +73,22 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
         rotateY,
         scale: scaleVal,
         borderRadius,
+        willChange: 'transform'
       }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {children}
-      {/* Glare overlay */}
+      
+      {/* Glare overlay - optimized with MotionValue */}
       {glareEnable && (
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-30"
           style={{
             borderRadius,
-            background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
+            background: glareBackground,
+            opacity: glareOpacity
           }}
         />
       )}

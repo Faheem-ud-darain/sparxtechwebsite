@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
@@ -6,7 +5,7 @@ import { CONTACT_INFO } from '@/data/constants';
 
 const PrivacyPolicy = () => {
   return (
-    <main className="min-h-screen bg-[#030303] text-white">
+    <main className="relative min-h-screen bg-[#030303] text-white">
       <Header />
       
       <section className="relative pt-40 pb-20 px-6 overflow-hidden">

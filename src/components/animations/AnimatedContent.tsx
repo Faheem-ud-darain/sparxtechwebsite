@@ -19,10 +19,10 @@ export const AnimatedContent: React.FC<AnimatedContentProps> = ({
 
   const getVariants = () => {
     switch(direction) {
-      case 'up': return { hidden: { y: 40, opacity: 0 }, visible: { y: 0, opacity: 1 } };
-      case 'down': return { hidden: { y: -40, opacity: 0 }, visible: { y: 0, opacity: 1 } };
-      case 'left': return { hidden: { x: 40, opacity: 0 }, visible: { x: 0, opacity: 1 } };
-      case 'right': return { hidden: { x: -40, opacity: 0 }, visible: { x: 0, opacity: 1 } };
+      case 'up': return { hidden: { y: 60, opacity: 0, scale: 0.9 }, visible: { y: 0, opacity: 1, scale: 1 } };
+      case 'down': return { hidden: { y: -60, opacity: 0, scale: 0.9 }, visible: { y: 0, opacity: 1, scale: 1 } };
+      case 'left': return { hidden: { x: 60, opacity: 0, scale: 0.9 }, visible: { x: 0, opacity: 1, scale: 1 } };
+      case 'right': return { hidden: { x: -60, opacity: 0, scale: 0.9 }, visible: { x: 0, opacity: 1, scale: 1 } };
     }
   };
 

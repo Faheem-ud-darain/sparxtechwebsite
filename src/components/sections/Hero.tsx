@@ -8,18 +8,25 @@ import SplitText from '@/components/animations/SplitText';
 import StarBorder from '@/components/animations/StarBorder';
 import { STATS } from '@/data/constants';
 
+import Magnetic from '@/components/animations/Magnetic';
+
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const yBg = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const yScroll = useTransform(scrollYProgress, [0, 0.3], [0, 50]);
+  const yOrb = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  
+  // New: Receding scale effect for the entire content block
+  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
   return (
-    <section ref={ref} className="relative min-h-screen w-full bg-[#030303] flex flex-col justify-center overflow-hidden">
+    <section ref={ref} className="relative min-h-[150vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
       {/* Orb WebGL Background */}
-      <div className="absolute inset-0 pointer-events-none">
+      <motion.div style={{ y: yOrb, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0 overflow-hidden">
         <Orb
           hue={69}
           hoverIntensity={0.46}
@@ -27,7 +34,7 @@ const Hero = () => {
           forceHoverState={false}
           backgroundColor="#030303"
         />
-      </div>
+      </motion.div>
 
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/60 via-transparent to-[#030303] pointer-events-none z-0" />
@@ -36,7 +43,7 @@ const Hero = () => {
       <FloatingParticles count={25} color="rgba(34, 197, 94, 0.2)" minSize={2} maxSize={5} />
 
       {/* Parallax Background Elements */}
-      <motion.div style={{ y: yBg }} className="absolute inset-0 pointer-events-none z-0">
+      <motion.div style={{ y: yBg, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[30%] -left-[20%] md:left-[10%] w-[260px] md:w-[500px] h-[260px] md:h-[500px] rounded-full bg-green-500/[0.12] md:bg-green-500/[0.08] blur-[80px] md:blur-[150px] animate-float-slow" />
         <div className="absolute bottom-[20%] -right-[20%] md:right-[10%] w-[260px] md:w-[400px] h-[260px] md:h-[400px] rounded-full bg-emerald-500/[0.12] md:bg-emerald-500/[0.08] blur-[80px] md:blur-[150px] animate-float-slower" />
         <div className="absolute inset-0 grid-bg-fade opacity-30 h-full w-full" />
@@ -47,15 +54,15 @@ const Hero = () => {
 
       {/* ─── CONTENT ─── */}
       <motion.div
-        style={{ y, opacity }}
-        className="relative z-10 max-w-6xl mx-auto w-full px-5 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20"
+        style={{ y, opacity, scale: heroScale }}
+        className="sticky top-0 z-10 max-w-6xl mx-auto w-full px-5 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 pointer-events-none"
       >
 
         {/* ── MOBILE layout (< md) ── */}
         <div className="md:hidden flex flex-col items-center text-center">
 
           {/* Badge */}
-          <AnimatedContent direction="up" delay={0.1}>
+          <AnimatedContent direction="up" delay={0.1} className="pointer-events-auto">
             <span className="pill-badge mb-6">
               <span className="glow-dot" />
               SPARX STUDIOZ
@@ -63,10 +70,11 @@ const Hero = () => {
           </AnimatedContent>
 
           {/* Heading */}
-          <div className="mb-4 px-2">
+          <div className="mb-4 px-2 pointer-events-auto">
             <SplitText
               className="text-3xl xs:text-4xl leading-[1.2] font-extrabold tracking-tight text-white"
               delay={40}
+              entryDelay={0.1}
               duration={1}
               splitType="chars"
               tag="h1"
@@ -81,14 +89,14 @@ const Hero = () => {
           </div>
 
           {/* Short tagline */}
-          <AnimatedContent direction="up" delay={0.32}>
+          <AnimatedContent direction="up" delay={0.15} className="pointer-events-auto">
             <p className="mt-4 text-sm sm:text-base text-gray-400 leading-relaxed max-w-[280px] mx-auto">
               Creative agency building innovative design, advanced development&nbsp;&amp; modern marketing solutions.
             </p>
           </AnimatedContent>
 
           {/* CTAs — stacked, compact */}
-          <AnimatedContent direction="up" delay={0.46}>
+          <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
             <div className="mt-8 flex flex-col gap-2.5 w-full max-w-[220px] mx-auto">
               <StarBorder as={HashLink} smooth to="/#contact" color="#55f78e" speed="5s" className="w-full">
                 <span className="flex items-center justify-center gap-2 py-1">
@@ -111,7 +119,7 @@ const Hero = () => {
         <div className="hidden md:flex flex-col items-center text-center">
 
           {/* Badge */}
-          <AnimatedContent direction="up" delay={0.1}>
+          <AnimatedContent direction="up" delay={0.1} className="pointer-events-auto">
             <div className="mb-8">
               <span className="pill-badge">
                 <span className="glow-dot" />
@@ -121,10 +129,11 @@ const Hero = () => {
           </AnimatedContent>
 
           {/* Heading */}
-          <div className="mb-4">
+          <div className="mb-4 pointer-events-auto">
             <SplitText
               className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-white max-w-5xl mx-auto"
               delay={40}
+              entryDelay={0.1}
               duration={1}
               splitType="chars"
               tag="h1"
@@ -139,7 +148,7 @@ const Hero = () => {
           </div>
 
           {/* Subtext */}
-          <AnimatedContent direction="up" delay={0.35}>
+          <AnimatedContent direction="up" delay={0.15} className="pointer-events-auto">
             <div className="mt-8 flex flex-col items-center gap-4 max-w-2xl mx-auto">
               <div className="w-[40px] h-[3px] bg-gradient-to-r from-green-500/0 via-green-500 to-green-500/0 rounded-full" />
               <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
@@ -150,7 +159,7 @@ const Hero = () => {
           </AnimatedContent>
 
           {/* CTA Buttons */}
-          <AnimatedContent direction="up" delay={0.5}>
+          <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
             <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
               <StarBorder as={HashLink} smooth to="/#contact" color="#55f78e" speed="5s">
                 <span className="flex items-center justify-center gap-2">
@@ -175,7 +184,7 @@ const Hero = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 md:py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4 sm:gap-6 md:gap-8">
             {STATS.map((stat, i) => (
-              <AnimatedContent key={stat.label} direction="up" delay={0.6 + i * 0.1}>
+              <AnimatedContent key={stat.label} direction="up" delay={0.25 + i * 0.05} className="pointer-events-auto">
                 <div className="text-center md:text-left">
                   <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white">{stat.value}</div>
                   <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{stat.label}</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import CircularGallery from '@/components/animations/CircularGallery';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
+import TechPattern from '@/components/animations/TechPattern';
 
 const TESTIMONIALS = [
   {
@@ -40,6 +41,7 @@ const TESTIMONIALS = [
 const Testimonials = () => {
   return (
     <section id="testimonials" className="py-24 bg-[#030303] relative overflow-hidden border-t border-white/[0.03]">
+      <TechPattern color="rgba(34, 197, 94, 0.12)" opacity={0.3} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-12 text-center">
         <AnimatedContent direction="up">
           <span className="pill-badge mb-4">

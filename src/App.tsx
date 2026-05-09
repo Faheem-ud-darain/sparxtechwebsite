@@ -1,34 +1,64 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { BlobCursor } from '@/components/animations/BlobCursor';
-import Home from '@/pages/Home';
-import Portfolio from '@/pages/Portfolio';
-import CaseStudy from '@/pages/CaseStudy';
-import Team from '@/pages/Team';
-import About from '@/pages/About';
-import Terms from '@/pages/Terms';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
 import Background from '@/components/animations/Background';
+import PageTransition from '@/components/animations/PageTransition';
+import Preloader from '@/components/animations/Preloader';
+import PageLoader from '@/components/animations/PageLoader';
+import { useState, lazy, Suspense } from 'react';
+
+import Home from '@/pages/Home';
+
+// Lazy load other sub-pages for performance
+const About = lazy(() => import('@/pages/About'));
+const Portfolio = lazy(() => import('@/pages/Portfolio'));
+const CaseStudy = lazy(() => import('@/pages/CaseStudy'));
+const Team = lazy(() => import('@/pages/Team'));
+const Terms = lazy(() => import('@/pages/Terms'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  
+  return (
+    <>
+      <PageLoader key={location.pathname + location.hash} pathname={location.pathname} />
+      <Suspense fallback={null}>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/portfolio" element={<PageTransition><Portfolio /></PageTransition>} />
+            <Route path="/project/:slug" element={<PageTransition><CaseStudy /></PageTransition>} />
+            <Route path="/team" element={<PageTransition><Team /></PageTransition>} />
+            <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+            <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+          </Routes>
+        </AnimatePresence>
+      </Suspense>
+    </>
+  );
+}
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
-    <SmoothScroll>
-      <Background />
-      <BlobCursor />
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/project/:slug" element={<CaseStudy />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        </Routes>
-      </Router>
-    </SmoothScroll>
+    <div className="relative bg-[#030303] selection:bg-green-500/30 min-h-screen">
+      <Preloader onComplete={() => setLoading(false)} />
+      {!loading && (
+        <SmoothScroll>
+          <Background />
+          <BlobCursor />
+          <Router>
+            <ScrollToTop />
+            <AnimatedRoutes />
+          </Router>
+        </SmoothScroll>
+      )}
+    </div>
   );
 }
 

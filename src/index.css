@@ -31,10 +31,10 @@
 html {
   font-family: var(--font-sans);
   font-size: 16px;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizeSpeed; /* Changed from optimizeLegibility for faster rendering */
 }
 
 body {
@@ -94,10 +94,12 @@ body {
 
 .animate-float-slow {
   animation: float-slow 12s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-float-slower {
   animation: float-slow 16s ease-in-out infinite reverse;
+  will-change: transform;
 }
 
 /* ── Glassmorphism Card ────────────────────────────────────────── */
@@ -108,6 +110,7 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
   transition: border-color 0.3s ease, background 0.3s ease;
+  will-change: transform, opacity; /* Hint for hover animations */
 }
 
 .glass-card:hover {
@@ -168,4 +171,36 @@ body {
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-33.33%); }
+}
+
+/* ── Grain Animation ─────────────────────────────────────────────── */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+.animate-grain {
+  animation: grain 8s steps(10) infinite;
+  will-change: transform;
+}
+
+/* ── 3D Perspective Utilities ────────────────────────────────────── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
 }

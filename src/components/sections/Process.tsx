@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { PROCESS_STEPS } from '@/data/constants';
+import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import FloatingParticles from '@/components/animations/FloatingParticles';
+import TechPattern from '@/components/animations/TechPattern';
 
 const ProcessStep = ({ step, index, progress }: { step: any, index: number, progress: any }) => {
   // Each step takes 25% of the total 500vh scroll
@@ -91,7 +93,8 @@ const Process = () => {
       style={{ height: '500vh' }}
     >
       {/* Sticky Container - Forced pinning */}
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden z-20" style={{ willChange: 'transform' }}>
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden z-20">
+        <TechPattern color="rgba(34, 197, 94, 0.15)" opacity={0.4} />
         <FloatingParticles count={10} color="rgba(34, 197, 94, 0.08)" minSize={2} maxSize={5} />
         
         {/* Background Visuals */}
@@ -105,11 +108,13 @@ const Process = () => {
 
         {/* Floating Header */}
         <div className="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 z-30 text-center w-full px-6">
-          <span className="pill-badge mb-4">
-            <span className="glow-dot" />
-            THE ROADMAP
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mt-2 tracking-tight">How we bring ideas to life</h2>
+          <AnimatedContent direction="down">
+            <span className="pill-badge mb-4">
+              <span className="glow-dot" />
+              THE ROADMAP
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mt-2 tracking-tight">How we bring ideas to life</h2>
+          </AnimatedContent>
         </div>
 
         {/* The Stacked Cards Container */}

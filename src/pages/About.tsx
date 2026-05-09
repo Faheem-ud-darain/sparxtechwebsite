@@ -1,10 +1,9 @@
-import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import CardSwap, { Card } from '@/components/animations/CardSwap';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Target, Users, Zap, Award, BarChart3, Rocket, Shield, Heart } from 'lucide-react';
+import { CheckCircle2, Target, Users, Zap, Award, Rocket } from 'lucide-react';
 
 const WHY_CHOOSE_US_DATA = [
   {
@@ -31,7 +30,7 @@ const WHY_CHOOSE_US_DATA = [
 
 const About = () => {
   return (
-    <div className="min-h-screen text-white selection:bg-green-500/30">
+    <div className="relative min-h-screen text-white selection:bg-green-500/30">
       <Header />
       
       <main className="pt-32 pb-24">

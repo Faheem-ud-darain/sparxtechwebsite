@@ -34,6 +34,7 @@ export default function Orb({
 
     uniform float iTime;
     uniform vec3 iResolution;
+    uniform vec2 uMouse;
     uniform float hue;
     uniform float hover;
     uniform float rot;
@@ -178,6 +179,9 @@ export default function Orb({
       float c = cos(angle);
       uv = vec2(c * uv.x - s * uv.y, s * uv.x + c * uv.y);
       
+      uv.x += uMouse.x * 0.1;
+      uv.y += uMouse.y * 0.1;
+      
       uv.x += hover * hoverIntensity * 0.1 * sin(uv.y * 10.0 + iTime);
       uv.y += hover * hoverIntensity * 0.1 * sin(uv.x * 10.0 + iTime);
       
@@ -209,6 +213,7 @@ export default function Orb({
         iResolution: {
           value: new Vec3(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
         },
+        uMouse: { value: [0, 0] },
         hue: { value: hue },
         hover: { value: 0 },
         rot: { value: 0 },
@@ -235,6 +240,7 @@ export default function Orb({
     let targetHover = 0;
     let lastTime = 0;
     let currentRot = 0;
+    let mousePos = [0, 0];
     const rotationSpeed = 0.3;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -243,6 +249,10 @@ export default function Orb({
       const y = e.clientY - rect.top;
       const width = rect.width;
       const height = rect.height;
+      
+      mousePos[0] = (x / width) * 2 - 1;
+      mousePos[1] = (y / height) * -2 + 1;
+
       const size = Math.min(width, height);
       const centerX = width / 2;
       const centerY = height / 2;
@@ -263,17 +273,29 @@ export default function Orb({
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
 
+    let isVisible = true;
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    });
+    intersectionObserver.observe(container);
+
     let rafId: number;
     const update = (t: number) => {
       rafId = requestAnimationFrame(update);
+      if (!isVisible) return; // Skip rendering if not visible
+
       const dt = (t - lastTime) * 0.001;
       lastTime = t;
       program.uniforms.iTime.value = t * 0.001;
       program.uniforms.hue.value = hue;
       program.uniforms.hoverIntensity.value = hoverIntensity;
+      program.uniforms.uMouse.value = [
+        lerp(program.uniforms.uMouse.value[0], mousePos[0], 0.03),
+        lerp(program.uniforms.uMouse.value[1], mousePos[1], 0.03)
+      ];
 
       const effectiveHover = forceHoverState ? 1 : targetHover;
-      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.1;
+      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.05;
 
       if (rotateOnHover && effectiveHover > 0.5) {
         currentRot += dt * rotationSpeed;
@@ -287,6 +309,7 @@ export default function Orb({
 
     return () => {
       cancelAnimationFrame(rafId);
+      intersectionObserver.disconnect();
       window.removeEventListener('resize', resize);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
@@ -296,6 +319,10 @@ export default function Orb({
   }, [hue, hoverIntensity, rotateOnHover, forceHoverState, backgroundColor]);
 
   return <div ref={ctnDom} className="w-full h-full" />;
+}
+
+function lerp(a: number, b: number, t: number) {
+  return a * (1 - t) + b * t;
 }
 
 function hslToRgb(h: number, s: number, l: number) {

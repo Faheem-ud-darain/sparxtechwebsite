@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useProjects } from '@/hooks/useSanity';
 import { urlFor } from '@/config/sanityClient';
@@ -17,6 +18,14 @@ interface PortfolioGridProps {
 
 const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => {
   const { projects, loading } = useProjects();
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   const mergedProjects = mockProjects.map(mock => {
     const sanityProj = projects?.find(p => p.slug?.current === mock.slug.current);
@@ -30,9 +39,14 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
   const usePlaceholders = !projects || projects.length === 0;
 
   return (
-    <section id="portfolio" className="relative py-20 sm:py-24 md:py-32 bg-[#030303] overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
+    <section 
+      ref={sectionRef} 
+      id="portfolio" 
+      className="relative py-32 bg-[#050505] overflow-hidden"
+    >
+      <motion.div style={{ scale, opacity }} className="absolute inset-0 z-0">
+        <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
+      </motion.div>
       <div className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slower" />
       <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-blue-600/[0.08] blur-[120px] pointer-events-none animate-float-slow" />
       <FloatingParticles count={20} color="rgba(85, 173, 247, 0.2)" minSize={2} maxSize={6} />

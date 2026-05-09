@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useRef } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
@@ -68,8 +68,8 @@ const TEAM_MEMBERS = [
 
 
 const Team = () => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
     const el = scrollRef.current;
@@ -87,7 +87,7 @@ const Team = () => {
   };
 
   return (
-    <main className="min-h-screen text-white">
+    <main className="relative min-h-screen text-white selection:bg-green-500/30">
       <Header />
 
       {/* Decorative Props */}
@@ -144,24 +144,26 @@ const Team = () => {
           {/* Invisible spacers for centering first/last card */}
           <div className="shrink-0 w-[calc(50vw-130px)]" />
           
-          {TEAM_MEMBERS.map((member) => (
+          {TEAM_MEMBERS.map((member, index) => (
             <div
               key={member.id}
               className="snap-center shrink-0 flex justify-center"
               style={{ width: '260px', touchAction: 'pan-y' }}
             >
-              <PixelCard variant="green" className="w-full h-full">
-                <ProfileCard
-                  name={member.name}
-                  title={member.title}
-                  handle={member.handle}
-                  status={member.status}
-                  avatarUrl={member.image}
-                  instagramUrl={member.instagram}
-                  linkedInUrl={member.linkedin}
-                  className="pointer-events-auto"
-                />
-              </PixelCard>
+              <AnimatedContent direction="up" delay={index * 0.1}>
+                <PixelCard variant="green" className="w-full h-full">
+                  <ProfileCard
+                    name={member.name}
+                    title={member.title}
+                    handle={member.handle}
+                    status={member.status}
+                    avatarUrl={member.image}
+                    instagramUrl={member.instagram}
+                    linkedInUrl={member.linkedin}
+                    className="pointer-events-auto"
+                  />
+                </PixelCard>
+              </AnimatedContent>
             </div>
           ))}
 
