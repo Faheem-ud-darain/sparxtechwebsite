@@ -144,26 +144,24 @@ const Team = () => {
           {/* Invisible spacers for centering first/last card */}
           <div className="shrink-0 w-[calc(50vw-130px)]" />
           
-          {TEAM_MEMBERS.map((member, index) => (
+          {TEAM_MEMBERS.map((member) => (
             <div
               key={member.id}
               className="snap-center shrink-0 flex justify-center"
               style={{ width: '260px', touchAction: 'pan-y' }}
             >
-              <AnimatedContent direction="up" delay={index * 0.1}>
-                <PixelCard variant="green" className="w-full h-full">
-                  <ProfileCard
-                    name={member.name}
-                    title={member.title}
-                    handle={member.handle}
-                    status={member.status}
-                    avatarUrl={member.image}
-                    instagramUrl={member.instagram}
-                    linkedInUrl={member.linkedin}
-                    className="pointer-events-auto"
-                  />
-                </PixelCard>
-              </AnimatedContent>
+              <PixelCard variant="green" className="w-full h-full">
+                <ProfileCard
+                  name={member.name}
+                  title={member.title}
+                  handle={member.handle}
+                  status={member.status}
+                  avatarUrl={member.image}
+                  instagramUrl={member.instagram}
+                  linkedInUrl={member.linkedin}
+                  className="pointer-events-auto"
+                />
+              </PixelCard>
             </div>
           ))}
 

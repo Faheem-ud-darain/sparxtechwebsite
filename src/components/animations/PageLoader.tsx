@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const PATH_MESSAGES: Record<string, string> = {
@@ -7,7 +6,8 @@ const PATH_MESSAGES: Record<string, string> = {
   '/services': 'Our Expertise',
   '/portfolio': 'Witnessing Excellence',
   '/contact': 'Starting a Conversation',
-  '/case-study': 'Deconstructing the Process'
+  '/case-study': 'Deconstructing the Process',
+  '/team': 'the brains behind brawls'
 };
 
 const PageLoader = ({ pathname = '/' }: { pathname?: string }) => {

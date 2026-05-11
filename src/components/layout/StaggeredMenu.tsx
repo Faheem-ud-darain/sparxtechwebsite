@@ -1,5 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 export interface StaggeredMenuItem {
@@ -40,7 +41,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   className,
   logoUrl = '/src/assets/logos/reactbits-gh-white.svg',
   menuButtonColor = '#fff',
-  openMenuButtonColor = '#fff',
+  openMenuButtonColor = '#000',
   changeMenuColorOnOpen = true,
   accentColor = '#5227FF',
   isFixed = false,
@@ -55,19 +56,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const preLayersRef = useRef<HTMLDivElement | null>(null);
   const preLayerElsRef = useRef<HTMLElement[]>([]);
 
-  const plusHRef = useRef<HTMLSpanElement | null>(null);
-  const plusVRef = useRef<HTMLSpanElement | null>(null);
+  const lineTopRef = useRef<HTMLSpanElement | null>(null);
+  const lineBottomRef = useRef<HTMLSpanElement | null>(null);
   const iconRef = useRef<HTMLSpanElement | null>(null);
 
-  const textInnerRef = useRef<HTMLSpanElement | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const textWrapRef = useRef<HTMLSpanElement | null>(null);
-  const [textLines, setTextLines] = useState<string[]>(['Menu', 'Close']);
 
   const openTlRef = useRef<gsap.core.Timeline | null>(null);
-  const closeTweenRef = useRef<gsap.core.Tween | null>(null);
+  const closeTweenRef = useRef<gsap.core.Animation | null>(null);
   const spinTweenRef = useRef<gsap.core.Timeline | null>(null);
-  const textCycleAnimRef = useRef<gsap.core.Tween | null>(null);
   const colorTweenRef = useRef<gsap.core.Tween | null>(null);
 
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -80,12 +76,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
 
-      const plusH = plusHRef.current;
-      const plusV = plusVRef.current;
+      const lineTop = lineTopRef.current;
+      const lineBottom = lineBottomRef.current;
       const icon = iconRef.current;
-      const textInner = textInnerRef.current;
 
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !lineTop || !lineBottom || !icon) return;
 
       let preLayers: HTMLElement[] = [];
       if (preContainer) {
@@ -99,11 +94,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         gsap.set(preContainer, { xPercent: 0, opacity: 1 });
       }
 
-      gsap.set(plusH, { transformOrigin: '50% 50%', rotate: 0 });
-      gsap.set(plusV, { transformOrigin: '50% 50%', rotate: 90 });
+      gsap.set(lineTop, { transformOrigin: '50% 50%', y: -4, rotate: 0 });
+      gsap.set(lineBottom, { transformOrigin: '50% 50%', y: 4, rotate: 0 });
       gsap.set(icon, { rotate: 0, transformOrigin: '50% 50%' });
-
-      gsap.set(textInner, { yPercent: 0 });
 
       if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
@@ -215,64 +208,96 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [buildOpenTimeline]);
 
   const playClose = useCallback(() => {
+    if (busyRef.current) return;
+    busyRef.current = true;
+
     openTlRef.current?.kill();
     openTlRef.current = null;
     itemEntranceTweenRef.current?.kill();
 
     const panel = panelRef.current;
     const layers = preLayerElsRef.current;
-    if (!panel) return;
+    if (!panel) {
+      busyRef.current = false;
+      return;
+    }
 
-    const all: HTMLElement[] = [...layers, panel];
-    closeTweenRef.current?.kill();
+    const itemEls = Array.from(panel.querySelectorAll('.sm-panel-itemLabel')) as HTMLElement[];
+    const numberEls = Array.from(
+      panel.querySelectorAll('.sm-panel-list[data-numbering] .sm-panel-item')
+    ) as HTMLElement[];
+    const socialTitle = panel.querySelector('.sm-socials-title') as HTMLElement | null;
+    const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link')) as HTMLElement[];
 
-    const offscreen = position === 'left' ? -100 : 100;
-
-    closeTweenRef.current = gsap.to(all, {
-      xPercent: offscreen,
-      duration: 0.32,
-      ease: 'power3.in',
-      overwrite: 'auto',
+    const tl = gsap.timeline({
       onComplete: () => {
-        const itemEls = Array.from(panel.querySelectorAll('.sm-panel-itemLabel')) as HTMLElement[];
-        if (itemEls.length) gsap.set(itemEls, { yPercent: 140, rotate: 10 });
-
-        const numberEls = Array.from(
-          panel.querySelectorAll('.sm-panel-list[data-numbering] .sm-panel-item')
-        ) as HTMLElement[];
-        if (numberEls.length) gsap.set(numberEls, { ['--sm-num-opacity' as any]: 0 });
-
-        const socialTitle = panel.querySelector('.sm-socials-title') as HTMLElement | null;
-        const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link')) as HTMLElement[];
-        if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
-        if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
-
         busyRef.current = false;
       }
     });
+
+    const offscreen = position === 'left' ? -100 : 100;
+
+    // 1. Stagger items out
+    if (itemEls.length) {
+      tl.to(
+        itemEls,
+        { yPercent: 140, rotate: -5, duration: 0.45, ease: 'power2.in', stagger: { each: 0.04, from: 'end' } },
+        0
+      );
+      if (numberEls.length) {
+        tl.to(
+          numberEls,
+          { duration: 0.35, ease: 'power2.in', ['--sm-num-opacity' as any]: 0, stagger: { each: 0.04, from: 'end' } },
+          0
+        );
+      }
+    }
+
+    if (socialTitle || socialLinks.length) {
+      const socialsOutStart = 0.05;
+      if (socialTitle) tl.to(socialTitle, { opacity: 0, duration: 0.3 }, socialsOutStart);
+      if (socialLinks.length) {
+        tl.to(
+          socialLinks,
+          { y: 20, opacity: 0, duration: 0.35, ease: 'power2.in', stagger: { each: 0.03, from: 'end' } },
+          socialsOutStart
+        );
+      }
+    }
+
+    // 2. Stagger layers out
+    const layersOutStart = 0.2;
+    tl.to(panel, { xPercent: offscreen, duration: 0.45, ease: 'power3.inOut' }, layersOutStart);
+
+    layers.forEach((layer, i) => {
+      tl.to(
+        layer,
+        { xPercent: offscreen, duration: 0.45, ease: 'power3.inOut' },
+        layersOutStart + 0.05 + (layers.length - 1 - i) * 0.06
+      );
+    });
+
+    closeTweenRef.current = tl;
   }, [position]);
 
   const animateIcon = useCallback((opening: boolean) => {
     const icon = iconRef.current;
-    const h = plusHRef.current;
-    const v = plusVRef.current;
-    if (!icon || !h || !v) return;
+    const top = lineTopRef.current;
+    const bottom = lineBottomRef.current;
+    if (!icon || !top || !bottom) return;
 
     spinTweenRef.current?.kill();
 
     if (opening) {
-      // ensure container never rotates
-      gsap.set(icon, { rotate: 0, transformOrigin: '50% 50%' });
       spinTweenRef.current = gsap
-        .timeline({ defaults: { ease: 'power4.out' } })
-        .to(h, { rotate: 45, duration: 0.5 }, 0)
-        .to(v, { rotate: -45, duration: 0.5 }, 0);
+        .timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
+        .to(top, { y: 0, rotate: 45, width: '100%' }, 0)
+        .to(bottom, { y: 0, rotate: -45, width: '100%' }, 0);
     } else {
       spinTweenRef.current = gsap
-        .timeline({ defaults: { ease: 'power3.inOut' } })
-        .to(h, { rotate: 0, duration: 0.35 }, 0)
-        .to(v, { rotate: 90, duration: 0.35 }, 0)
-        .to(icon, { rotate: 0, duration: 0.001 }, 0);
+        .timeline({ defaults: { ease: 'power4.out', duration: 0.6 } })
+        .to(top, { y: -4, rotate: 0, width: '100%' }, 0)
+        .to(bottom, { y: 4, rotate: 0, width: '70%' }, 0);
     }
   }, []);
 
@@ -302,37 +327,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     }
   }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
 
-  const animateText = useCallback((opening: boolean) => {
-    const inner = textInnerRef.current;
-    if (!inner) return;
 
-    textCycleAnimRef.current?.kill();
-
-    const currentLabel = opening ? 'Menu' : 'Close';
-    const targetLabel = opening ? 'Close' : 'Menu';
-    const cycles = 3;
-
-    const seq: string[] = [currentLabel];
-    let last = currentLabel;
-    for (let i = 0; i < cycles; i++) {
-      last = last === 'Menu' ? 'Close' : 'Menu';
-      seq.push(last);
-    }
-    if (last !== targetLabel) seq.push(targetLabel);
-    seq.push(targetLabel);
-
-    setTextLines(seq);
-    gsap.set(inner, { yPercent: 0 });
-
-    const lineCount = seq.length;
-    const finalShift = ((lineCount - 1) / lineCount) * 100;
-
-    textCycleAnimRef.current = gsap.to(inner, {
-      yPercent: -finalShift,
-      duration: 0.5 + lineCount * 0.07,
-      ease: 'power4.out'
-    });
-  }, []);
 
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;
@@ -349,8 +344,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     animateIcon(target);
     animateColor(target);
-    animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+  }, [playOpen, playClose, animateIcon, animateColor, onMenuOpen, onMenuClose]);
 
   const closeMenu = useCallback(() => {
     if (openRef.current) {
@@ -360,9 +354,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       playClose();
       animateIcon(false);
       animateColor(false);
-      animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
+  }, [playClose, animateIcon, animateColor, onMenuClose]);
 
   React.useEffect(() => {
     if (!closeOnClickAway || !open) return;
@@ -422,7 +415,12 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           className="staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between p-[2em] bg-transparent pointer-events-none z-20"
           aria-label="Main navigation header"
         >
-          <div className="sm-logo flex items-center select-none pointer-events-auto" aria-label="Logo">
+          <Link 
+            to="/" 
+            className="sm-logo flex items-center select-none pointer-events-auto" 
+            aria-label="Back to home"
+            onClick={closeMenu}
+          >
             <img
               src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
               alt="Logo"
@@ -431,7 +429,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               width={110}
               height={24}
             />
-          </div>
+          </Link>
 
           <button
             ref={toggleBtnRef}
@@ -444,31 +442,20 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             onClick={toggleMenu}
             type="button"
           >
-            <span
-              className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)]"
-              aria-hidden="true"
-            >
-              <span ref={textInnerRef} className="sm-toggle-textInner flex flex-col leading-none">
-                {textLines.map((l, i) => (
-                  <span className="sm-toggle-line block h-[1em] leading-none" key={i}>
-                    {l}
-                  </span>
-                ))}
-              </span>
-            </span>
+            {/* Icon only */}
 
             <span
               ref={iconRef}
-              className="sm-icon relative w-[14px] h-[14px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
+              className="sm-icon relative w-[24px] h-[24px] shrink-0 inline-flex flex-col items-end justify-center gap-[6px] [will-change:transform]"
               aria-hidden="true"
             >
               <span
-                ref={plusHRef}
-                className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                ref={lineTopRef}
+                className="sm-icon-line relative w-full h-[2px] bg-current rounded-[2px] [will-change:transform]"
               />
               <span
-                ref={plusVRef}
-                className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[2px] bg-current rounded-[2px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                ref={lineBottomRef}
+                className="sm-icon-line relative w-[70%] h-[2px] bg-current rounded-[2px] [will-change:transform]"
               />
             </span>
           </button>
@@ -553,9 +540,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-toggle-textWrap { position: relative; margin-right: 0.5em; display: inline-block; height: 1em; overflow: hidden; white-space: nowrap; width: var(--sm-toggle-width, auto); min-width: var(--sm-toggle-width, auto); }
 .sm-scope .sm-toggle-textInner { display: flex; flex-direction: column; line-height: 1; }
 .sm-scope .sm-toggle-line { display: block; height: 1em; line-height: 1; }
-.sm-scope .sm-icon { position: relative; width: 14px; height: 14px; flex: 0 0 14px; display: inline-flex; align-items: center; justify-content: center; will-change: transform; }
+.sm-scope .sm-icon { position: relative; width: 24px; height: 24px; flex: 0 0 24px; display: inline-flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; will-change: transform; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.sm-scope .sm-toggle:hover .sm-icon { transform: scale(1.15); }
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
-.sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
+.sm-scope .sm-icon-line { position: relative; width: 100%; height: 2px; background: currentColor; border-radius: 2px; will-change: transform; }
 .sm-scope .sm-line { display: none !important; }
 .sm-scope .staggered-menu-panel { position: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 100%; background: white; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
@@ -577,8 +565,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-title { margin: 0; font-size: 1rem; font-weight: 600; color: #fff; text-transform: uppercase; }
 .sm-scope .sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
 .sm-scope .sm-panel-item { position: relative; color: #000; font-weight: 600; font-size: 4rem; cursor: pointer; line-height: 1; letter-spacing: -2px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
-.sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
+.sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, #ff0000); }
+.sm-scope .sm-panel-item:hover .sm-panel-itemLabel { transform: translateX(10px); }
+.sm-scope .sm-socials-link { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease; }
+.sm-scope .sm-socials-link:hover { transform: translateY(-3px); color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
 .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.1em; right: 3.2em; font-size: 18px; font-weight: 400; color: var(--sm-accent, #ff0000); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); }
 @media (max-width: 1024px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .staggered-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }
