@@ -3,28 +3,29 @@ import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import CardSwap, { Card } from '@/components/animations/CardSwap';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Target, Users, Zap, Award, Rocket } from 'lucide-react';
+import { CheckCircle2, Target } from 'lucide-react';
+import AnimatedIcon from '@/components/animations/AnimatedIcon';
 
 const WHY_CHOOSE_US_DATA = [
   {
     title: "All-in-One Solution",
     description: "From UI/UX design to custom software and marketing, we provide everything under one roof.",
-    icon: <Rocket className="w-8 h-8 text-green-400" />
+    icon: <AnimatedIcon name="Rocket" className="w-8 h-8 text-green-500" />
   },
   {
     title: "Innovation Driven",
     description: "We use the latest technology stacks (Next.js, AI, etc.) to keep your business ahead of the curve.",
-    icon: <Zap className="w-8 h-8 text-green-400" />
+    icon: <AnimatedIcon name="Zap" className="w-8 h-8 text-green-500" />
   },
   {
     title: "Affordable Excellence",
     description: "High-quality, scalable digital solutions that are customized to fit your budget and goals.",
-    icon: <Award className="w-8 h-8 text-green-400" />
+    icon: <AnimatedIcon name="Award" className="w-8 h-8 text-green-500" />
   },
   {
     title: "Expert Professionals",
     description: "Our team consists of dedicated specialists in every domain, from DevOps to Graphic Design.",
-    icon: <Users className="w-8 h-8 text-green-400" />
+    icon: <AnimatedIcon name="Users" className="w-8 h-8 text-green-500" />
   }
 ];
 

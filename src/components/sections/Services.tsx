@@ -3,9 +3,8 @@ import { SERVICES } from '@/data/constants';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import BorderGlow from '@/components/animations/BorderGlow';
 import FloatingParticles from '@/components/animations/FloatingParticles';
-import LottieIcon from '@/components/animations/LottieIcon';
-import { SERVICE_ICONS } from '@/data/lottieIcons';
 import { HashLink } from 'react-router-hash-link';
+import AnimatedIcon from '@/components/animations/AnimatedIcon';
 
 const Services = () => {
   const [showAll, setShowAll] = useState(false);
@@ -73,16 +72,13 @@ const Services = () => {
                     {service.number}
                   </div>
 
-                  {/* Lottie Icon */}
+                  {/* Animated Icon */}
                   <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 group-hover:bg-green-500/10 group-hover:border-green-500/20 transition-all duration-500">
-                    {SERVICE_ICONS[service.title] ? (
-                      <LottieIcon
-                        animationData={SERVICE_ICONS[service.title]}
-                        className="w-8 h-8"
-                      />
-                    ) : (
-                      <span className="text-3xl">{service.icon}</span>
-                    )}
+                    <AnimatedIcon
+                      name={service.lucideIcon || 'HelpCircle'}
+                      className="w-6 h-6 sm:w-8 sm:h-8 text-green-500"
+                      size={isMobile ? 24 : 32}
+                    />
                   </div>
 
                   {/* Content */}
