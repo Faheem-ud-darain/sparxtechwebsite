@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 class Pixel {
   width: number;
@@ -22,7 +22,8 @@ class Pixel {
   isShimmer: boolean;
 
   constructor(
-    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
     context: CanvasRenderingContext2D,
     x: number,
     y: number,
@@ -30,8 +31,8 @@ class Pixel {
     speed: number,
     delay: number
   ) {
-    this.width = canvas.width;
-    this.height = canvas.height;
+    this.width = width;
+    this.height = height;
     this.ctx = context;
     this.x = x;
     this.y = y;
@@ -199,27 +200,37 @@ export default function PixelCard({
     if (!containerRef.current || !canvasRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    const width = Math.floor(rect.width);
-    const height = Math.floor(rect.height);
+    const width = rect.width;
+    const height = rect.height;
     const ctx = canvasRef.current.getContext('2d');
+    if (!ctx) return;
 
-    canvasRef.current.width = width;
-    canvasRef.current.height = height;
+    const dpr = window.devicePixelRatio || 1;
+    canvasRef.current.width = width * dpr;
+    canvasRef.current.height = height * dpr;
     canvasRef.current.style.width = `${width}px`;
     canvasRef.current.style.height = `${height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const gapInt = parseInt(finalGap.toString(), 10);
+    const cols = Math.floor(width / gapInt) + 4; // More overflow
+    const rows = Math.floor(height / gapInt) + 4;
+    const startX = (width - (cols - 1) * gapInt) / 2;
+    const startY = (height - (rows - 1) * gapInt) / 2;
 
     const colorsArray = finalColors.split(',');
     const pxs = [];
-    for (let x = 0; x < width; x += parseInt(finalGap.toString(), 10)) {
-      for (let y = 0; y < height; y += parseInt(finalGap.toString(), 10)) {
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        const x = startX + i * gapInt;
+        const y = startY + j * gapInt;
         const color = colorsArray[Math.floor(Math.random() * colorsArray.length)];
 
         const dx = x - width / 2;
         const dy = y - height / 2;
         const distance = Math.sqrt(dx * dx + dy * dy);
         const delay = reducedMotion ? 0 : distance;
-        if (!ctx) return;
-        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(finalSpeed, reducedMotion), delay));
+        pxs.push(new Pixel(width, height, ctx, x, y, color, getEffectiveSpeed(finalSpeed, reducedMotion), delay));
       }
     }
     pixelsRef.current = pxs;
@@ -235,9 +246,10 @@ export default function PixelCard({
     timePreviousRef.current = timeNow - (timePassed % timeInterval);
 
     const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx || !canvasRef.current) return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!ctx || !canvasRef.current || !rect) return;
 
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    ctx.clearRect(0, 0, rect.width, rect.height);
 
     let allIdle = true;
     for (let i = 0; i < pixelsRef.current.length; i++) {

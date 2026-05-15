@@ -49,7 +49,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   avatarUrl = '',
   name = '',
   title = '',
-  handle = '',
   status = '',
   instagramUrl = '',
   linkedInUrl = '',
@@ -132,7 +131,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               </div>
               <div className="flex flex-col">
                 <span className="text-[11px] md:text-[13px] font-bold text-white leading-none mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  @{handle || name.toLowerCase().replace(/\s+/g, '_')}
+                  {name}
                 </span>
                 <span className="text-[8px] md:text-[9px] font-black text-green-400 tracking-widest uppercase flex items-center gap-1.5" style={{ fontFamily: "'Inter', sans-serif" }}>
                   <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-green-500 animate-pulse" />

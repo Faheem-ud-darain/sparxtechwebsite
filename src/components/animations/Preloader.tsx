@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Critical assets to preload for a smooth first impression
@@ -20,48 +20,81 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   useEffect(() => {
-    let loadedCount = 0;
-    const totalAssets = CRITICAL_ASSETS.length;
-
-    // Preload images
+    let isMounted = true;
+    const totalCritical = CRITICAL_ASSETS.length;
+    
+    // Preload images helper
     const preloadImage = (src: string) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = src;
-        img.onload = resolve;
-        img.onerror = resolve; // Continue even if one fails
+        if (img.complete) {
+          resolve(true);
+        } else {
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(false);
+        }
       });
     };
 
-    const startLoading = async () => {
-      // Minimum artificial progress for smoothness
-      const interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 90 && !assetsLoaded) return 90; // Stall at 90% until assets are ready
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 1;
+    // Helper to check if all images in DOM are loaded
+    const checkDomImages = () => {
+      const images = Array.from(document.querySelectorAll('img'));
+      if (images.length === 0) return Promise.resolve();
+      return Promise.all(images.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
         });
-      }, 50);
-
-      // Real asset loading
-      await Promise.all(CRITICAL_ASSETS.map(async (asset) => {
-        await preloadImage(asset);
-        loadedCount++;
-        // If we want to sync progress more tightly:
-        // setProgress(Math.floor((loadedCount / totalAssets) * 100));
       }));
-
-      setAssetsLoaded(true);
-      setProgress(100);
-      
-      setTimeout(() => setIsDone(true), 800);
     };
 
+    const startLoading = async () => {
+      // 1. Initial burst of progress
+      setProgress(10);
+      
+      // 2. Load critical assets
+      let criticalLoaded = 0;
+      await Promise.all(CRITICAL_ASSETS.map(async (asset) => {
+        await preloadImage(asset);
+        if (!isMounted) return;
+        criticalLoaded++;
+        setProgress(10 + (criticalLoaded / totalCritical) * 40); // Up to 50%
+      }));
+
+      // 3. Wait for DOM images (since App now renders them in background)
+      // We give it a small delay to let React mount components
+      await new Promise(r => setTimeout(r, 100));
+      await checkDomImages();
+      
+      if (!isMounted) return;
+      
+      // 4. Final stretch
+      setProgress(100);
+      setAssetsLoaded(true);
+      
+      setTimeout(() => {
+        if (isMounted) setIsDone(true);
+      }, 500);
+    };
+
+    // Fallback timer to ensure it doesn't get stuck forever
+    const fallback = setTimeout(() => {
+      if (!assetsLoaded && isMounted) {
+        setAssetsLoaded(true);
+        setProgress(100);
+        setTimeout(() => setIsDone(true), 500);
+      }
+    }, 10000);
+
     startLoading();
-  }, [assetsLoaded]);
+    
+    return () => {
+      isMounted = false;
+      clearTimeout(fallback);
+    };
+  }, []);
 
   return (
     <AnimatePresence onExitComplete={onComplete}>

@@ -47,8 +47,21 @@ function App() {
 
   return (
     <div className="relative bg-[#030303] selection:bg-green-500/30 min-h-screen">
-      <Preloader onComplete={() => setLoading(false)} />
-      {!loading && (
+      <AnimatePresence mode="wait">
+        {loading && (
+          <Preloader key="preloader" onComplete={() => setLoading(false)} />
+        )}
+      </AnimatePresence>
+      
+      <div 
+        className="transition-opacity duration-1000"
+        style={{ 
+          visibility: loading ? 'hidden' : 'visible',
+          opacity: loading ? 0 : 1,
+          height: loading ? '100vh' : 'auto',
+          overflow: loading ? 'hidden' : 'visible'
+        }}
+      >
         <SmoothScroll>
           <Background />
           <BlobCursor />
@@ -57,7 +70,7 @@ function App() {
             <AnimatedRoutes />
           </Router>
         </SmoothScroll>
-      )}
+      </div>
     </div>
   );
 }
