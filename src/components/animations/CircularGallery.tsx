@@ -3,6 +3,16 @@ import { useEffect, useRef } from 'react';
 
 type GL = Renderer['gl'];
 
+interface ScreenSize {
+  width: number;
+  height: number;
+}
+
+interface Viewport {
+  width: number;
+  height: number;
+}
+
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
   let timeout: number;
   return function (this: any, ...args: Parameters<T>) {
@@ -15,19 +25,6 @@ function lerp(p1: number, p2: number, t: number): number {
   return p1 + (p2 - p1) * t;
 }
 
-function autoBind(instance: any): void {
-  const proto = Object.getPrototypeOf(instance);
-  Object.getOwnPropertyNames(proto).forEach(key => {
-    if (key !== 'constructor' && typeof instance[key] === 'function') {
-      instance[key] = instance[key].bind(instance);
-    }
-  });
-}
-
-function getFontSize(font: string): number {
-  const match = font.match(/(\d+)px/);
-  return match ? parseInt(match[1], 10) : 30;
-}
 
 function createCardTexture(
   gl: GL,
@@ -102,7 +99,7 @@ function createCardTexture(
 
   // 5. Draw Review Text (Multiline)
   context.font = 'italic 34px sans-serif';
-  context.fillStyle = 'white';
+  context.fillStyle = textColor;
   const words = (data.text || '').split(' ');
   let line = '';
   let y = 240;
@@ -125,11 +122,12 @@ function createCardTexture(
 
   // 6. Draw Client Info
   context.font = 'bold 36px sans-serif';
-  context.fillStyle = 'white';
+  context.fillStyle = textColor;
   context.fillText(data.author || 'Anonymous', 60, height - 140);
   
   context.font = '24px sans-serif';
-  context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+  // Use a slightly transparent version of textColor if possible, or just keep it simple
+  context.fillStyle = textColor.startsWith('#') ? `${textColor}80` : textColor; 
   context.fillText(data.designation || 'Client', 60, height - 90);
 
   const texture = new Texture(gl, { generateMipmaps: true });
@@ -354,8 +352,8 @@ class App {
   planeGeometry!: Plane;
   medias: Media[] = [];
   dataItems: any[] = [];
-  screen!: { width: number; height: number };
-  viewport!: { width: number; height: number };
+  screen!: ScreenSize;
+  viewport!: Viewport;
   raf: number = 0;
 
   boundOnResize!: () => void;
