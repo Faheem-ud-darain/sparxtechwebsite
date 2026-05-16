@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { Suspense, lazy } from 'react';
@@ -38,7 +38,7 @@ const Hero = () => {
   return (
     <section ref={ref} className="relative min-h-[160vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
       {/* ── BACKGROUND LAYERS ── */}
-      <motion.div style={{ y: yOrb, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0 overflow-hidden">
+      <m.div style={{ y: yOrb, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0 overflow-hidden">
         <Suspense fallback={<div className="absolute inset-0 bg-[#030303]" />}>
           <Orb
             hue={69}
@@ -47,7 +47,7 @@ const Hero = () => {
             backgroundColor="#030303"
           />
         </Suspense>
-      </motion.div>
+      </m.div>
 
       {/* Tech Pattern Background */}
       <TechPattern opacity={0.3} color="rgba(34, 197, 94, 0.1)" />
@@ -59,14 +59,14 @@ const Hero = () => {
       <FloatingParticles count={30} color="rgba(34, 197, 94, 0.15)" minSize={1} maxSize={4} />
 
       {/* Parallax Background Elements */}
-      <motion.div style={{ y: yBg, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 pointer-events-none z-0">
+      <m.div style={{ y: yBg, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] rounded-full bg-green-500/[0.03] blur-[120px] animate-float-slow" />
         <div className="absolute bottom-[30%] right-[10%] w-[500px] h-[500px] rounded-full bg-emerald-500/[0.03] blur-[120px] animate-float-slower" />
         <div className="absolute inset-0 grid-bg-fade opacity-20 h-full w-full" />
-      </motion.div>
+      </m.div>
 
       {/* ─── CONTENT ─── */}
-      <motion.div
+      <m.div
         style={{ y, opacity, scale: heroScale }}
         className="sticky top-0 z-10 max-w-5xl mx-auto w-full px-6 pt-32 sm:pt-40 md:pt-48 pb-20 pointer-events-none"
       >
@@ -105,7 +105,7 @@ const Hero = () => {
             </SplitText>
             
             {/* Visual accent line */}
-            <motion.div 
+            <m.div 
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "100px", opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }}
@@ -148,7 +148,7 @@ const Hero = () => {
             </div>
           </AnimatedContent>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Stats Bar */}
       <div className="relative z-10 border-t border-white/[0.05] mt-auto">
@@ -171,7 +171,7 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         style={{ opacity, y: yScroll }}
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -179,7 +179,7 @@ const Hero = () => {
       >
         <span className="text-[10px] tracking-[0.4em] uppercase font-bold">Initialize Scroll</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-green-500/50 to-transparent" />
-      </motion.div>
+      </m.div>
     </section>
   );
 };

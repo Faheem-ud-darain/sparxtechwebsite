@@ -1,16 +1,16 @@
-import EcomImg from '@/assets/ecommerce-mockup.png';
-import SaasImg from '@/assets/saas-mockup.png';
-import MobileImg from '@/assets/mobile-mockup.png';
+import EcomImg from '@/assets/ecommerce-mockup.webp';
+import SaasImg from '@/assets/saas-mockup.webp';
+import MobileImg from '@/assets/mobile-mockup.webp';
 
 // New specific project assets
 import AgencyManagementImg from '@/assets/Agency Management App.webp';
-import AlbatrossImg from '@/assets/Albatross Edvisors.png';
+import AlbatrossImg from '@/assets/Albatross Edvisors.webp';
 import CarWashImg from '@/assets/Car wash App.webp';
-import DaehanImg from '@/assets/Daehan Links.png';
-import KingdomImg from '@/assets/Kingdom Watch Company.png';
+import DaehanImg from '@/assets/Daehan Links.webp';
+import KingdomImg from '@/assets/Kingdom Watch Company.webp';
 import NMAImg from '@/assets/NMA Watch Guy.webp';
 import SparxWebsiteImg from '@/assets/Sparx tech Agency Website.webp';
-import GoldOfHimalayaImg from '@/assets/gold of himalaya.png';
+import GoldOfHimalayaImg from '@/assets/gold of himalaya.webp';
 
 export const mockProjects = [
   {

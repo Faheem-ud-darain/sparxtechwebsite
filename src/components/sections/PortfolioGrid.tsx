@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import TiltedCard from '@/components/animations/TiltedCard';
@@ -28,9 +28,9 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
       id="portfolio" 
       className="relative py-32 bg-[#050505] overflow-hidden"
     >
-      <motion.div style={{ scale, opacity }} className="absolute inset-0 z-0">
+      <m.div style={{ scale, opacity }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 grid-bg-fade pointer-events-none opacity-40" />
-      </motion.div>
+      </m.div>
       <div className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full bg-green-500/[0.08] blur-[150px] pointer-events-none animate-float-slower" />
       <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-blue-600/[0.08] blur-[120px] pointer-events-none animate-float-slow" />
       <FloatingParticles count={20} color="rgba(85, 173, 247, 0.2)" minSize={2} maxSize={6} />

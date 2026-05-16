@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import { m, useSpring, useMotionValue, useTransform } from 'framer-motion';
 
 interface TiltedCardProps {
   children: React.ReactNode;
@@ -63,7 +63,7 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={`relative ${className} group/tilted`}
       style={{
@@ -83,7 +83,7 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
       
       {/* Glare overlay - optimized with MotionValue */}
       {glareEnable && (
-        <motion.div
+        <m.div
           className="absolute inset-0 pointer-events-none z-30"
           style={{
             borderRadius,
@@ -92,7 +92,7 @@ const TiltedCard: React.FC<TiltedCardProps> = ({
           }}
         />
       )}
-    </motion.div>
+    </m.div>
   );
 };
 

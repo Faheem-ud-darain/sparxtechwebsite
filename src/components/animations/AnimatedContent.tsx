@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 
 interface AnimatedContentProps {
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export const AnimatedContent: React.FC<AnimatedContentProps> = ({
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       variants={getVariants()}
       initial="hidden"
@@ -36,6 +36,6 @@ export const AnimatedContent: React.FC<AnimatedContentProps> = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };

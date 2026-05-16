@@ -29,8 +29,8 @@ const CaseStudy = () => {
     <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
       <SEO 
         title={activeProject ? `${activeProject.title} Case Study` : 'Project Not Found'}
-        description={activeProject ? activeProject.description : 'Explore our detailed case studies.'}
-        ogImage={activeProject?.coverImage}
+        description={activeProject ? activeProject.title : 'Explore our detailed case studies.'}
+        ogImage={activeProject?.image || activeProject?.image3D}
       />
       
       {/* Background Decor */}
@@ -47,7 +47,7 @@ const CaseStudy = () => {
             <AnimatedContent direction="up">
               <HashLink 
                 smooth
-                to="/#portfolio" 
+                to="/portfolio" 
                 className="inline-flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors mb-12 group"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '@/assets/Full Logo Tranparent.png';
+import Logo from '@/assets/Full Logo Tranparent.webp';
 import GooeyNav from './GooeyNav';
 import StaggeredMenu from './StaggeredMenu';
 import Dock from './Dock';
@@ -11,7 +11,7 @@ import { Home, Layers, Info, Briefcase, Users, Mail } from 'lucide-react';
 const navLinks = [
   { label: "Services", href: "/#services", icon: <Layers size={20} /> },
   { label: "About", href: "/about", icon: <Info size={20} /> },
-  { label: "Portfolio", href: "/#portfolio", icon: <Briefcase size={20} /> },
+  { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={20} /> },
   { label: "Team", href: "/team", icon: <Users size={20} /> },
 ];
 
@@ -76,7 +76,7 @@ const Header = () => {
   return (
     <>
       {/* Standard Header - Hidden on scroll */}
-      <motion.header
+      <m.header
         initial={false}
         animate={{ 
           y: isScrolled ? -120 : 0,
@@ -121,12 +121,12 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </motion.header>
+      </m.header>
 
       {/* Floating Dock (Bottom) - Shown on scroll */}
       <AnimatePresence>
         {isScrolled && (
-          <motion.div
+          <m.div
             initial={{ y: 100, opacity: 0, x: '-50%' }}
             animate={{ y: 0, opacity: 1, x: '-50%' }}
             exit={{ y: 100, opacity: 0, x: '-50%' }}
@@ -136,14 +136,14 @@ const Header = () => {
             <div className="pointer-events-auto">
               <Dock items={dockItems} panelHeight={64} baseItemSize={50} magnification={70} />
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Mobile Staggered Menu */}
       <div className="lg:hidden">
         {/* Mobile Header Glass Background */}
-        <motion.div
+        <m.div
           initial={false}
           animate={{
             backgroundColor: isScrolled ? 'rgba(3, 3, 3, 0.7)' : 'rgba(3, 3, 3, 0)',

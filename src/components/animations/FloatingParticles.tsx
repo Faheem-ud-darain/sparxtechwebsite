@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 interface Particle {
   id: number;
@@ -41,7 +41,7 @@ const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
       {particles.map((p) => (
-        <motion.div
+        <m.div
           key={p.id}
           className="absolute rounded-full"
           style={{

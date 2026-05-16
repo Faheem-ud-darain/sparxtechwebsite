@@ -1,12 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useContactForm } from '@/hooks/useContactForm';
 import { CONTACT_INFO, SOCIAL_LINKS } from '@/data/constants';
 
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import MagicRings from '@/components/animations/MagicRings';
 import BorderGlow from '@/components/animations/BorderGlow';
-import Logo from '@/assets/Full Logo Tranparent.png';
+import Logo from '@/assets/Full Logo Tranparent.webp';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
@@ -146,19 +146,19 @@ const Footer = () => {
                 >
                   <div className="p-8 md:p-10">
                     {status === 'success' ? (
-                      <motion.div 
+                      <m.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="text-center py-12"
                       >
-                        <motion.div 
+                        <m.div 
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ type: "spring", stiffness: 200, damping: 20 }}
                           className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center"
                         >
                           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-green-400"><path d="M20 6 9 17l-5-5"/></svg>
-                        </motion.div>
+                        </m.div>
                         <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
                         <p className="text-gray-400 mb-8 max-w-[240px] mx-auto">We've received your request and will get back to you shortly.</p>
                         <button 
@@ -167,14 +167,14 @@ const Footer = () => {
                         >
                           Send Another Message
                         </button>
-                      </motion.div>
+                      </m.div>
                     ) : (
                       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                         {[
                           { label: "Full Name", name: "name", type: "text", placeholder: "John Doe" },
                           { label: "Email Address", name: "email", type: "email", placeholder: "john@company.com" }
                         ].map((field, i) => (
-                          <motion.div 
+                          <m.div 
                             key={field.name}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -193,10 +193,10 @@ const Footer = () => {
                               />
                               <div className="absolute inset-0 rounded-2xl bg-green-500/5 opacity-0 group-focus-within/input:opacity-100 pointer-events-none transition-opacity" />
                             </div>
-                          </motion.div>
+                          </m.div>
                         ))}
 
-                        <motion.div
+                        <m.div
                           initial={{ opacity: 0, x: -20 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.4 }}
@@ -214,19 +214,19 @@ const Footer = () => {
                             />
                             <div className="absolute inset-0 rounded-2xl bg-green-500/5 opacity-0 group-focus-within/input:opacity-100 pointer-events-none transition-opacity" />
                           </div>
-                        </motion.div>
+                        </m.div>
 
                         {status === 'error' && errorMessage && (
-                          <motion.p 
+                          <m.p 
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             className="text-red-400 text-sm font-medium"
                           >
                             {errorMessage}
-                          </motion.p>
+                          </m.p>
                         )}
 
-                        <motion.button
+                        <m.button
                           type="submit"
                           disabled={status === 'submitting'}
                           whileHover={{ scale: 1.01 }}
@@ -250,7 +250,7 @@ const Footer = () => {
                             )}
                           </span>
                           <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </motion.button>
+                        </m.button>
                       </form>
                     )}
                   </div>

@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import PixelCard from '@/components/animations/PixelCard';
 import SEO from '@/components/SEO';
 
-import FaheemImg from '@/assets/Faheem Jadoon.png';
-import ZainImg from '@/assets/Zain Jadoon.png';
+import FaheemImg from '@/assets/Faheem Jadoon.webp';
+import ZainImg from '@/assets/Zain Jadoon.webp';
 import IbaadImg from '@/assets/Ibaad Jadoon.jpeg';
-import AraizImg from '@/assets/Araiz Jadoon.png';
-import RajaImg from '@/assets/Raja Abdullah.png';
+import AraizImg from '@/assets/Araiz Jadoon.webp';
+import RajaImg from '@/assets/Raja Abdullah.webp';
 
 const TEAM_MEMBERS = [
   {

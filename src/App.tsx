@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { BlobCursor } from '@/components/animations/BlobCursor';
 import { ScrollToTop } from '@/components/layout/ScrollToTop';
@@ -55,30 +55,32 @@ function App() {
 
   return (
     <div className="relative bg-[#030303] selection:bg-green-500/30 min-h-screen">
-      <AnimatePresence mode="wait">
-        {loading && (
-          <Preloader key="preloader" onComplete={() => {
-            setLoading(false);
-            // Trigger prerender for SSG
-            setTimeout(() => {
-              document.dispatchEvent(new Event('custom-render-trigger'));
-            }, 1000);
-          }} />
-        )}
-      </AnimatePresence>
-      
-      <main className="relative">
-        <SmoothScroll>
-          <Background />
-          <BlobCursor />
-          <Router>
-            <ScrollToTop />
-            <CookieConsent />
-            <Header />
-            <AnimatedRoutes isInitialLoading={loading} />
-          </Router>
-        </SmoothScroll>
-      </main>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence mode="wait">
+          {loading && (
+            <Preloader key="preloader" onComplete={() => {
+              setLoading(false);
+              // Trigger prerender for SSG
+              setTimeout(() => {
+                document.dispatchEvent(new Event('custom-render-trigger'));
+              }, 1000);
+            }} />
+          )}
+        </AnimatePresence>
+        
+        <main className="relative">
+          <SmoothScroll>
+            <Background />
+            <BlobCursor />
+            <Router>
+              <ScrollToTop />
+              <CookieConsent />
+              <Header />
+              <AnimatedRoutes isInitialLoading={loading} />
+            </Router>
+          </SmoothScroll>
+        </main>
+      </LazyMotion>
     </div>
   );
 }
