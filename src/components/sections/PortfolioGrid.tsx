@@ -112,16 +112,20 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                     <div className="absolute inset-0 rounded-[2rem] overflow-hidden pointer-events-none">
                       {/* Image or gradient placeholder */}
                       {(!usePlaceholders && (project as any).coverImage) ? (
-                        <img
                           src={urlFor((project as any).coverImage).width(1200).height(800).url()}
                           alt={project.title}
+                          width={1200}
+                          height={800}
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
                           loading="lazy"
                         />
                       ) : (project as any).image ? (
-                        <img
                           src={(project as any).image}
                           alt={project.title}
+                          width={1200}
+                          height={800}
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-40"
                           loading="lazy"
                         />
@@ -153,6 +157,9 @@ const PortfolioGrid: React.FC<PortfolioGridProps> = ({ showViewAll = true }) => 
                         <img
                           src={(project as any).image3D}
                           alt={`${project.title} 3D Preview`}
+                          width={800}
+                          height={1000}
+                          decoding="async"
                           className="w-full h-full object-contain object-right-top transition-transform duration-1000 group-hover:scale-110 group-hover:-translate-y-2 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
                         />
                       </div>

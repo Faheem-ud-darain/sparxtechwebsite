@@ -106,7 +106,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <img
             src={avatarUrl}
             alt={name}
+            width={400}
+            height={500}
+            decoding="async"
             className="w-full h-full object-cover object-top opacity-100"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
         </div>
@@ -127,7 +131,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             {/* User Info */}
             <div className="flex items-center gap-2 md:gap-3">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border border-white/20 flex-shrink-0 bg-gray-900">
-                <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+                <img src={avatarUrl} alt="" width={40} height={40} decoding="async" className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col">
                 <span className="text-[11px] md:text-[13px] font-bold text-white leading-none mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>

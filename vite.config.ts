@@ -56,9 +56,19 @@ export default defineConfig(async ({ command }): Promise<UserConfig> => {
               if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
                 return 'vendor-react';
               }
-              if (id.includes('framer-motion') || id.includes('gsap') || id.includes('lenis')) {
-                return 'vendor-animation';
+              if (id.includes('framer-motion')) {
+                return 'vendor-framer';
               }
+              if (id.includes('three') || id.includes('ogl')) {
+                return 'vendor-3d';
+              }
+              if (id.includes('gsap')) {
+                return 'vendor-gsap';
+              }
+              if (id.includes('lucide-react')) {
+                return 'vendor-icons';
+              }
+              return 'vendor-others';
             }
           },
         },

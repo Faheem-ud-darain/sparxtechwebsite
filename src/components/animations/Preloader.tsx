@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Critical assets to preload for a smooth first impression
+import LogoImg from '@/assets/Full Logo Tranparent.png';
+
+// Essential brand assets
 const CRITICAL_ASSETS = [
-  '/assets/Sparx tech Agency Website.webp',
-  '/assets/Kingdom Watch Company.png',
-  '/assets/NMA Watch Guy.webp',
-  '/assets/Albatross Edvisors.png',
-  '/assets/Daehan Links.png'
+  LogoImg
 ];
 
 interface PreloaderProps {
@@ -17,11 +15,9 @@ interface PreloaderProps {
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-    const totalCritical = CRITICAL_ASSETS.length;
     
     // Preload images helper
     const preloadImage = (src: string) => {
@@ -37,56 +33,39 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       });
     };
 
-    // Helper to check if all images in DOM are loaded
-    const checkDomImages = () => {
-      const images = Array.from(document.querySelectorAll('img'));
-      if (images.length === 0) return Promise.resolve();
-      return Promise.all(images.map(img => {
-        if (img.complete) return Promise.resolve();
-        return new Promise(resolve => {
-          img.onload = resolve;
-          img.onerror = resolve;
-        });
-      }));
-    };
-
     const startLoading = async () => {
-      // 1. Initial burst of progress
-      setProgress(10);
+      // 1. Initial burst
+      setProgress(15);
       
       // 2. Load critical assets
-      let criticalLoaded = 0;
+      const total = CRITICAL_ASSETS.length;
+      let loaded = 0;
+      
       await Promise.all(CRITICAL_ASSETS.map(async (asset) => {
         await preloadImage(asset);
         if (!isMounted) return;
-        criticalLoaded++;
-        setProgress(10 + (criticalLoaded / totalCritical) * 40); // Up to 50%
+        loaded++;
+        setProgress(15 + (loaded / total) * 35); // Up to 50%
       }));
 
-      // 3. Wait for DOM images (since App now renders them in background)
-      // We give it a small delay to let React mount components
-      await new Promise(r => setTimeout(r, 100));
-      await checkDomImages();
-      
+      // 3. Simulated final check
+      await new Promise(r => setTimeout(r, 400));
       if (!isMounted) return;
       
-      // 4. Final stretch
       setProgress(100);
-      setAssetsLoaded(true);
       
       setTimeout(() => {
         if (isMounted) setIsDone(true);
       }, 500);
     };
 
-    // Fallback timer to ensure it doesn't get stuck forever
+    // Fast fallback for mobile/poor connections
     const fallback = setTimeout(() => {
-      if (!assetsLoaded && isMounted) {
-        setAssetsLoaded(true);
+      if (isMounted) {
         setProgress(100);
-        setTimeout(() => setIsDone(true), 500);
+        setTimeout(() => setIsDone(true), 400);
       }
-    }, 10000);
+    }, 5000);
 
     startLoading();
     

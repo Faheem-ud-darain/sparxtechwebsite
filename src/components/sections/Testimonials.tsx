@@ -55,7 +55,8 @@ const TESTIMONIALS = [
   }
 ];
 
-import CircularGallery from '@/components/animations/CircularGallery';
+import { Suspense } from 'react';
+const CircularGallery = React.lazy(() => import('@/components/animations/CircularGallery'));
 
 
 
@@ -80,14 +81,16 @@ const Testimonials = () => {
       </div>
 
       <div style={{ height: '600px', position: 'relative' }}>
-        <CircularGallery 
-          items={TESTIMONIALS}
-          bend={1}
-          textColor="#ffffff"
-          borderRadius={0.05}
-          scrollSpeed={2}
-          scrollEase={0.05}
-        />
+        <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-white/20">Loading Gallery...</div>}>
+          <CircularGallery 
+            items={TESTIMONIALS}
+            bend={1}
+            textColor="#ffffff"
+            borderRadius={0.05}
+            scrollSpeed={2}
+            scrollEase={0.05}
+          />
+        </Suspense>
       </div>
 
       {/* Decorative elements */}

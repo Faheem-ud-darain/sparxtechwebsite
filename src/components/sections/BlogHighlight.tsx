@@ -90,7 +90,11 @@ const BlogHighlight = () => {
                         <img 
                           src={post.image} 
                           alt={post.title}
+                          width={600}
+                          height={375}
+                          decoding="async"
                           className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent opacity-60" />
                         <div className="absolute top-4 left-4">

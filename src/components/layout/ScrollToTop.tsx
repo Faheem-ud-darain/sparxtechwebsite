@@ -13,7 +13,7 @@ export const ScrollToTop = () => {
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 800); // Wait for transition
+      }, 1500); // Wait for PageLoader transition to clear fully
       return () => clearTimeout(timer);
     } else {
       window.scrollTo(0, 0);

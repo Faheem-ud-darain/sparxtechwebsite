@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { HashLink } from 'react-router-hash-link';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
-import Orb from '@/components/animations/Orb';
+import { Suspense, lazy } from 'react';
+const Orb = lazy(() => import('@/components/animations/Orb'));
 import FloatingParticles from '@/components/animations/FloatingParticles';
 import SplitText from '@/components/animations/SplitText';
 import StarBorder from '@/components/animations/StarBorder';
@@ -27,13 +28,15 @@ const Hero = () => {
     <section ref={ref} className="relative min-h-[150vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
       {/* Orb WebGL Background */}
       <motion.div style={{ y: yOrb, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0 overflow-hidden">
-        <Orb
-          hue={69}
-          hoverIntensity={0.46}
-          rotateOnHover={true}
-          forceHoverState={false}
-          backgroundColor="#030303"
-        />
+        <Suspense fallback={<div className="absolute inset-0 bg-[#030303]" />}>
+          <Orb
+            hue={69}
+            hoverIntensity={0.46}
+            rotateOnHover={true}
+            forceHoverState={false}
+            backgroundColor="#030303"
+          />
+        </Suspense>
       </motion.div>
 
       {/* Dark gradient overlay */}

@@ -67,26 +67,18 @@ function App() {
         )}
       </AnimatePresence>
       
-      <div 
-        className="relative transition-opacity duration-1000"
-        style={{ 
-          visibility: loading ? 'hidden' : 'visible',
-          opacity: loading ? 0 : 1,
-          height: loading ? '100vh' : 'auto',
-          overflow: loading ? 'hidden' : 'visible'
-        }}
-      >
+      <main className="relative">
         <SmoothScroll>
           <Background />
           <BlobCursor />
-        <Router>
-          <ScrollToTop />
-          <CookieConsent />
-          <Header />
-          <AnimatedRoutes />
-        </Router>
+          <Router>
+            <ScrollToTop />
+            <CookieConsent />
+            <Header />
+            <AnimatedRoutes />
+          </Router>
         </SmoothScroll>
-      </div>
+      </main>
     </div>
   );
 }
