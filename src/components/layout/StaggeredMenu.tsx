@@ -1,6 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 export interface StaggeredMenuItem {
@@ -50,6 +50,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuClose
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const openRef = useRef(false);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -487,18 +488,28 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               {items && items.length ? (
                 items.map((it, idx) => (
                   <li className="sm-panel-itemWrap relative overflow-hidden leading-none" key={it.label + idx}>
-                    <HashLink
-                      smooth
-                      className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]"
-                      to={it.link}
+                    <button
+                      className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em] bg-transparent border-none text-left"
+                      onClick={() => {
+                        closeMenu();
+                        if (it.link.startsWith('/#')) {
+                          const id = it.link.split('#')[1];
+                          const element = document.getElementById(id);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                            return;
+                          }
+                        }
+                        // Default fallback to standard navigation
+                        navigate(it.link);
+                      }}
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
-                      onClick={closeMenu}
                     >
                       <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
                         {it.label}
                       </span>
-                    </HashLink>
+                    </button>
                   </li>
                 ))
               ) : (

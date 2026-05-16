@@ -29,7 +29,7 @@ function AnimatedRoutes() {
   
   return (
     <>
-      <PageLoader key={location.pathname + location.hash} pathname={location.pathname} />
+      <PageLoader key={location.pathname} pathname={location.pathname} />
       <Suspense fallback={null}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>

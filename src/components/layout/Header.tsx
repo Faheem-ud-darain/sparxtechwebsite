@@ -105,14 +105,20 @@ const Header = () => {
                 <GooeyNav items={navLinks.map(({label, href}) => ({label, href}))} />
               </div>
 
-              <HashLink
-                smooth
-                to="/#contact"
+            <button
+                onClick={() => {
+                  const contact = document.getElementById('contact');
+                  if (contact) {
+                    contact.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    navigate('/#contact');
+                  }
+                }}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-400 text-black text-sm font-bold px-7 py-3 rounded-full hover:shadow-[0_0_30px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-95"
               >
                 Contact Us
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </HashLink>
+              </button>
             </div>
           </div>
         </div>

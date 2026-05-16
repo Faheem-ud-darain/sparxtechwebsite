@@ -304,15 +304,25 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
 
             return (
               <li key={index} className="relative">
-                {isHash ? (
-                  <HashLink smooth to={item.href} {...linkProps}>
-                    {item.label}
-                  </HashLink>
-                ) : (
-                  <Link to={item.href} {...linkProps}>
-                    {item.label}
-                  </Link>
-                )}
+                <Link 
+                  to={item.href} 
+                  {...linkProps}
+                  onClick={(e) => {
+                    // Call the visual effect click handler
+                    handleClick(e as any, index);
+                    
+                    if (isHash) {
+                      const id = item.href.split('#')[1];
+                      const element = document.getElementById(id);
+                      if (element) {
+                        e.preventDefault();
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }
+                  }}
+                >
+                  {item.label}
+                </Link>
               </li>
             );
           })}

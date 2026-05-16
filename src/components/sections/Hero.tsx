@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { HashLink } from 'react-router-hash-link';
+import { useNavigate } from 'react-router-dom';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { Suspense, lazy } from 'react';
 const Orb = lazy(() => import('@/components/animations/Orb'));
@@ -13,6 +13,7 @@ import Magnetic from '@/components/animations/Magnetic';
 
 const Hero = () => {
   const ref = useRef(null);
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const yBg = useTransform(scrollYProgress, [0, 1], [0, 60]);
@@ -23,6 +24,18 @@ const Hero = () => {
   // New: Receding scale effect for the entire content block
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+  const handleSectionClick = (href: string) => {
+    if (href.startsWith('/#')) {
+      const id = href.split('#')[1];
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    navigate(href);
+  };
 
   return (
     <section ref={ref} className="relative min-h-[150vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
@@ -101,19 +114,23 @@ const Hero = () => {
           {/* CTAs — stacked, compact */}
           <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
             <div className="mt-8 flex flex-col gap-2.5 w-full max-w-[220px] mx-auto">
-              <StarBorder as={HashLink} smooth to="/#contact" color="#55f78e" speed="5s" className="w-full">
-                <span className="flex items-center justify-center gap-2 py-1">
-                  Let's Connect
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </span>
-              </StarBorder>
-              <HashLink
-                smooth
-                to="/#services"
-                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-white/60 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300"
+              <button 
+                onClick={() => handleSectionClick('/#contact')} 
+                className="w-full bg-transparent border-none p-0 cursor-pointer"
+              >
+                <StarBorder color="#55f78e" speed="5s" className="w-full">
+                  <span className="flex items-center justify-center gap-2 py-1">
+                    Let's Connect
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </StarBorder>
+              </button>
+              <button
+                onClick={() => handleSectionClick('/#services')}
+                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-white/60 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"
               >
                 Explore Services
-              </HashLink>
+              </button>
             </div>
           </AnimatedContent>
         </div>
@@ -164,19 +181,23 @@ const Hero = () => {
           {/* CTA Buttons */}
           <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
             <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
-              <StarBorder as={HashLink} smooth to="/#contact" color="#55f78e" speed="5s">
-                <span className="flex items-center justify-center gap-2">
-                  Let's Connect
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </span>
-              </StarBorder>
-              <HashLink
-                smooth
-                to="/#services"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300"
+              <button 
+                onClick={() => handleSectionClick('/#contact')} 
+                className="bg-transparent border-none p-0 cursor-pointer"
+              >
+                <StarBorder color="#55f78e" speed="5s">
+                  <span className="flex items-center justify-center gap-2">
+                    Let's Connect
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </StarBorder>
+              </button>
+              <button
+                onClick={() => handleSectionClick('/#services')}
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"
               >
                 Explore Services
-              </HashLink>
+              </button>
             </div>
           </AnimatedContent>
         </div>
