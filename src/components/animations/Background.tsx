@@ -10,6 +10,9 @@ const Background = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      // Only track mouse on devices that have it
+      if (window.innerWidth < 768) return;
+      
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
       mouseX.set((clientX / innerWidth) - 0.5);
@@ -26,16 +29,19 @@ const Background = () => {
   const moveX2 = useTransform(springX, (v) => v * -150);
   const moveY2 = useTransform(springY, (v) => v * -150);
 
+  // Detect if we are on mobile to disable heavy effects
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#030303]">
-      {/* Decorative Blobs with Parallax */}
+      {/* Decorative Blobs with Parallax - Simplified on Mobile */}
       <motion.div
         style={{ x: moveX1, y: moveY1, willChange: 'transform' }}
-        animate={{
+        animate={isMobile ? { opacity: 0.1 } : {
           scale: [1, 1.1, 1],
           opacity: [0.15, 0.25, 0.15]
         }}
-        transition={{
+        transition={isMobile ? {} : {
           duration: 15,
           repeat: Infinity,
           ease: "easeInOut"
@@ -45,11 +51,11 @@ const Background = () => {
       
       <motion.div
         style={{ x: moveX2, y: moveY2, willChange: 'transform' }}
-        animate={{
+        animate={isMobile ? { opacity: 0.05 } : {
           scale: [1, 1.2, 1],
           opacity: [0.1, 0.2, 0.1]
         }}
-        transition={{
+        transition={isMobile ? {} : {
           duration: 20,
           repeat: Infinity,
           ease: "easeInOut"
@@ -58,12 +64,12 @@ const Background = () => {
       />
 
       <motion.div
-        animate={{
+        animate={isMobile ? { opacity: 0.05 } : {
           x: [0, 50, 0],
           y: [0, -50, 0],
           opacity: [0.05, 0.1, 0.05]
         }}
-        transition={{
+        transition={isMobile ? {} : {
           duration: 18,
           repeat: Infinity,
           ease: "easeInOut"

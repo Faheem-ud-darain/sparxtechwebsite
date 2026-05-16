@@ -56,6 +56,8 @@ const Blog = () => {
     return allPosts.filter(p => p.category === topCategory).slice(0, 2);
   }, [allPosts, userInterests]);
 
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+
   return (
     <div className="relative min-h-screen text-white selection:bg-green-500/30">
       <SEO 
@@ -255,37 +257,100 @@ const Blog = () => {
 
       {/* Mobile Floating Dock - Bottom Fixed */}
       {createPortal(
-        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[50] bg-black/60 backdrop-blur-2xl border border-white/10 rounded-xl p-2 flex items-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-          {/* Mobile Search Icon Only to Save Space */}
-          <div className="relative flex-shrink-0">
-            <button className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/10 text-gray-400">
+        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[200] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-2xl p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-300">
+          {/* Mobile Search - Expandable */}
+          <motion.div 
+            animate={{ width: isSearchExpanded ? '100%' : '44px' }}
+            className="relative flex items-center bg-white/[0.05] border border-white/10 rounded-xl overflow-hidden"
+          >
+            <button 
+              onClick={() => setIsSearchExpanded(!isSearchExpanded)}
+              className="w-10 h-10 flex flex-shrink-0 items-center justify-center text-gray-400 hover:text-green-500 transition-colors"
+            >
               <Search className="w-4 h-4" />
             </button>
-          </div>
+            <AnimatePresence>
+              {isSearchExpanded && (
+                <motion.input
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  type="text"
+                  autoFocus
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent border-none py-2 pr-4 text-xs text-white focus:outline-none placeholder:text-gray-600"
+                />
+              )}
+            </AnimatePresence>
+          </motion.div>
 
-          <div className="w-px h-6 bg-white/10 flex-shrink-0" />
+          {!isSearchExpanded && (
+            <>
+              <div className="w-px h-6 bg-white/10 flex-shrink-0" />
 
-          {/* Categories */}
-          <div className="flex-grow overflow-x-auto no-scrollbar py-1">
-            <CategoryPillNav 
-              items={categories.map(cat => ({ label: cat, id: cat }))}
-              activeId={selectedCategory}
-              onSelect={setSelectedCategory}
-              className="min-w-max"
-            />
-          </div>
+              {/* Categories */}
+              <div className="flex-grow overflow-x-auto no-scrollbar py-1">
+                <CategoryPillNav 
+                  items={categories.map(cat => ({ label: cat, id: cat }))}
+                  activeId={selectedCategory}
+                  onSelect={setSelectedCategory}
+                  className="min-w-max"
+                />
+              </div>
 
-          <div className="w-px h-6 bg-white/10 flex-shrink-0" />
+              <div className="w-px h-6 bg-white/10 flex-shrink-0" />
 
-          {/* Sort */}
-          <div className="relative flex-shrink-0">
-            <button
-              onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center justify-center w-10 h-10 bg-white/[0.05] border border-white/10 rounded-xl text-gray-400"
-            >
-              <Filter className="w-4 h-4" />
-            </button>
-          </div>
+              {/* Sort */}
+              <div className="relative flex-shrink-0">
+                <button
+                  onClick={() => setIsSortOpen(!isSortOpen)}
+                  className="flex items-center justify-center w-10 h-10 bg-white/[0.05] border border-white/10 rounded-xl text-gray-400"
+                >
+                  <Filter className="w-4 h-4" />
+                </button>
+
+                <AnimatePresence>
+                  {isSortOpen && (
+                    <>
+                      <div className="fixed inset-0 z-[10000]" onClick={() => setIsSortOpen(false)} />
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: -20, x: -160 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        className="absolute bottom-full right-0 mb-4 w-48 z-[10001] bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/10 rounded-xl p-2 shadow-2xl"
+                      >
+                        {[
+                          { id: 'newest', label: 'Newest First' },
+                          { id: 'oldest', label: 'Oldest First' },
+                          { id: 'readingTime', label: 'Reading Time' }
+                        ].map((option) => (
+                          <button
+                            key={option.id}
+                            onClick={() => {
+                              setSortBy(option.id as any);
+                              setIsSortOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-[10px] transition-all ${
+                              sortBy === option.id 
+                              ? 'bg-green-500/10 text-green-400 font-bold' 
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                            }`}
+                          >
+                            {option.label}
+                            {sortBy === option.id && (
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                            )}
+                          </button>
+                        ))}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+            </>
+          )}
         </div>,
         document.body
       )}
