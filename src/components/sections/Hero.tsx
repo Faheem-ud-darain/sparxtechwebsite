@@ -7,8 +7,10 @@ const Orb = lazy(() => import('@/components/animations/Orb'));
 import FloatingParticles from '@/components/animations/FloatingParticles';
 import SplitText from '@/components/animations/SplitText';
 import StarBorder from '@/components/animations/StarBorder';
+import TechPattern from '@/components/animations/TechPattern';
+import FuturisticHUD from '@/components/animations/FuturisticHUD';
+import HeroDashboard from '@/components/animations/HeroDashboard';
 import { STATS } from '@/data/constants';
-
 
 const Hero = () => {
   const ref = useRef(null);
@@ -37,8 +39,8 @@ const Hero = () => {
   };
 
   return (
-    <section ref={ref} className="relative min-h-[150vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
-      {/* Orb WebGL Background */}
+    <section ref={ref} className="relative min-h-[170vh] w-full bg-[#030303] flex flex-col justify-start overflow-hidden">
+      {/* ── BACKGROUND LAYERS ── */}
       <motion.div style={{ y: yOrb, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0 overflow-hidden">
         <Suspense fallback={<div className="absolute inset-0 bg-[#030303]" />}>
           <Orb
@@ -51,166 +53,121 @@ const Hero = () => {
         </Suspense>
       </motion.div>
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/60 via-transparent to-[#030303] pointer-events-none z-0" />
+      <TechPattern opacity={0.4} color="rgba(34, 197, 94, 0.15)" />
+      <FuturisticHUD />
 
-      {/* Floating Particles — fewer on mobile */}
-      <FloatingParticles count={25} color="rgba(34, 197, 94, 0.2)" minSize={2} maxSize={5} />
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/80 via-[#030303]/20 to-[#030303] pointer-events-none z-0" />
+
+      {/* Floating Particles */}
+      <FloatingParticles count={40} color="rgba(34, 197, 94, 0.25)" minSize={1} maxSize={4} />
 
       {/* Parallax Background Elements */}
       <motion.div style={{ y: yBg, scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-[30%] -left-[20%] md:left-[10%] w-[260px] md:w-[500px] h-[260px] md:h-[500px] rounded-full bg-green-500/[0.12] md:bg-green-500/[0.08] blur-[80px] md:blur-[150px] animate-float-slow" />
-        <div className="absolute bottom-[20%] -right-[20%] md:right-[10%] w-[260px] md:w-[400px] h-[260px] md:h-[400px] rounded-full bg-emerald-500/[0.12] md:bg-emerald-500/[0.08] blur-[80px] md:blur-[150px] animate-float-slower" />
-        <div className="absolute inset-0 grid-bg-fade opacity-30 h-full w-full" />
+        <div className="absolute top-[20%] left-[5%] w-[400px] h-[400px] rounded-full bg-green-500/[0.05] blur-[120px] animate-float-slow" />
+        <div className="absolute bottom-[30%] right-[5%] w-[500px] h-[500px] rounded-full bg-emerald-500/[0.05] blur-[120px] animate-float-slower" />
       </motion.div>
-
-      {/* Vertical accent line — desktop only */}
-      <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-white/[0.06] to-transparent pointer-events-none" />
 
       {/* ─── CONTENT ─── */}
       <motion.div
         style={{ y, opacity, scale: heroScale }}
-        className="sticky top-0 z-10 max-w-6xl mx-auto w-full px-5 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 pointer-events-none"
+        className="sticky top-0 z-10 max-w-7xl mx-auto w-full px-5 sm:px-6 pt-32 sm:pt-40 md:pt-48 pb-20 pointer-events-none"
       >
-
-        {/* ── MOBILE layout (< md) ── */}
-        <div className="md:hidden flex flex-col items-center text-center">
-
-          {/* Badge */}
-          <AnimatedContent direction="up" delay={0.1} className="pointer-events-auto">
-            <span className="pill-badge mb-6">
-              <span className="glow-dot" />
-              SPARX STUDIOZ
-            </span>
-          </AnimatedContent>
-
-          {/* Heading */}
-          <div className="mb-4 px-2 pointer-events-auto">
-            <SplitText
-              className="text-3xl xs:text-4xl leading-[1.2] font-extrabold tracking-tight text-white"
-              delay={40}
-              entryDelay={0.1}
-              duration={1}
-              splitType="chars"
-              tag="h1"
-              textAlign="center"
-            >
-              Technology That{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
-                Sparks
-              </span>{' '}
-              Tomorrow
-            </SplitText>
-          </div>
-
-          {/* Short tagline */}
-          <AnimatedContent direction="up" delay={0.15} className="pointer-events-auto">
-            <p className="mt-4 text-sm sm:text-base text-gray-400 leading-relaxed max-w-[280px] mx-auto">
-              Creative agency building innovative design, advanced development&nbsp;&amp; modern marketing solutions.
-            </p>
-          </AnimatedContent>
-
-          {/* CTAs — stacked, compact */}
-          <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
-            <div className="mt-8 flex flex-col gap-2.5 w-full max-w-[220px] mx-auto">
-              <button 
-                onClick={() => handleSectionClick('/#contact')} 
-                className="w-full bg-transparent border-none p-0 cursor-pointer"
-              >
-                <StarBorder color="#55f78e" speed="5s" className="w-full">
-                  <span className="flex items-center justify-center gap-2 py-1">
-                    Let's Connect
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </span>
-                </StarBorder>
-              </button>
-              <button
-                onClick={() => handleSectionClick('/#services')}
-                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-white/60 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"
-              >
-                Explore Services
-              </button>
-            </div>
-          </AnimatedContent>
-        </div>
-
-        {/* ── DESKTOP layout (md+) ── */}
-        <div className="hidden md:flex flex-col items-center text-center">
-
-          {/* Badge */}
-          <AnimatedContent direction="up" delay={0.1} className="pointer-events-auto">
-            <div className="mb-8">
-              <span className="pill-badge">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* ── LEFT COLUMN: TEXT ── */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            
+            {/* Badge */}
+            <AnimatedContent direction="up" delay={0.1} className="pointer-events-auto">
+              <span className="pill-badge mb-8 backdrop-blur-md border-white/10">
                 <span className="glow-dot" />
-                SPARX STUDIOZ &amp; TECHNOLOGIES
+                <span className="text-[10px] tracking-[0.3em] font-bold uppercase">SYSTEM STATUS: OPTIMIZED</span>
               </span>
-            </div>
-          </AnimatedContent>
+            </AnimatedContent>
 
-          {/* Heading */}
-          <div className="mb-4 pointer-events-auto">
-            <SplitText
-              className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-white max-w-5xl mx-auto"
-              delay={40}
-              entryDelay={0.1}
-              duration={1}
-              splitType="chars"
-              tag="h1"
-              textAlign="center"
-            >
-              Technology That{' '}
-              <span className="text-green-400 bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
-                Sparks
-              </span>{' '}
-              Tomorrow
-            </SplitText>
+            {/* Heading */}
+            <div className="mb-6 pointer-events-auto relative">
+              <div className="absolute -left-4 top-0 w-1 h-full bg-green-500/20 hidden lg:block" />
+              <SplitText
+                className="text-4xl xs:text-5xl md:text-6xl lg:text-8xl font-black leading-[0.95] tracking-tight text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                delay={30}
+                entryDelay={0.1}
+                duration={0.8}
+                splitType="chars"
+                tag="h1"
+              >
+                Sparking Future Technology
+              </SplitText>
+              {/* Manual gradient span because SplitText handles chars */}
+              <div className="mt-2 text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 drop-shadow-[0_0_20px_rgba(34,197,94,0.3)] text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-[0.2em]">
+                Elite Agency
+              </div>
+            </div>
+
+            {/* Subtext */}
+            <AnimatedContent direction="up" delay={0.15} className="pointer-events-auto">
+              <div className="max-w-xl">
+                <p className="text-base md:text-lg lg:text-xl text-gray-400 leading-relaxed font-medium">
+                  We bridge the gap between imagination and execution. Specialized in 
+                  <span className="text-white"> Next-Gen Design</span>, 
+                  <span className="text-white"> Advanced Development</span>, and 
+                  <span className="text-white"> Digital Evolution</span>.
+                </p>
+                
+                {/* Visual Data Line */}
+                <div className="mt-8 h-[2px] w-full max-w-[100px] bg-gradient-to-r from-green-500 to-transparent rounded-full mx-auto lg:mx-0" />
+              </div>
+            </AnimatedContent>
+
+            {/* CTAs */}
+            <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
+              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-6">
+                <button 
+                  onClick={() => handleSectionClick('/#contact')} 
+                  className="bg-transparent border-none p-0 cursor-pointer group"
+                >
+                  <StarBorder color="#55f78e" speed="5s" className="scale-110">
+                    <span className="flex items-center justify-center gap-3 px-2 py-1">
+                      Start Your Project
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
+                  </StarBorder>
+                </button>
+                <button
+                  onClick={() => handleSectionClick('/#services')}
+                  className="inline-flex items-center gap-2 px-10 py-4 rounded-full text-sm font-bold text-white/70 border border-white/10 hover:border-green-500/30 hover:text-green-500 transition-all duration-300 bg-white/[0.02] backdrop-blur-sm"
+                >
+                  Our Expertise
+                </button>
+              </div>
+            </AnimatedContent>
           </div>
 
-          {/* Subtext */}
-          <AnimatedContent direction="up" delay={0.15} className="pointer-events-auto">
-            <div className="mt-8 flex flex-col items-center gap-4 max-w-2xl mx-auto">
-              <div className="w-[40px] h-[3px] bg-gradient-to-r from-green-500/0 via-green-500 to-green-500/0 rounded-full" />
-              <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
-                We are a creative and technology-driven digital agency dedicated to empowering businesses through
-                innovative design, advanced development, and modern marketing strategies.
-              </p>
-            </div>
-          </AnimatedContent>
+          {/* ── RIGHT COLUMN: INTERACTIVE DASHBOARD ── */}
+          <div className="lg:col-span-5 hidden lg:flex items-center justify-center pointer-events-auto">
+            <AnimatedContent direction="left" delay={0.3}>
+              <HeroDashboard />
+            </AnimatedContent>
+          </div>
 
-          {/* CTA Buttons */}
-          <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
-              <button 
-                onClick={() => handleSectionClick('/#contact')} 
-                className="bg-transparent border-none p-0 cursor-pointer"
-              >
-                <StarBorder color="#55f78e" speed="5s">
-                  <span className="flex items-center justify-center gap-2">
-                    Let's Connect
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </span>
-                </StarBorder>
-              </button>
-              <button
-                onClick={() => handleSectionClick('/#services')}
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"
-              >
-                Explore Services
-              </button>
-            </div>
-          </AnimatedContent>
         </div>
       </motion.div>
 
-      {/* Stats Bar (Insight Section) — Anchored to bottom */}
-      <div className="relative z-10 border-t border-white/[0.06] mt-auto pt-32">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 md:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4 sm:gap-6 md:gap-8">
+      {/* ── STATS BAR ── */}
+      <div className="relative z-10 mt-auto border-t border-white/[0.05] bg-black/40 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 py-10 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {STATS.map((stat, i) => (
-              <AnimatedContent key={stat.label} direction="up" delay={0.25 + i * 0.05} className="pointer-events-auto">
-                <div className="text-center md:text-left">
-                  <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{stat.label}</div>
+              <AnimatedContent key={stat.label} direction="up" delay={0.3 + i * 0.05} className="pointer-events-auto">
+                <div className="flex flex-col items-center md:items-start gap-2 group">
+                  <div className="text-3xl md:text-5xl font-black text-white group-hover:text-green-500 transition-colors duration-300">
+                    {stat.value}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-4 h-[1px] bg-green-500/50" />
+                    <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] font-bold">{stat.label}</span>
+                  </div>
                 </div>
               </AnimatedContent>
             ))}
@@ -218,15 +175,15 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll indicator — desktop only */}
+      {/* Scroll indicator */}
       <motion.div
-        style={{ opacity, y: yScroll }}
-        animate={{ y: [0, 8, 0] }}
+        style={{ opacity }}
+        animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden md:flex absolute bottom-72 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-gray-600 z-10"
+        className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-3 text-white/20 z-10"
       >
-        <span className="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-gray-600 to-transparent" />
+        <span className="text-[10px] tracking-[0.4em] uppercase font-bold">Initialize Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-green-500/50 to-transparent" />
       </motion.div>
     </section>
   );
