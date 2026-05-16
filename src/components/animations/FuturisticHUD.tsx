@@ -5,16 +5,16 @@ const FuturisticHUD: React.FC = () => {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
       {/* Corner Brackets */}
-      <div className="absolute top-10 left-10 w-20 h-20 border-t border-l border-green-500/30 rounded-tl-xl" />
-      <div className="absolute top-10 right-10 w-20 h-20 border-t border-r border-green-500/30 rounded-tr-xl" />
-      <div className="absolute bottom-10 left-10 w-20 h-20 border-b border-l border-green-500/30 rounded-bl-xl" />
-      <div className="absolute bottom-10 right-10 w-20 h-20 border-b border-r border-green-500/30 rounded-br-xl" />
+      <div className="absolute top-16 left-16 w-14 h-14 border-t border-l border-green-500/30 rounded-tl-xl" />
+      <div className="absolute top-16 right-16 w-14 h-14 border-t border-r border-green-500/30 rounded-tr-xl" />
+      <div className="absolute bottom-16 left-16 w-14 h-14 border-b border-l border-green-500/30 rounded-bl-xl" />
+      <div className="absolute bottom-16 right-16 w-14 h-14 border-b border-r border-green-500/30 rounded-br-xl" />
 
       {/* Grid Reference Points */}
-      <div className="absolute top-1/4 left-5 text-[8px] font-mono text-green-500/20 rotate-90">LAT: 34.0522</div>
-      <div className="absolute top-3/4 left-5 text-[8px] font-mono text-green-500/20 rotate-90">LNG: -118.2437</div>
-      <div className="absolute top-1/4 right-5 text-[8px] font-mono text-green-500/20 -rotate-90">SYS: ACTIVE</div>
-      <div className="absolute top-3/4 right-5 text-[8px] font-mono text-green-500/20 -rotate-90">PWR: 100%</div>
+      <div className="absolute top-1/4 left-12 text-[8px] font-mono text-green-500/20 rotate-90 tracking-widest">LAT: 34.0522</div>
+      <div className="absolute top-3/4 left-12 text-[8px] font-mono text-green-500/20 rotate-90 tracking-widest">LNG: -118.2437</div>
+      <div className="absolute top-1/4 right-12 text-[8px] font-mono text-green-500/20 -rotate-90 tracking-widest">SYS: ACTIVE</div>
+      <div className="absolute top-3/4 right-12 text-[8px] font-mono text-green-500/20 -rotate-90 tracking-widest">PWR: 100%</div>
 
       {/* Rotating HUD Elements */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.03]">
