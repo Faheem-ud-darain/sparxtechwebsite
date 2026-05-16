@@ -260,27 +260,32 @@ const Blog = () => {
         <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[200] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-2xl p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-300">
           {/* Mobile Search - Expandable */}
           <motion.div 
-            animate={{ width: isSearchExpanded ? '100%' : '44px' }}
-            className="relative flex items-center bg-white/[0.05] border border-white/10 rounded-xl overflow-hidden"
+            initial={false}
+            animate={{ 
+              width: isSearchExpanded ? '100%' : '48px',
+              backgroundColor: isSearchExpanded ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)'
+            }}
+            className="relative flex items-center border border-white/10 rounded-xl overflow-hidden h-12"
           >
             <button 
               onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-              className="w-10 h-10 flex flex-shrink-0 items-center justify-center text-gray-400 hover:text-green-500 transition-colors"
+              className="w-12 h-12 flex flex-shrink-0 items-center justify-center text-white hover:text-green-500 transition-colors z-10"
+              aria-label="Toggle search"
             >
-              <Search className="w-4 h-4" />
+              <Search className="w-5 h-5" />
             </button>
             <AnimatePresence>
               {isSearchExpanded && (
                 <motion.input
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
                   type="text"
                   autoFocus
-                  placeholder="Search..."
+                  placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent border-none py-2 pr-4 text-xs text-white focus:outline-none placeholder:text-gray-600"
+                  className="flex-grow bg-transparent border-none py-2 pr-4 text-sm text-white focus:outline-none placeholder:text-gray-500"
                 />
               )}
             </AnimatePresence>
