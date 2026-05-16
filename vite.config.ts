@@ -74,10 +74,6 @@ export default defineConfig(async ({ command }): Promise<UserConfig> => {
         },
       },
       sourcemap: false,
-      minify: 'esbuild',
-    },
-    esbuild: {
-      drop: ['console' as any, 'debugger' as any],
     },
   };
 });
