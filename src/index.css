@@ -96,12 +96,10 @@ body {
 
 .animate-float-slow {
   animation: float-slow 12s ease-in-out infinite;
-  will-change: transform;
 }
 
 .animate-float-slower {
   animation: float-slow 16s ease-in-out infinite reverse;
-  will-change: transform;
 }
 
 /* ── Glassmorphism Card ────────────────────────────────────────── */
@@ -112,7 +110,6 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
   transition: border-color 0.3s ease, background 0.3s ease;
-  will-change: transform, opacity; /* Hint for hover animations */
 }
 
 .glass-card:hover {

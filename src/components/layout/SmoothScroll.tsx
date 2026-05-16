@@ -3,16 +3,18 @@ import Lenis from 'lenis';
 
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
-    // Disable smooth scroll on mobile for better performance
-    if (window.innerWidth < 1024) return;
+    // Disable smooth scroll on mobile for better performance and native feel
+    if (window.innerWidth < 768) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0, // Slightly faster for responsiveness
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      touchMultiplier: 2,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      infinite: false,
     });
 
     let rafId: number;
