@@ -1,33 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Pages -->
   <url>
     <loc>https://sparxtech.com/</loc>
-    <lastmod>2024-05-16</lastmod>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sparxtech.com/about</loc>
-    <lastmod>2024-05-16</lastmod>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sparxtech.com/portfolio</loc>
-    <lastmod>2024-05-16</lastmod>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sparxtech.com/team</loc>
-    <lastmod>2024-05-16</lastmod>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sparxtech.com/blog</loc>
-    <lastmod>2024-05-16</lastmod>
+    <lastmod>2026-05-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://sparxtech.com/terms</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://sparxtech.com/privacy-policy</loc>
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Case Studies -->
+  <url><loc>https://sparxtech.com/project/tooth-clinic-mansehra-meta-ads</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/fake-news-detection-ai-model-thesis</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/kingdom-watch-company-social-graphics</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/nma-watch-guy-godaddy-website</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/daehan-links-social-media-ads-management</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/mufasa-herbal-reel-production-studio</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/gold-of-himalaya-shopify-meta-ads</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/mashi-fashion-studios-ecommerce-photography</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/wizstrapz-wordpress-ecommerce-abbottabad</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/mha-real-estate-reel-editing-islamabad</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/realty-with-ankita-india-reel-editing</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/sparx-hub-internal-management-system</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/car-wash-pro-management-app</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/sparx-studioz-corporate-website-portfolio</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://sparxtech.com/project/albatross-edvisors-social-media-graphics</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+
+  <!-- Blog Posts -->
+  <url><loc>https://sparxtech.com/blog/3d-web-design-revolution</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/apple-ipad-2024-guide</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/halo-future-2024</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/iphone-ecosystem-strategy</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/meta-ads-strategy-2024</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/microsoft-claude-ai</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/nest-app-troubleshooting</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/nvidia-revolution</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/samsung-s90f-oled-review</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/sony-xperia-visuals</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/tomodachi-life-patch-notes</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/verizon-fcc-spectrum</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/whatsapp-conversational-ai</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
+  <url><loc>https://sparxtech.com/blog/xiaomi-17-performance</loc><lastmod>2026-05-16</lastmod><priority>0.6</priority></url>
 </urlset>
