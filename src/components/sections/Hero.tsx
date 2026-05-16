@@ -127,21 +127,16 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-5">
               <button 
                 onClick={() => handleSectionClick('/#contact')} 
-                className="bg-transparent border-none p-0 cursor-pointer group"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white bg-[#0A0D14] border border-white/10 hover:bg-[#111622] hover:border-white/20 transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]"
               >
-                <StarBorder color="#55f78e" speed="5s">
-                  <span className="flex items-center justify-center gap-2 px-4 py-1">
-                    Let's Connect
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </span>
-                </StarBorder>
+                Let's Connect →
               </button>
               <button
                 onClick={() => handleSectionClick('/#services')}
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"
               >
                 Explore Services
               </button>
@@ -150,15 +145,19 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Stats Bar (Insight Section) — Anchored to bottom */}
-      <div className="relative z-10 border-t border-white/[0.06] mt-auto pt-32">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 md:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4 sm:gap-6 md:gap-8">
+      {/* Stats Bar */}
+      <div className="relative z-10 border-t border-white/[0.05] mt-auto">
+        <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {STATS.map((stat, i) => (
-              <AnimatedContent key={stat.label} direction="up" delay={0.25 + i * 0.05} className="pointer-events-auto">
-                <div className="text-center md:text-left">
-                  <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{stat.label}</div>
+              <AnimatedContent key={stat.label} direction="up" delay={0.3 + i * 0.05} className="pointer-events-auto">
+                <div className="flex flex-col items-start gap-1 group">
+                  <div className="text-3xl md:text-[40px] leading-none font-bold text-white transition-colors duration-300">
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-widest mt-1">
+                    {stat.label}
+                  </div>
                 </div>
               </AnimatedContent>
             ))}
