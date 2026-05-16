@@ -257,7 +257,7 @@ const Blog = () => {
 
       {/* Mobile Floating Dock - Bottom Fixed */}
       {createPortal(
-        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[200] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-2xl p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-300">
+        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[200] bg-black/80 backdrop-blur-3xl border border-white/10 rounded-2xl p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] transition-all duration-300">
           {/* Mobile Search - Expandable */}
           <motion.div 
             initial={false}
@@ -311,7 +311,7 @@ const Blog = () => {
               <div className="relative flex-shrink-0">
                 <button
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center justify-center w-10 h-10 bg-white/[0.05] border border-white/10 rounded-xl text-gray-400"
+                  className="flex items-center justify-center w-12 h-12 bg-white/[0.05] border border-white/10 rounded-xl text-white hover:text-green-500 transition-colors"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
