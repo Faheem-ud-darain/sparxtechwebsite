@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
@@ -9,7 +9,6 @@ import SplitText from '@/components/animations/SplitText';
 import StarBorder from '@/components/animations/StarBorder';
 import { STATS } from '@/data/constants';
 
-import Magnetic from '@/components/animations/Magnetic';
 
 const Hero = () => {
   const ref = useRef(null);

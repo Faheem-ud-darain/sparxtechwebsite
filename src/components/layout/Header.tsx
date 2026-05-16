@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import Logo from '@/assets/Full Logo Tranparent.png';
 import GooeyNav from './GooeyNav';
 import StaggeredMenu from './StaggeredMenu';

@@ -1,7 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Link, useNavigate } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 
 export interface StaggeredMenuItem {
   label: string;
