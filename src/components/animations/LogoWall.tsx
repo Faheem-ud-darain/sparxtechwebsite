@@ -14,13 +14,19 @@ export const LogoWall: React.FC = () => {
           {[...TECH_STACK, ...TECH_STACK, ...TECH_STACK].map((tech, index) => (
             <span
               key={index}
-              className="mx-10 text-sm font-semibold text-gray-600 uppercase tracking-[0.15em] hover:text-green-400 transition-colors duration-300 select-none"
+              className="tech-logo mx-10 text-sm font-semibold text-gray-600 uppercase tracking-[0.15em] transition-colors duration-300 select-none cursor-default"
+              style={{ '--brand-color': tech.color } as React.CSSProperties}
             >
-              {tech}
+              {tech.name}
             </span>
           ))}
         </div>
       </div>
+      <style>{`
+        .tech-logo:hover {
+          color: var(--brand-color);
+        }
+      `}</style>
     </AnimatedContent>
   );
 };

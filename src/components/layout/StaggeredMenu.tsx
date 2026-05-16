@@ -1,6 +1,7 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 export interface StaggeredMenuItem {
   label: string;
@@ -10,6 +11,7 @@ export interface StaggeredMenuItem {
 export interface StaggeredMenuSocialItem {
   label: string;
   link: string;
+  icon?: React.ReactNode;
 }
 export interface StaggeredMenuProps {
   position?: 'left' | 'right';
@@ -51,6 +53,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const openRef = useRef(false);
+  const location = useLocation();
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
@@ -202,25 +205,13 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [position]);
 
   const playOpen = useCallback(() => {
-    // If we're already opening, don't restart. If closing, we allow interruption.
-    if (busyRef.current && openRef.current) return;
-    busyRef.current = true;
     const tl = buildOpenTimeline();
     if (tl) {
-      tl.eventCallback('onComplete', () => {
-        busyRef.current = false;
-      });
       tl.play(0);
-    } else {
-      busyRef.current = false;
     }
   }, [buildOpenTimeline]);
 
   const playClose = useCallback(() => {
-    // If we're already closing, don't restart. If opening, we allow interruption.
-    if (busyRef.current && !openRef.current) return;
-    busyRef.current = true;
-
     openTlRef.current?.kill();
     openTlRef.current = null;
     itemEntranceTweenRef.current?.kill();
@@ -239,11 +230,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const socialTitle = panel.querySelector('.sm-socials-title') as HTMLElement | null;
     const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link')) as HTMLElement[];
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        busyRef.current = false;
-      }
-    });
+    const tl = gsap.timeline();
 
     const offscreen = position === 'left' ? -100 : 100;
 
@@ -389,7 +376,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   return (
     <div
-      className={`sm-scope z-[100] ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
+      className={`sm-scope z-[100] ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden pointer-events-none' : 'w-full h-full pointer-events-none'}`}
     >
       <div
         className={
@@ -485,10 +472,15 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               data-numbering={displayItemNumbering || undefined}
             >
               {items && items.length ? (
-                items.map((it, idx) => (
+                items.map((it, idx) => {
+                  const currentPath = location.pathname + location.hash;
+                  // Handle root matching or exact path/hash matching
+                  const isActive = it.link === currentPath || (it.link === '/' && currentPath === '/');
+                  
+                  return (
                   <li className="sm-panel-itemWrap relative overflow-hidden leading-none" key={it.label + idx}>
                     <button
-                      className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em] bg-transparent border-none text-left"
+                      className={`sm-panel-item relative font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em] bg-transparent border-none text-left ${isActive ? '[color:var(--sm-accent)]' : 'text-black'}`}
                       onClick={() => {
                         closeMenu();
                         if (it.link.startsWith('/#')) {
@@ -510,7 +502,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                       </span>
                     </button>
                   </li>
-                ))
+                )})
               ) : (
                 <li className="sm-panel-itemWrap relative overflow-hidden leading-none" aria-hidden="true">
                   <span className="sm-panel-item relative text-black font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em]">
@@ -536,8 +528,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                         target="_blank"
                         rel="noopener noreferrer"
                         className="sm-socials-link text-[1.2rem] font-medium text-[#111] no-underline relative inline-block py-[2px] transition-[color,opacity] duration-300 ease-linear"
+                        aria-label={s.label}
                       >
-                        {s.label}
+                        {s.icon ? s.icon : s.label}
                       </a>
                     </li>
                   ))}

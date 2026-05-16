@@ -49,7 +49,7 @@ const Services = () => {
         </AnimatedContent>
 
         {/* Services Grid: Grid on desktop/tablet, scroll on mobile */}
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-5 md:gap-8 pb-4 pt-8 px-6 -mx-6 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
+        <div data-lenis-prevent="true" className="flex md:grid md:grid-cols-2 lg:grid-cols-3 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory gap-5 md:gap-8 pb-4 pt-8 px-6 -mx-6 md:px-0 md:mx-0 hide-scrollbar md:hide-scrollbar-none">
           {displayedServices.map((service, index) => (
             <AnimatedContent 
               key={index} 

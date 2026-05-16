@@ -51,9 +51,26 @@ export const PROCESS_STEPS = [
 ];
 
 export const TECH_STACK = [
-  "React", "Next.js", "TypeScript", "Node.js", "WordPress",
-  "Tailwind CSS", "Figma", "Shopify", "Firebase", "MongoDB",
-  "GraphQL", "Sanity", "Framer Motion", "Vite", "AWS",
+  { name: "React", color: "#61DAFB" },
+  { name: "Next.js", color: "#FFFFFF" },
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "Node.js", color: "#339933" },
+  { name: "WordPress", color: "#21759B" },
+  { name: "Tailwind CSS", color: "#38B2AC" },
+  { name: "Figma", color: "#F24E1E" },
+  { name: "Shopify", color: "#95BF47" },
+  { name: "Firebase", color: "#FFCA28" },
+  { name: "MongoDB", color: "#47A248" },
+  { name: "GraphQL", color: "#E10098" },
+  { name: "Sanity", color: "#F03E2F" },
+  { name: "Framer Motion", color: "#0055FF" },
+  { name: "Vite", color: "#646CFF" },
+  { name: "AWS", color: "#FF9900" },
+  { name: "Google", color: "#4285F4" },
+  { name: "Antigravity", color: "#00E5FF" },
+  { name: "Claude", color: "#D97757" },
+  { name: "OpenAI", color: "#10A37F" },
+  { name: "Supabase", color: "#3ECF8E" }
 ];
 
 export const CONTACT_INFO = {

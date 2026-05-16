@@ -75,7 +75,7 @@ const BlogHighlight = () => {
           </AnimatedContent>
         </div>
 
-        <div className="flex overflow-x-auto md:grid md:grid-cols-3 gap-8 pb-8 hide-scrollbar snap-x snap-mandatory">
+        <div data-lenis-prevent="true" className="flex overflow-x-auto md:grid md:grid-cols-3 gap-8 pb-8 hide-scrollbar snap-x snap-mandatory">
           {displayedPosts.map((post, index) => (
             <div 
               key={post.slug} 

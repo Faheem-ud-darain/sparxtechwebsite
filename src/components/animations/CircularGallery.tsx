@@ -422,7 +422,7 @@ class App {
     borderRadius: number
   ) {
     if (!items) return;
-    const galleryItems = items.concat(items);
+    const galleryItems = items;
     this.medias = galleryItems.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,

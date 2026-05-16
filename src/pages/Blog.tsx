@@ -255,7 +255,7 @@ const Blog = () => {
 
       {/* Mobile Floating Dock - Bottom Fixed */}
       {createPortal(
-        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[9999] bg-black/60 backdrop-blur-2xl border border-white/10 rounded-xl p-2 flex items-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+        <div className="lg:hidden fixed bottom-[20px] left-1/2 -translate-x-1/2 w-[92%] z-[50] bg-black/60 backdrop-blur-2xl border border-white/10 rounded-xl p-2 flex items-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
           {/* Mobile Search Icon Only to Save Space */}
           <div className="relative flex-shrink-0">
             <button className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/10 text-gray-400">
