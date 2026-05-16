@@ -1,10 +1,15 @@
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { CONTACT_INFO } from '@/data/constants';
+import SEO from '@/components/SEO';
 
 const Terms = () => {
   return (
     <main className="min-h-screen bg-[#030303] text-white">
+      <SEO 
+        title="Terms & Conditions"
+        description="Terms and Conditions for SPARX Studioz & Technologies. Please read these terms carefully."
+      />
       
       <section className="relative pt-40 pb-20 px-6 overflow-hidden">
         {/* Background elements */}

@@ -1,10 +1,15 @@
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { CONTACT_INFO } from '@/data/constants';
+import SEO from '@/components/SEO';
 
 const PrivacyPolicy = () => {
   return (
     <main className="relative min-h-screen bg-[#030303] text-white">
+      <SEO 
+        title="Privacy Policy"
+        description="Privacy Policy for SPARX Studioz & Technologies. Learn how we collect, use, and protect your data."
+      />
       
       <section className="relative pt-40 pb-20 px-6 overflow-hidden">
         {/* Background elements */}

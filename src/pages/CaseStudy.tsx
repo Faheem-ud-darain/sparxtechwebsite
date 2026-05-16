@@ -19,12 +19,19 @@ const renderPortableText = (blocks: any[] | undefined) => {
   });
 };
 
+import SEO from '@/components/SEO';
+
 const CaseStudy = () => {
   const { slug } = useParams<{ slug: string }>();
   const activeProject = mockProjects.find(p => p.slug.current === slug);
   
   return (
     <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
+      <SEO 
+        title={activeProject ? `${activeProject.title} Case Study` : 'Project Not Found'}
+        description={activeProject ? activeProject.description : 'Explore our detailed case studies.'}
+        ogImage={activeProject?.coverImage}
+      />
       
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
