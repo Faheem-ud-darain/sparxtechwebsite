@@ -1,7 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { useProject } from '@/hooks/useSanity';
-import { urlFor } from '@/config/sanityClient';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { mockProjects } from '@/data/mockProjects';
@@ -9,25 +7,21 @@ import { mockProjects } from '@/data/mockProjects';
 const renderPortableText = (blocks: any[] | undefined) => {
   if (!blocks || blocks.length === 0) return <p className="text-gray-400 text-lg leading-relaxed">Detailed content for this project will be available soon.</p>;
 
-  return blocks.map((block) => {
+  return blocks.map((block, idx) => {
     if (block._type !== 'block') return null;
     const text = block.children?.map((child: any) => child.text).join('');
     
     switch (block.style) {
-      case 'h2': return <h2 key={block._key} className="text-3xl font-bold mt-12 mb-6 text-white">{text}</h2>;
-      case 'h3': return <h3 key={block._key} className="text-xl font-bold mt-8 mb-4 text-white/90">{text}</h3>;
-      default: return <p key={block._key} className="text-gray-400 text-lg leading-relaxed mb-6">{text}</p>;
+      case 'h2': return <h2 key={idx} className="text-3xl font-bold mt-12 mb-6 text-white">{text}</h2>;
+      case 'h3': return <h3 key={idx} className="text-xl font-bold mt-8 mb-4 text-white/90">{text}</h3>;
+      default: return <p key={idx} className="text-gray-400 text-lg leading-relaxed mb-6">{text}</p>;
     }
   });
 };
 
 const CaseStudy = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { project, loading } = useProject(slug);
-
-  const mockProject = mockProjects.find(p => p.slug.current === slug);
-  const activeProject = project ? { ...mockProject, ...project } : mockProject;
-  const isMockup = !project && !!mockProject;
+  const activeProject = mockProjects.find(p => p.slug.current === slug);
   
   return (
     <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
@@ -40,16 +34,7 @@ const CaseStudy = () => {
       </div>
 
       <main className="relative z-10 pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-28 md:pb-32">
-        {loading && !isMockup && (
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 animate-pulse">
-            <div className="h-4 w-24 bg-white/5 rounded-full mb-8" />
-            <div className="h-16 w-2/3 bg-white/5 rounded-2xl mb-6" />
-            <div className="h-6 w-1/3 bg-white/5 rounded-full mb-12" />
-            <div className="aspect-[21/9] bg-white/5 rounded-[2.5rem] mb-20" />
-          </div>
-        )}
-
-        {activeProject && (
+        {activeProject ? (
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {/* Breadcrumb */}
             <AnimatedContent direction="up">
@@ -91,13 +76,7 @@ const CaseStudy = () => {
             {/* Hero Image */}
             <AnimatedContent direction="up" delay={0.3}>
               <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-16 sm:mb-24 md:mb-32 bg-[#050505]">
-                {(activeProject as any).coverImage ? (
-                  <img
-                    src={urlFor((activeProject as any).coverImage).width(1600).url()}
-                    alt={activeProject.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                ) : activeProject.image3D ? (
+                {activeProject.image3D ? (
                   <div className="absolute inset-0 w-full h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#050505] via-[#0A0A0A] to-green-900/20" />
                     <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)', backgroundSize: '32px 32px' }} />
@@ -134,11 +113,11 @@ const CaseStudy = () => {
                     alt={activeProject.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
-                ) : (activeProject as any).localImage ? (
+                ) : (
                   <div className="w-full h-full bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center">
                     <span className="text-gray-500 font-mono text-xs tracking-widest uppercase italic">High-Fidelity Preview: {activeProject.title}</span>
                   </div>
-                ) : null}
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
               </div>
             </AnimatedContent>
@@ -214,16 +193,11 @@ const CaseStudy = () => {
               </div>
             </AnimatedContent>
           </div>
-        )}
-
-        {/* Empty State / Not Found */}
-        {!loading && !activeProject && (
+        ) : (
           <div className="max-w-6xl mx-auto px-6 text-center py-40">
             <h1 className="text-6xl font-extrabold mb-8">Project <span className="text-green-500">Not Found</span></h1>
             <p className="text-gray-500 text-xl mb-12 max-w-lg mx-auto">
-              {isMockup 
-                ? "This is one of our premium mockup templates. Detailed case studies for these will be added as we migrate our legacy portfolio." 
-                : "The project you're looking for doesn't exist or has been moved."}
+              The project you're looking for doesn't exist or has been moved.
             </p>
             <Link to="/" className="inline-flex items-center gap-2 bg-white text-black font-bold px-8 py-4 rounded-full hover:bg-green-500 transition-all">
               Return Home

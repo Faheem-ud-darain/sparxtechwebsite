@@ -53,17 +53,9 @@ You are building a premium, highly interactive full stack website for "SPARX Stu
 *   **Content:** Include a functional contact form on one side, and the physical address, email, and phone number[cite: 4] on the other. 
 *   **Visuals:** End with a very subtle, glowing radial gradient at the bottom of the page combining the brand colors[cite: 1].
 
-## 5. Headless CMS Integration (Sanity)
+## 5. Data Management
 
-*   **Setup:** Initialize Sanity within the project to manage the Portfolio. 
-*   **Dependencies:** Install `@sanity/client` and `@sanity/image-url` for the frontend to fetch data.
-*   **Database Schema (`sanity/schemas/project.ts`):** Create a Sanity schema for a "Project" document. It must include:
-    *   `title` (String): The name of the project.
-    *   `slug` (Slug): For generating dynamic URLs (e.g., `/portfolio/my-project`).
-    *   `coverImage` (Image): The high-res mockup for the grid.
-    *   `category` (String): e.g., Web Dev, UI/UX, SEO.
-    *   `challenge` (Block Content): Text describing the problem.
-    *   `solution` (Block Content): Text describing the SPARX solution.
-    *   `techStack` (Array of Strings): Tools used (e.g., "React", "Node.js").
-*   **Frontend Connection (`src/config/sanityClient.ts`):** Create a setup file exporting the configured Sanity client so the React app can fetch data.
-*   **Dynamic Routing:** Update `App.tsx` so that `Portfolio.tsx` fetches all projects from Sanity, and `CaseStudy.tsx` uses a dynamic route (`/portfolio/:slug`) to fetch and display the specific project data from Sanity.
+*   **Approach:** Purely static data management using local files for maximum performance and simplicity.
+*   **Portfolio Data (`src/data/mockProjects.ts`):** All project information, case studies, and images are managed in a centralized TypeScript file.
+*   **Blog Content (`src/content/blog/`):** Articles are written in Markdown files with frontmatter, parsed at build time via Vite's `import.meta.glob`.
+*   **Dynamic Routing:** React Router handles navigation to individual case studies (`/project/:slug`) and blog posts (`/blog/:slug`) based on the local data.
