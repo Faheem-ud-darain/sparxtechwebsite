@@ -141,10 +141,10 @@ const Hero = () => {
               </button>
               <button
                 onClick={() => handleSectionClick('/#services')}
-                className="scale-110 inline-flex items-center gap-3 px-10 py-4.5 rounded-[20px] text-xs font-black uppercase tracking-[0.2em] text-white border border-white/10 hover:border-green-500/40 hover:bg-white/[0.03] transition-all duration-500 bg-white/[0.01] backdrop-blur-md group"
+                className="scale-110 inline-flex items-center justify-center gap-3 py-3 px-6 md:py-4 md:px-8 rounded-[20px] text-sm md:text-base font-bold uppercase tracking-widest text-white border border-gray-800 bg-gradient-to-b from-black to-gray-900 hover:border-green-500/40 transition-all duration-500 backdrop-blur-md group"
               >
                 Our Expertise
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500/40 group-hover:bg-green-500 transition-colors shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
+                <div className="w-2 h-2 rounded-full bg-green-500/40 group-hover:bg-green-500 transition-colors shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
               </button>
             </div>
           </AnimatedContent>
