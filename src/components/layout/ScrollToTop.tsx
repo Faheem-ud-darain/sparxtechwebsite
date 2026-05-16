@@ -5,8 +5,17 @@ export const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // If there's no hash, scroll to top
-    if (!hash) {
+    if (hash) {
+      // Small delay to allow PageLoader and content to render
+      const timer = setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 800); // Wait for transition
+      return () => clearTimeout(timer);
+    } else {
       window.scrollTo(0, 0);
     }
   }, [pathname, hash]);
