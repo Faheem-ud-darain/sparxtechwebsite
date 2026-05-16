@@ -24,12 +24,12 @@ const Blog = lazy(() => import('@/pages/Blog'));
 const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
-function AnimatedRoutes() {
+function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
   const location = useLocation();
   
   return (
     <>
-      <PageLoader key={location.pathname} pathname={location.pathname} />
+      {!isInitialLoading && <PageLoader key={location.pathname} pathname={location.pathname} />}
       <Suspense fallback={null}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -75,7 +75,7 @@ function App() {
             <ScrollToTop />
             <CookieConsent />
             <Header />
-            <AnimatedRoutes />
+            <AnimatedRoutes isInitialLoading={loading} />
           </Router>
         </SmoothScroll>
       </main>
