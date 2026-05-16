@@ -479,28 +479,18 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                   
                   return (
                   <li className="sm-panel-itemWrap relative overflow-hidden leading-none" key={it.label + idx}>
-                    <button
-                      className={`sm-panel-item relative font-semibold text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em] bg-transparent border-none text-left ${isActive ? '[color:var(--sm-accent)]' : 'text-black'}`}
-                      onClick={() => {
-                        closeMenu();
-                        if (it.link.startsWith('/#')) {
-                          const id = it.link.split('#')[1];
-                          const element = document.getElementById(id);
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth' });
-                            return;
-                          }
-                        }
-                        // Default fallback to standard navigation
-                        navigate(it.link);
-                      }}
+                    <HashLink
+                      smooth
+                      to={it.link}
+                      className={`sm-panel-item relative font-semibold text-[3rem] sm:text-[4rem] cursor-pointer leading-none tracking-[-2px] uppercase transition-[background,color] duration-150 ease-linear inline-block no-underline pr-[1.4em] bg-transparent border-none text-left ${isActive ? '[color:var(--sm-accent)]' : 'text-black'}`}
+                      onClick={() => closeMenu()}
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
                     >
                       <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
                         {it.label}
                       </span>
-                    </button>
+                    </HashLink>
                   </li>
                 )})
               ) : (
