@@ -7,11 +7,39 @@ import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import MagicRings from '@/components/animations/MagicRings';
 import BorderGlow from '@/components/animations/BorderGlow';
 import Logo from '@/assets/Full Logo Tranparent.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
-  const { formData, status, errorMessage, handleChange, handleSubmit, reset } =
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { formData, status, errorMessage, handleChange, handleSubmit, reset, setFormField } =
     useContactForm();
+
+  // Track if we've already processed this specific message to avoid loops
+  const prefilledRef = React.useRef<string | null>(null);
+
+  // Handle dynamic message pre-fill from blog posts
+  React.useEffect(() => {
+    const state = location.state as { message?: string };
+    
+    // Only pre-fill if there's a message and we haven't already filled THIS specific message
+    if (state?.message && prefilledRef.current !== state.message) {
+      setFormField('message', state.message);
+      prefilledRef.current = state.message;
+      
+      // Ensure we scroll to the contact form
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Clear the state via navigate to keep the URL clean
+      navigate(location.pathname + location.search + location.hash, { 
+        replace: true, 
+        state: {} 
+      });
+    }
+  }, [location, setFormField, navigate]);
 
   return (
     <footer id="contact" className="relative bg-[#030303] overflow-hidden">

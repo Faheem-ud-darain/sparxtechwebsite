@@ -19,24 +19,41 @@ const PageLoader = ({ pathname = '/' }: { pathname?: string }) => {
     let isMounted = true;
     
     const checkReady = async () => {
-      // 1. Minimum display time for the loader (cinematic)
-      const minTime = new Promise(resolve => setTimeout(resolve, 1500));
+      // 1. Minimum cinematic display time
+      const minTime = new Promise<void>(resolve => setTimeout(() => resolve(), 800));
       
-      // 2. Wait for images in the new page
+      // 2. Safety timeout (Max 3.5 seconds total)
+      const safetyTimeout = new Promise<void>(resolve => setTimeout(() => resolve(), 3500));
+      
+      // 3. Image Loading Logic
       const imagesReady = (async () => {
-        // Wait a bit for React to start rendering the new route
-        await new Promise(resolve => setTimeout(resolve, 100));
-        const images = Array.from(document.querySelectorAll('img'));
-        await Promise.all(images.map(img => {
-          if (img.complete) return Promise.resolve();
-          return new Promise(r => {
-            img.onload = r;
-            img.onerror = r;
-          });
-        }));
+        try {
+          // Wait longer for React to render lazy components
+          await new Promise<void>(resolve => setTimeout(() => resolve(), 300));
+          
+          const images = Array.from(document.querySelectorAll('img'));
+          if (images.length === 0) return;
+
+          await Promise.all(images.map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise<void>(r => {
+              // Add a per-image timeout to be extra safe
+              const timer = setTimeout(() => r(), 2000);
+              img.onload = () => { clearTimeout(timer); r(); };
+              img.onerror = () => { clearTimeout(timer); r(); };
+            });
+          }));
+        } catch (err) {
+          console.warn('PageLoader image check failed:', err);
+        }
       })();
 
-      await Promise.all([minTime, imagesReady]);
+      // Wait for either everything to be ready OR the safety timeout
+      await Promise.race([
+        Promise.all([minTime, imagesReady]),
+        safetyTimeout
+      ]);
+
       if (isMounted) setCanExit(true);
     };
 

@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import ProfileCard from '@/components/animations/ProfileCard';
 import { motion } from 'framer-motion';
 import PixelCard from '@/components/animations/PixelCard';
+import SEO from '@/components/SEO';
 
 import FaheemImg from '@/assets/Faheem Jadoon.png';
 import ZainImg from '@/assets/Zain Jadoon.png';
@@ -88,7 +88,10 @@ const Team = () => {
 
   return (
     <main className="relative min-h-screen text-white selection:bg-green-500/30">
-      <Header />
+      <SEO 
+        title="Our Team" 
+        description="Meet the experts at Sparx Studioz & Technologies. Our team of designers, engineers, and strategists are dedicated to building extraordinary digital products." 
+      />
 
       {/* Decorative Props */}
       <div className="fixed inset-0 pointer-events-none z-0">

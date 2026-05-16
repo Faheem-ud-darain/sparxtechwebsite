@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SERVICES } from '@/data/constants';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import BorderGlow from '@/components/animations/BorderGlow';
 import FloatingParticles from '@/components/animations/FloatingParticles';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import AnimatedIcon from '@/components/animations/AnimatedIcon';
 
 const Services = () => {
@@ -91,9 +91,11 @@ const Services = () => {
 
                   {/* Footer Link */}
                   <div className="pt-6 border-t border-white/[0.06] mt-auto">
-                    <HashLink
-                      smooth
+                    <Link
                       to="/#contact"
+                      state={{ 
+                        message: `Hi SPARX! I'm interested in your ${service.title} services. Could you please provide more details on how we can get started?`
+                      }}
                       className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 group-hover:text-green-400 transition-colors"
                     >
                       Discuss Project
@@ -111,7 +113,7 @@ const Services = () => {
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
                       </svg>
-                    </HashLink>
+                    </Link>
                   </div>
                 </div>
               </BorderGlow>

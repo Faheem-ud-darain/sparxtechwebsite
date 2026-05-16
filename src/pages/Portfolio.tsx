@@ -1,13 +1,16 @@
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PortfolioGrid from '@/components/sections/PortfolioGrid';
 import { motion } from 'framer-motion';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
+import SEO from '@/components/SEO';
 
 const Portfolio = () => {
   return (
     <div className="relative min-h-screen text-white selection:bg-green-500/30">
-      <Header />
+      <SEO 
+        title="Our Portfolio" 
+        description="Explore our portfolio of premium 3D web development, custom software solutions, and successful digital marketing campaigns." 
+      />
       
       {/* Decorative Props */}
       <div className="fixed inset-0 pointer-events-none z-0">

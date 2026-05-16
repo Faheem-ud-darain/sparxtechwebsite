@@ -89,19 +89,27 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       preLayerElsRef.current = preLayers;
 
       const offscreen = position === 'left' ? -100 : 100;
-      gsap.set([panel, ...preLayers], { xPercent: offscreen, opacity: 1 });
-      if (preContainer) {
-        gsap.set(preContainer, { xPercent: 0, opacity: 1 });
+      
+      // Only set initial positions if not currently open
+      if (!openRef.current) {
+        gsap.set([panel, ...preLayers], { xPercent: offscreen, opacity: 1 });
+        if (preContainer) {
+          gsap.set(preContainer, { xPercent: 0, opacity: 1 });
+        }
       }
 
-      gsap.set(lineTop, { transformOrigin: '50% 50%', y: -4, rotate: 0 });
-      gsap.set(lineBottom, { transformOrigin: '50% 50%', y: 4, rotate: 0 });
+      gsap.set(lineTop, { transformOrigin: '50% 50%', y: openRef.current ? 0 : -4, rotate: openRef.current ? 45 : 0 });
+      gsap.set(lineBottom, { transformOrigin: '50% 50%', y: openRef.current ? 0 : 4, rotate: openRef.current ? -45 : 0 });
       gsap.set(icon, { rotate: 0, transformOrigin: '50% 50%' });
-
-      if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
     return () => ctx.revert();
-  }, [menuButtonColor, position]);
+  }, [position]); // Removed menuButtonColor to prevent reset on scroll
+
+  useLayoutEffect(() => {
+    if (toggleBtnRef.current) {
+      gsap.set(toggleBtnRef.current, { color: menuButtonColor });
+    }
+  }, [menuButtonColor]);
 
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
@@ -194,7 +202,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [position]);
 
   const playOpen = useCallback(() => {
-    if (busyRef.current) return;
+    // If we're already opening, don't restart. If closing, we allow interruption.
+    if (busyRef.current && openRef.current) return;
     busyRef.current = true;
     const tl = buildOpenTimeline();
     if (tl) {
@@ -208,7 +217,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [buildOpenTimeline]);
 
   const playClose = useCallback(() => {
-    if (busyRef.current) return;
+    // If we're already closing, don't restart. If opening, we allow interruption.
+    if (busyRef.current && !openRef.current) return;
     busyRef.current = true;
 
     openTlRef.current?.kill();

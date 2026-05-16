@@ -1,10 +1,10 @@
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import CardSwap, { Card } from '@/components/animations/CardSwap';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Target } from 'lucide-react';
 import AnimatedIcon from '@/components/animations/AnimatedIcon';
+import SEO from '@/components/SEO';
 
 const WHY_CHOOSE_US_DATA = [
   {
@@ -32,7 +32,10 @@ const WHY_CHOOSE_US_DATA = [
 const About = () => {
   return (
     <div className="relative min-h-screen text-white selection:bg-green-500/30">
-      <Header />
+      <SEO 
+        title="About Our Agency" 
+        description="Learn more about Sparx Studioz & Technologies, a results-oriented creative agency delivering innovative tech and marketing solutions worldwide." 
+      />
       
       <main className="pt-32 pb-24">
         {/* 1. About Us Section */}

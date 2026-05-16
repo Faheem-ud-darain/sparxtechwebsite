@@ -8,6 +8,8 @@ import PageTransition from '@/components/animations/PageTransition';
 import Preloader from '@/components/animations/Preloader';
 import PageLoader from '@/components/animations/PageLoader';
 import { useState, lazy, Suspense } from 'react';
+import CookieConsent from '@/components/layout/CookieConsent';
+import Header from '@/components/layout/Header';
 
 import Home from '@/pages/Home';
 
@@ -18,6 +20,9 @@ const CaseStudy = lazy(() => import('@/pages/CaseStudy'));
 const Team = lazy(() => import('@/pages/Team'));
 const Terms = lazy(() => import('@/pages/Terms'));
 const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const BlogPost = lazy(() => import('@/pages/BlogPost'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -35,6 +40,9 @@ function AnimatedRoutes() {
             <Route path="/team" element={<PageTransition><Team /></PageTransition>} />
             <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
             <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+            <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+            <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </AnimatePresence>
       </Suspense>
@@ -49,12 +57,18 @@ function App() {
     <div className="relative bg-[#030303] selection:bg-green-500/30 min-h-screen">
       <AnimatePresence mode="wait">
         {loading && (
-          <Preloader key="preloader" onComplete={() => setLoading(false)} />
+          <Preloader key="preloader" onComplete={() => {
+            setLoading(false);
+            // Trigger prerender for SSG
+            setTimeout(() => {
+              document.dispatchEvent(new Event('custom-render-trigger'));
+            }, 1000);
+          }} />
         )}
       </AnimatePresence>
       
       <div 
-        className="transition-opacity duration-1000"
+        className="relative transition-opacity duration-1000"
         style={{ 
           visibility: loading ? 'hidden' : 'visible',
           opacity: loading ? 0 : 1,
@@ -65,10 +79,12 @@ function App() {
         <SmoothScroll>
           <Background />
           <BlobCursor />
-          <Router>
-            <ScrollToTop />
-            <AnimatedRoutes />
-          </Router>
+        <Router>
+          <ScrollToTop />
+          <CookieConsent />
+          <Header />
+          <AnimatedRoutes />
+        </Router>
         </SmoothScroll>
       </div>
     </div>

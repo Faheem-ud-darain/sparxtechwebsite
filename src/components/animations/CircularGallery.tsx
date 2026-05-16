@@ -3,16 +3,6 @@ import { useEffect, useRef } from 'react';
 
 type GL = Renderer['gl'];
 
-interface ScreenSize {
-  width: number;
-  height: number;
-}
-
-interface Viewport {
-  width: number;
-  height: number;
-}
-
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
   let timeout: number;
   return function (this: any, ...args: Parameters<T>) {
@@ -25,92 +15,80 @@ function lerp(p1: number, p2: number, t: number): number {
   return p1 + (p2 - p1) * t;
 }
 
-
 function createCardTexture(
   gl: GL,
-  data: any,
-  textColor: string = 'white'
+  data: {
+    text: string;
+    author: string;
+    designation: string;
+    service: string;
+    rating: number;
+  }
 ): { texture: Texture; width: number; height: number } {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Could not get 2d context');
 
-  // Set card dimensions
   const width = 800;
   const height = 1000;
   canvas.width = width;
   canvas.height = height;
 
-  // 1. Draw Background (Dark Glass effect)
-  context.fillStyle = '#111111';
+  // 1. Draw Background
+  context.fillStyle = '#0a0a0a';
   context.fillRect(0, 0, width, height);
 
-  // 2. Draw subtle border
-  context.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-  context.lineWidth = 2;
-  context.strokeRect(5, 5, width - 10, height - 10);
-
-  // 3. Draw Stars (Yellow with Glow)
+  // 2. Draw Stars (Golden)
   const rating = Number(data.rating) || 5;
-  const starX = 60;
-  const starY = 100;
-  const starSize = 32;
-  const starGap = 45; // Increased gap to prevent overlap
-
-  context.font = `${starSize}px sans-serif`;
+  context.font = '54px serif';
+  context.fillStyle = '#FFD700'; // Golden color
   context.textAlign = 'left';
-  context.textBaseline = 'middle';
+  context.fillText('★'.repeat(rating) + '☆'.repeat(5 - rating), 60, 100);
 
-  for (let i = 0; i < 5; i++) {
-    const x = starX + i * starGap;
-    const diff = Math.max(0, Math.min(1, rating - i));
-    
-    // 1. Draw Background Star (More visible empty star)
-    context.save();
-    context.shadowBlur = 0;
-    context.fillStyle = 'rgba(255, 255, 255, 0.25)';
-    context.fillText('★', x, starY);
-    context.restore();
+  // 3. Draw Service in Pill Style
+  const serviceText = data.service.toUpperCase();
+  context.font = 'bold 22px Figtree';
+  const textMetrics = context.measureText(serviceText);
+  const pillWidth = textMetrics.width + 80;
+  const pillHeight = 44;
+  const pillX = 60;
+  const pillY = 140;
 
-    // 2. Draw Filled Star (Yellow with Glow)
-    if (diff > 0) {
-      context.save();
-      // Precise clipping based on measured width
-      const metrics = context.measureText('★');
-      const starWidth = metrics.width;
-      
-      context.beginPath();
-      context.rect(x, starY - starSize, starWidth * diff, starSize * 2);
-      context.clip();
-      
-      context.shadowBlur = 15;
-      context.shadowColor = 'rgba(250, 204, 21, 0.8)';
-      context.fillStyle = '#facc15';
-      context.fillText('★', x, starY);
-      context.restore();
-    }
-  }
+  // Pill background
+  context.fillStyle = 'rgba(255, 255, 255, 0.05)';
+  context.beginPath();
+  context.roundRect(pillX, pillY, pillWidth, pillHeight, 22);
+  context.fill();
+  context.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+  context.lineWidth = 1;
+  context.stroke();
+
+  // Glow dot
+  context.fillStyle = '#4ade80';
+  context.shadowBlur = 10;
+  context.shadowColor = '#4ade80';
+  context.beginPath();
+  context.arc(pillX + 25, pillY + pillHeight / 2, 6, 0, Math.PI * 2);
+  context.fill();
   context.shadowBlur = 0; // Reset shadow
 
-  // 4. Draw Service Taken
-  context.font = 'bold 24px sans-serif';
-  context.fillStyle = '#22c55e';
-  context.fillText((data.service || 'Digital Solution').toUpperCase(), 60, 150);
+  // Service text
+  context.fillStyle = '#ffffff';
+  context.fillText(serviceText, pillX + 50, pillY + pillHeight / 2 + 8);
 
-  // 5. Draw Review Text (Multiline)
-  context.font = 'italic 34px sans-serif';
-  context.fillStyle = textColor;
-  const words = (data.text || '').split(' ');
+  // 4. Draw Review Text (Wrapped)
+  context.font = '46px Figtree';
+  context.fillStyle = '#ffffff';
+  const words = data.text.split(' ');
   let line = '';
-  let y = 240;
+  let y = 300;
   const maxWidth = width - 120;
-  const lineHeight = 45;
+  const lineHeight = 65;
 
   for (let n = 0; n < words.length; n++) {
     const testLine = line + words[n] + ' ';
     const metrics = context.measureText(testLine);
-    const testWidth = metrics.width;
-    if (testWidth > maxWidth && n > 0) {
+    if (metrics.width > maxWidth && n > 0) {
       context.fillText(line, 60, y);
       line = words[n] + ' ';
       y += lineHeight;
@@ -120,30 +98,49 @@ function createCardTexture(
   }
   context.fillText(line, 60, y);
 
-  // 6. Draw Client Info
-  context.font = 'bold 36px sans-serif';
-  context.fillStyle = textColor;
-  context.fillText(data.author || 'Anonymous', 60, height - 140);
-  
-  context.font = '24px sans-serif';
-  // Use a slightly transparent version of textColor if possible, or just keep it simple
-  context.fillStyle = textColor.startsWith('#') ? `${textColor}80` : textColor; 
-  context.fillText(data.designation || 'Client', 60, height - 90);
+  // 5. Draw Author Name (Gradient)
+  context.font = 'bold 52px Figtree';
+  const authorName = data.author;
+  const authorMetrics = context.measureText(authorName);
+  const gradient = context.createLinearGradient(60, 0, 60 + authorMetrics.width, 0);
+  gradient.addColorStop(0, '#4ade80');
+  gradient.addColorStop(1, '#6ee7b7');
+  context.fillStyle = gradient;
+  context.fillText(authorName, 60, height - 120);
 
-  const texture = new Texture(gl, { generateMipmaps: true });
+  // 6. Draw Designation
+  context.font = '32px Figtree';
+  context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+  context.fillText(data.designation, 60, height - 70);
+
+  const texture = new Texture(gl, { 
+    generateMipmaps: true,
+    minFilter: gl.LINEAR_MIPMAP_LINEAR,
+    magFilter: gl.LINEAR
+  });
   texture.image = canvas;
   return { texture, width, height };
+}
+
+interface ScreenSize {
+  width: number;
+  height: number;
+}
+
+interface Viewport {
+  width: number;
+  height: number;
 }
 
 interface MediaProps {
   geometry: Plane;
   gl: GL;
-  data: any;
   index: number;
   length: number;
   renderer: Renderer;
   scene: Transform;
   screen: ScreenSize;
+  data: any;
   viewport: Viewport;
   bend: number;
   textColor: string;
@@ -154,12 +151,12 @@ class Media {
   extra: number = 0;
   geometry: Plane;
   gl: GL;
-  data: any;
   index: number;
   length: number;
   renderer: Renderer;
   scene: Transform;
   screen: ScreenSize;
+  data: any;
   viewport: Viewport;
   bend: number;
   textColor: string;
@@ -178,25 +175,25 @@ class Media {
   constructor({
     geometry,
     gl,
-    data,
     index,
     length,
     renderer,
     scene,
     screen,
+    data,
     viewport,
     bend,
     textColor,
-    borderRadius = 0,
+    borderRadius = 0
   }: MediaProps) {
     this.geometry = geometry;
     this.gl = gl;
-    this.data = data;
     this.index = index;
     this.length = length;
     this.renderer = renderer;
     this.scene = scene;
     this.screen = screen;
+    this.data = data;
     this.viewport = viewport;
     this.bend = bend;
     this.textColor = textColor;
@@ -207,7 +204,7 @@ class Media {
   }
 
   createShader() {
-    const { texture } = createCardTexture(this.gl, this.data, this.textColor);
+    const { texture } = createCardTexture(this.gl, this.data);
     this.program = new Program(this.gl, {
       depthTest: false,
       depthWrite: false,
@@ -229,6 +226,7 @@ class Media {
       `,
       fragment: `
         precision highp float;
+        uniform vec2 uPlaneSizes;
         uniform sampler2D tMap;
         uniform float uBorderRadius;
         varying vec2 vUv;
@@ -248,6 +246,7 @@ class Media {
       `,
       uniforms: {
         tMap: { value: texture },
+        uPlaneSizes: { value: [0, 0] },
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius }
@@ -277,15 +276,11 @@ class Media {
       const B_abs = Math.abs(this.bend);
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
-
       const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-      if (this.bend > 0) {
-        this.plane.position.y = -arc;
-        this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
-      } else {
-        this.plane.position.y = arc;
-        this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
-      }
+      const maxArc = R - Math.sqrt(R * R - H * H);
+      
+      this.plane.position.y = (this.bend > 0 ? -arc : arc) + (this.bend > 0 ? maxArc / 2 : -maxArc / 2);
+      this.plane.rotation.z = (this.bend > 0 ? -1 : 1) * Math.sign(x) * Math.asin(effectiveX / R);
     }
 
     this.speed = scroll.current - scroll.last;
@@ -312,13 +307,10 @@ class Media {
       this.viewport = viewport;
     }
     const isMobile = this.screen.width < 768;
-    this.scale = this.screen.height / (isMobile ? 1500 : 1350);
-    const baseHeight = isMobile ? 800 : 850;
-    const baseWidth = isMobile ? 600 : 650;
-
-    this.plane.scale.y = (this.viewport.height * (baseHeight * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (baseWidth * this.scale)) / this.screen.width;
-    this.padding = 1.5;
+    this.plane.scale.y = this.viewport.height * (isMobile ? 0.5 : 0.85);
+    this.plane.scale.x = this.plane.scale.y * (800 / 1000);
+    this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
+    this.padding = isMobile ? 1.0 : 2.0;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
@@ -351,9 +343,8 @@ class App {
   scene!: Transform;
   planeGeometry!: Plane;
   medias: Media[] = [];
-  dataItems: any[] = [];
-  screen!: ScreenSize;
-  viewport!: Viewport;
+  screen!: { width: number; height: number };
+  viewport!: { width: number; height: number };
   raf: number = 0;
 
   boundOnResize!: () => void;
@@ -376,7 +367,6 @@ class App {
       scrollEase = 0.05
     }: AppConfig
   ) {
-    document.documentElement.classList.remove('no-js');
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
@@ -408,6 +398,12 @@ class App {
     this.camera.position.z = 20;
   }
 
+  createCameraPerspective() {
+    this.camera.perspective({
+      aspect: this.screen.width / this.screen.height
+    });
+  }
+
   createScene() {
     this.scene = new Transform();
   }
@@ -425,18 +421,18 @@ class App {
     textColor: string,
     borderRadius: number
   ) {
-    const galleryItems = items && items.length ? items : [];
-    this.dataItems = galleryItems.concat(galleryItems);
-    this.medias = this.dataItems.map((data, index) => {
+    if (!items) return;
+    const galleryItems = items.concat(items);
+    this.medias = galleryItems.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
         gl: this.gl,
-        data,
         index,
-        length: this.dataItems.length,
+        length: galleryItems.length,
         renderer: this.renderer,
         scene: this.scene,
         screen: this.screen,
+        data,
         viewport: this.viewport,
         bend,
         textColor,
@@ -514,7 +510,6 @@ class App {
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
     window.addEventListener('resize', this.boundOnResize);
-    window.addEventListener('mousewheel', this.boundOnWheel);
     window.addEventListener('wheel', this.boundOnWheel);
     window.addEventListener('mousedown', this.boundOnTouchDown);
     window.addEventListener('mousemove', this.boundOnTouchMove);
@@ -527,7 +522,6 @@ class App {
   destroy() {
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener('resize', this.boundOnResize);
-    window.removeEventListener('mousewheel', this.boundOnWheel);
     window.removeEventListener('wheel', this.boundOnWheel);
     window.removeEventListener('mousedown', this.boundOnTouchDown);
     window.removeEventListener('mousemove', this.boundOnTouchMove);
@@ -575,4 +569,3 @@ export default function CircularGallery({
   }, [items, bend, textColor, borderRadius, scrollSpeed, scrollEase]);
   return <div className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing" ref={containerRef} />;
 }
-

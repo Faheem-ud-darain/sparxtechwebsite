@@ -1,53 +1,93 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import Logo from '@/assets/Full Logo Tranparent.png';
-import TextHover from '@/components/animations/TextHover';
+import GooeyNav from './GooeyNav';
 import StaggeredMenu from './StaggeredMenu';
+import Dock from './Dock';
 import { SOCIAL_LINKS } from '@/data/constants';
-
-const MotionLink = motion.create(Link);
-const MotionHashLink = motion.create(HashLink);
+import { Home, Layers, Info, Briefcase, Users, Mail } from 'lucide-react';
 
 const navLinks = [
-  { label: "Services", href: "/#services" },
-  { label: "About", href: "/about" },
-  { label: "Portfolio", href: "/#portfolio" },
-  { label: "Team", href: "/team" },
+  { label: "Services", href: "/#services", icon: <Layers size={20} /> },
+  { label: "About", href: "/about", icon: <Info size={20} /> },
+  { label: "Portfolio", href: "/#portfolio", icon: <Briefcase size={20} /> },
+  { label: "Team", href: "/team", icon: <Users size={20} /> },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      // Robust scroll detection
+      const scrollPos = window.scrollY || document.documentElement.scrollTop;
+      setIsScrolled(scrollPos > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Lock body scroll when menu is open
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    }
+    return () => { 
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
+    };
   }, [isMenuOpen]);
+
+  const dockItems = [
+    { icon: <Home size={20} />, label: 'Home', onClick: () => navigate('/') },
+    ...navLinks.map(link => ({
+      icon: link.icon,
+      label: link.label,
+      onClick: () => {
+        if (link.href.startsWith('/#')) {
+          const id = link.href.split('#')[1];
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            navigate(link.href);
+          }
+        } else {
+          navigate(link.href);
+        }
+      }
+    })),
+    { 
+      icon: <Mail size={20} />, 
+      label: 'Contact', 
+      onClick: () => {
+        const contact = document.getElementById('contact');
+        if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+        else navigate('/#contact');
+      } 
+    },
+  ];
 
   return (
     <>
+      {/* Standard Header - Hidden on scroll */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed left-0 right-0 z-[60] transition-all duration-500 px-4 sm:px-6 hidden lg:block ${
-          isScrolled ? 'top-4' : 'top-4 md:top-8'
-        }`}
+        initial={false}
+        animate={{ 
+          y: isScrolled ? -120 : 0,
+          opacity: isScrolled ? 0 : 1,
+          pointerEvents: isScrolled ? 'none' : 'auto'
+        }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed left-0 right-0 z-[60] px-4 sm:px-6 hidden lg:block top-4 md:top-8"
       >
-        <div className={`max-w-7xl mx-auto rounded-full transition-all duration-500 ${
-          isScrolled
-            ? 'backdrop-blur-2xl bg-black/70 border border-white/[0.06] py-3 md:py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
-            : 'bg-transparent py-4 md:py-6'
-        }`}>
+        <div className="max-w-7xl mx-auto rounded-full bg-transparent py-4 md:py-6">
           <div className="px-4 md:px-8 flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="relative z-[70] flex items-center">
@@ -60,29 +100,10 @@ const Header = () => {
 
             {/* Right Side: Nav + CTA */}
             <div className="flex items-center gap-4 lg:gap-10 relative z-[70]">
-              {/* Desktop Nav */}
-              <nav className="flex items-center gap-8">
-                {navLinks.map((link) => (
-                  link.href.startsWith('/#') ? (
-                    <HashLink
-                      smooth
-                      key={link.label}
-                      to={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-300 tracking-wide"
-                    >
-                      <TextHover text={link.label} />
-                    </HashLink>
-                  ) : (
-                    <Link
-                      key={link.label}
-                      to={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-300 tracking-wide"
-                    >
-                      <TextHover text={link.label} />
-                    </Link>
-                  )
-                ))}
-              </nav>
+              {/* Desktop Nav - Gooey Effect */}
+              <div className="hidden lg:block">
+                <GooeyNav items={navLinks.map(({label, href}) => ({label, href}))} />
+              </div>
 
               <HashLink
                 smooth
@@ -97,12 +118,44 @@ const Header = () => {
         </div>
       </motion.header>
 
+      {/* Floating Dock (Bottom) - Shown on scroll */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.div
+            initial={{ y: 100, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            exit={{ y: 100, opacity: 0, x: '-50%' }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-10 left-1/2 z-[100] hidden lg:flex justify-center items-center pointer-events-none"
+          >
+            <div className="pointer-events-auto">
+              <Dock items={dockItems} panelHeight={64} baseItemSize={50} magnification={70} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Mobile Staggered Menu */}
       <div className="lg:hidden">
+        {/* Mobile Header Glass Background */}
+        <motion.div
+          initial={false}
+          animate={{
+            backgroundColor: isScrolled ? 'rgba(3, 3, 3, 0.7)' : 'rgba(3, 3, 3, 0)',
+            backdropFilter: isScrolled ? 'blur(16px)' : 'blur(0px)',
+            borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(255, 255, 255, 0)',
+          }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-0 left-0 right-0 h-20 z-[55] pointer-events-none"
+        />
+
         <StaggeredMenu
           isFixed={true}
           logoUrl={Logo}
-          items={navLinks.map(l => ({ label: l.label, ariaLabel: `Go to ${l.label}`, link: l.href }))}
+          items={[
+            ...navLinks.map(l => ({ label: l.label, ariaLabel: `Go to ${l.label}`, link: l.href })),
+            { label: "Blog", ariaLabel: "Explore our Blog", link: "/blog" }
+          ]}
           socialItems={[
             { label: 'Instagram', link: SOCIAL_LINKS.instagram },
             { label: 'LinkedIn', link: SOCIAL_LINKS.linkedin },

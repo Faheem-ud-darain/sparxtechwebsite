@@ -15,6 +15,7 @@ interface UseContactFormReturn {
   ) => void;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
   reset: () => void;
+  setFormField: (name: keyof ContactFormData, value: string) => void;
 }
 
 const INITIAL_STATE: ContactFormData = { name: '', email: '', message: '' };
@@ -77,5 +78,9 @@ export function useContactForm(): UseContactFormReturn {
     setErrorMessage(null);
   };
 
-  return { formData, status, errorMessage, handleChange, handleSubmit, reset };
+  const setFormField = (name: keyof ContactFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return { formData, status, errorMessage, handleChange, handleSubmit, reset, setFormField };
 }

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /studio
+
+Sitemap: https://sparxtech.com/sitemap.xml

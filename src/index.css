@@ -34,7 +34,8 @@ html {
   scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeSpeed; /* Changed from optimizeLegibility for faster rendering */
+  text-rendering: optimizeSpeed;
+  position: relative;
 }
 
 body {
@@ -42,6 +43,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
+  position: relative;
 }
 
 #root {

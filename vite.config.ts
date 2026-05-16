@@ -1,34 +1,73 @@
 import path from "path"
-import { defineConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import fs from 'fs'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
-              return 'vendor-react';
-            }
-            if (id.includes('framer-motion') || id.includes('gsap') || id.includes('lenis')) {
-              return 'vendor-animation';
-            }
-          }
-        },
+const getBlogRoutes = () => {
+  const blogDir = path.resolve(__dirname, './src/content/blog')
+  if (!fs.existsSync(blogDir)) return []
+  return fs.readdirSync(blogDir)
+    .filter(file => file.endsWith('.md'))
+    .map(file => `/blog/${file.replace('.md', '')}`)
+}
+
+export default defineConfig(async ({ command }): Promise<UserConfig> => {
+  const isBuild = command === 'build';
+  const plugins: any[] = [...react()];
+
+  if (isBuild) {
+    try {
+      const PrerenderModule = await import('vite-plugin-prerender');
+      const Prerender = PrerenderModule.default;
+      plugins.push(
+        Prerender({
+          staticDir: path.join(__dirname, 'dist'),
+          routes: ['/', '/about', '/portfolio', '/team', '/blog', ...getBlogRoutes()],
+          renderer: new Prerender.PuppeteerRenderer({
+            renderAfterDocumentEvent: 'custom-render-trigger',
+            maxConcurrentRoutes: 1,
+          }),
+          postProcess(renderedRoute: any) {
+            renderedRoute.html = renderedRoute.html.replace(
+              /window.__PRERENDER_INJECTED = true;/g,
+              ''
+            );
+            return renderedRoute;
+          },
+        })
+      );
+    } catch {
+      console.warn('Prerender plugin could not be loaded, skipping SSG.');
+    }
+  }
+
+  return {
+    plugins,
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
-    sourcemap: false,
-    minify: 'esbuild',
-  },
-  esbuild: {
-    drop: ['console', 'debugger'],
-  },
-})
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+                return 'vendor-react';
+              }
+              if (id.includes('framer-motion') || id.includes('gsap') || id.includes('lenis')) {
+                return 'vendor-animation';
+              }
+            }
+          },
+        },
+      },
+      sourcemap: false,
+      minify: 'esbuild',
+    },
+    esbuild: {
+      drop: ['console' as any, 'debugger' as any],
+    },
+  };
+});

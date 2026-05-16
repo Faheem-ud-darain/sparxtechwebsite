@@ -1,10 +1,7 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { motion } from 'framer-motion';
 import { useProject } from '@/hooks/useSanity';
 import { urlFor } from '@/config/sanityClient';
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { mockProjects } from '@/data/mockProjects';
@@ -26,7 +23,7 @@ const renderPortableText = (blocks: any[] | undefined) => {
 
 const CaseStudy = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { project, loading, error } = useProject(slug);
+  const { project, loading } = useProject(slug);
 
   const mockProject = mockProjects.find(p => p.slug.current === slug);
   const activeProject = project ? { ...mockProject, ...project } : mockProject;
@@ -34,7 +31,6 @@ const CaseStudy = () => {
   
   return (
     <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
-      <Header />
       
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -95,9 +91,9 @@ const CaseStudy = () => {
             {/* Hero Image */}
             <AnimatedContent direction="up" delay={0.3}>
               <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-white/[0.08] shadow-2xl group mb-16 sm:mb-24 md:mb-32 bg-[#050505]">
-                {activeProject.coverImage ? (
+                {(activeProject as any).coverImage ? (
                   <img
-                    src={urlFor(activeProject.coverImage).width(1600).url()}
+                    src={urlFor((activeProject as any).coverImage).width(1600).url()}
                     alt={activeProject.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
@@ -138,7 +134,7 @@ const CaseStudy = () => {
                     alt={activeProject.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
-                ) : activeProject.localImage ? (
+                ) : (activeProject as any).localImage ? (
                   <div className="w-full h-full bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center">
                     <span className="text-gray-500 font-mono text-xs tracking-widest uppercase italic">High-Fidelity Preview: {activeProject.title}</span>
                   </div>
