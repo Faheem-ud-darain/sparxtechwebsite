@@ -21,7 +21,10 @@ export default defineConfig(async ({ command }): Promise<UserConfig> => {
   const isBuild = command === 'build';
   const plugins: any[] = [...react()];
 
-  if (isBuild) {
+  // Skip prerendering (SSG) in Vercel CI environment because Vercel build instances
+  // lack GUI/Chromium system libraries (like libnss3.so) required by Puppeteer.
+  const isVercel = process.env.VERCEL === '1' || !!process.env.VERCEL;
+  if (isBuild && !isVercel) {
     try {
       const PrerenderModule = await import('vite-plugin-prerender');
       const Prerender = PrerenderModule.default;
