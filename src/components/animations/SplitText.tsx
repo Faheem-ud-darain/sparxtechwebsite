@@ -30,13 +30,10 @@ const SplitText: React.FC<SplitTextProps> = ({
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-10%" });
 
-  // Handle words or chars
-  const elements = splitType === 'chars' 
-    ? Array.from(content) 
-    : content.split(' ');
+  const words = content.split(' ');
 
   const containerVariants = {
-    hidden: { opacity: 1 }, // Keep container visible to show initial state if needed
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
@@ -76,20 +73,49 @@ const SplitText: React.FC<SplitTextProps> = ({
         animate={isInView ? "visible" : "hidden"}
         className="inline-block whitespace-normal"
       >
-        {elements.map((el, i) => (
-          <span key={i} className="inline-block overflow-hidden">
-            <m.span
-              variants={itemVariants}
-              className="inline-block"
-              style={{ 
-                whiteSpace: el === ' ' ? 'pre' : 'normal',
-                marginRight: splitType === 'words' && el !== ' ' ? '0.25em' : '0'
-              }}
-            >
-              {el === ' ' ? '\u00A0' : el}
-            </m.span>
-          </span>
-        ))}
+        {splitType === 'words' ? (
+          words.map((word, i) => (
+            <span key={i} className="inline-block overflow-hidden">
+              <m.span
+                variants={itemVariants}
+                className="inline-block"
+                style={{ marginRight: '0.25em' }}
+              >
+                {word}
+              </m.span>
+            </span>
+          ))
+        ) : (
+          words.map((word, wordIndex) => {
+            const chars = Array.from(word);
+            return (
+              <span key={wordIndex} className="inline-block whitespace-nowrap">
+                {chars.map((char, charIndex) => (
+                  <span key={charIndex} className="inline-block overflow-hidden">
+                    <m.span
+                      variants={itemVariants}
+                      className="inline-block"
+                    >
+                      {char}
+                    </m.span>
+                  </span>
+                ))}
+                {/* Space between words */}
+                {wordIndex < words.length - 1 && (
+                  <span className="inline-block overflow-hidden">
+                    <m.span
+                      variants={itemVariants}
+                      className="inline-block"
+                      style={{ whiteSpace: 'pre' }}
+                    >
+                      {'\u00A0'}
+                    </m.span>
+                  </span>
+                )}
+              </span>
+            );
+          })
+        )}
       </m.span>
     </Tag>
   );

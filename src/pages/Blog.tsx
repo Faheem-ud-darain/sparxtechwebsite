@@ -265,11 +265,11 @@ const Blog = () => {
               width: isSearchExpanded ? '100%' : '48px',
               backgroundColor: isSearchExpanded ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)'
             }}
-            className="relative flex items-center border border-white/10 rounded-xl overflow-hidden h-12"
+            className="relative flex-shrink-0 flex items-center border border-white/10 rounded-xl overflow-hidden h-12"
           >
             <button 
               onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-              className="w-12 h-12 flex flex-shrink-0 items-center justify-center text-white hover:text-green-500 transition-colors z-10"
+              className="w-12 h-full flex flex-shrink-0 items-center justify-center text-white hover:text-green-500 transition-colors z-10"
               aria-label="Toggle search"
             >
               <Search className="w-5 h-5" />
