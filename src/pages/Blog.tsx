@@ -6,7 +6,7 @@ import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { getPosts, getCategories, getInterestedCategories } from '@/lib/blog';
 import CategoryPillNav from '@/components/animations/CategoryPillNav';
 import { Link } from 'react-router-dom';
-import { Search, Filter, Calendar, Clock, ArrowUpRight, Star } from 'lucide-react';
+import { Search, Filter, ArrowUpDown, Calendar, Clock, ArrowUpRight, Star } from 'lucide-react';
 import SEO from '@/components/SEO';
 
 const Blog = () => {
@@ -148,8 +148,8 @@ const Blog = () => {
                   onClick={() => setIsSortOpen(!isSortOpen)}
                   className="flex items-center px-4 h-10 bg-white/[0.05] border border-white/10 rounded-xl text-gray-400 hover:text-white hover:border-green-500/30 transition-all group"
                 >
-                  <Filter className="w-4 h-4 mr-2 text-gray-500 group-hover:text-green-500 transition-colors" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest">{sortBy === 'readingTime' ? 'Time' : sortBy}</span>
+                  <ArrowUpDown className="w-4 h-4 mr-2 text-gray-500 group-hover:text-green-500 transition-colors" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Sort: {sortBy === 'readingTime' ? 'Time' : sortBy}</span>
                 </button>
 
                 <AnimatePresence>
@@ -313,7 +313,7 @@ const Blog = () => {
                   onClick={() => setIsSortOpen(!isSortOpen)}
                   className="flex items-center justify-center w-12 h-12 bg-white/[0.05] border border-white/10 rounded-xl text-white hover:text-green-500 transition-colors"
                 >
-                  <Filter className="w-4 h-4" />
+                  <ArrowUpDown className="w-4 h-4" />
                 </button>
 
                 <AnimatePresence>
@@ -321,9 +321,9 @@ const Blog = () => {
                     <>
                       <div className="fixed inset-0 z-[10000]" onClick={() => setIsSortOpen(false)} />
                       <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: -20, x: -160 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         className="absolute bottom-full right-0 mb-4 w-48 z-[10001] bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/10 rounded-xl p-2 shadow-2xl"
                       >
                         {[

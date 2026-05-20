@@ -4,7 +4,7 @@ date: "2024-05-10"
 author: "Zain Jadoon"
 category: "Marketing"
 excerpt: "Stop wasting your budget. Learn the precision targeting strategies we use at Sparx to deliver 5x ROAS for our global clients."
-image: "/assets/Kingdom Watch Company.png"
+image: "/blog/kingdom-watch-company.webp"
 readTime: "7 min"
 tags: ["Meta Ads", "ROI", "Growth"]
 ---

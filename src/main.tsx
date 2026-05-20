@@ -6,8 +6,8 @@ import App from './App.tsx'
 
 // Handle chunk loading errors (happens after new deployments)
 window.addEventListener('error', (e) => {
-  if (e.message.includes('Failed to fetch dynamically imported module') || 
-      e.message.includes('importing a module script failed')) {
+  if (e.message && (e.message.includes('Failed to fetch dynamically imported module') || 
+      e.message.includes('importing a module script failed'))) {
     window.location.reload();
   }
 }, true);

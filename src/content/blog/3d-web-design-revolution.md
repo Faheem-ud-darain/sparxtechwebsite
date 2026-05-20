@@ -4,7 +4,7 @@ date: "2024-05-15"
 author: "Faheem Jadoon"
 category: "Design"
 excerpt: "Discover why immersive 3D experiences are becoming the gold standard for high-end digital agencies and how they impact conversion rates."
-image: "/assets/Sparx tech Agency Website.webp"
+image: "/blog/sparx-tech-agency-website.webp"
 readTime: "5 min"
 tags: ["3D", "UX Design", "Trends"]
 ---
