@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
   title?: string;
@@ -14,13 +15,19 @@ const SEO = ({
   title = "SPARX Studioz & Technologies | Digital Crafting & Innovation",
   description = "A premium digital agency specializing in high-end web experiences, software solutions, and creative design.",
   keywords = "software development, 3d web development, digital marketing, meta ads, custom software, graphics design, video editing, SPARX",
-  canonical = "https://sparxtechwebsite.vercel.app",
+  canonical,
   ogImage = "/og-image.jpg",
   ogType = "website",
   twitterHandle = "@sparxstudioz"
 }: SEOProps) => {
+  const location = useLocation();
   const siteName = "SPARX Studioz & Technologies";
   const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+
+  // Dynamically resolve the canonical URL if not explicitly provided
+  const siteUrl = "https://sparxtechwebsite.vercel.app";
+  const normalizedPath = location.pathname === '/' ? '' : location.pathname;
+  const activeCanonical = canonical || `${siteUrl}${normalizedPath}`;
 
   return (
     <Helmet>
@@ -28,7 +35,7 @@ const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <link rel="canonical" href={canonical} />
+      <link rel="canonical" href={activeCanonical} />
 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />

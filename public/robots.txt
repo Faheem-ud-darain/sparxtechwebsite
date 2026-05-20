@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /studio
 
-Sitemap: https://sparxtech.com/sitemap.xml
+Sitemap: https://sparxtechwebsite.vercel.app/sitemap.xml
