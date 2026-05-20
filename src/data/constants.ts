@@ -77,7 +77,7 @@ export const CONTACT_INFO = {
   email: "studiozsparx@gmail.com",
   phone: "+92 3095843733",
   whatsapp: "+90 548 828 1864",
-  address: "2nd floor, Shammal News office, Plot: No 6-A, Small industry state, mandian, Abbottabad, KPK, Pakistan",
+  address: "2nd Floor, Shammal News Office, Plot 6-A, small industry state, Main Manshera Road, Mandian, Abbottabad, KPK, Pakistan",
 };
 
 export const SOCIAL_LINKS = {

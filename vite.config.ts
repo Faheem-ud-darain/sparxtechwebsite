@@ -2,6 +2,12 @@ import path from "path"
 import { defineConfig, type UserConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
+import { createRequire } from 'module'
+
+// Create standard require for CommonJS packages in ES Module scope
+if (typeof globalThis.require === 'undefined') {
+  (globalThis as any).require = createRequire(import.meta.url);
+}
 
 const getBlogRoutes = () => {
   const blogDir = path.resolve(__dirname, './src/content/blog')
@@ -24,8 +30,12 @@ export default defineConfig(async ({ command }): Promise<UserConfig> => {
           staticDir: path.join(__dirname, 'dist'),
           routes: ['/', '/about', '/portfolio', '/team', '/blog', ...getBlogRoutes()],
           renderer: new Prerender.PuppeteerRenderer({
-            renderAfterDocumentEvent: 'custom-render-trigger',
+            renderAfterTime: 2000,
             maxConcurrentRoutes: 1,
+            inject: {
+              prerendered: true
+            },
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
           }),
           postProcess(renderedRoute: any) {
             renderedRoute.html = renderedRoute.html.replace(
@@ -36,8 +46,8 @@ export default defineConfig(async ({ command }): Promise<UserConfig> => {
           },
         })
       );
-    } catch {
-      console.warn('Prerender plugin could not be loaded, skipping SSG.');
+    } catch (err: any) {
+      console.warn('Prerender plugin could not be loaded, skipping SSG. Error detail:', err?.message || err);
     }
   }
 

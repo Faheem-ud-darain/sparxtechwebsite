@@ -7,7 +7,7 @@ import Background from '@/components/animations/Background';
 import PageTransition from '@/components/animations/PageTransition';
 import Preloader from '@/components/animations/Preloader';
 import PageLoader from '@/components/animations/PageLoader';
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import CookieConsent from '@/components/layout/CookieConsent';
 import Header from '@/components/layout/Header';
 
@@ -51,7 +51,15 @@ function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    return typeof window !== 'undefined' && !(window as any).__PRERENDER_INJECTED;
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).__PRERENDER_INJECTED) {
+      document.dispatchEvent(new Event('custom-render-trigger'));
+    }
+  }, []);
 
   return (
     <div className="relative bg-[#030303] selection:bg-green-500/30 min-h-screen">
