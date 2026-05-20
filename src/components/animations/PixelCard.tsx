@@ -199,17 +199,14 @@ export default function PixelCard({
   const initPixels = () => {
     if (!containerRef.current || !canvasRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
+    const width = containerRef.current.offsetWidth;
+    const height = containerRef.current.offsetHeight;
     const ctx = canvasRef.current.getContext('2d');
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
     canvasRef.current.width = width * dpr;
     canvasRef.current.height = height * dpr;
-    canvasRef.current.style.width = `${width}px`;
-    canvasRef.current.style.height = `${height}px`;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const gapInt = parseInt(finalGap.toString(), 10);
@@ -246,10 +243,13 @@ export default function PixelCard({
     timePreviousRef.current = timeNow - (timePassed % timeInterval);
 
     const ctx = canvasRef.current?.getContext('2d');
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!ctx || !canvasRef.current || !rect) return;
+    const container = containerRef.current;
+    if (!ctx || !canvasRef.current || !container) return;
 
-    ctx.clearRect(0, 0, rect.width, rect.height);
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+
+    ctx.clearRect(0, 0, width, height);
 
     let allIdle = true;
     for (let i = 0; i < pixelsRef.current.length; i++) {
