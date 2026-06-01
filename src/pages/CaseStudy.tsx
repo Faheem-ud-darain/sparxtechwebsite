@@ -1,8 +1,24 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { mockProjects } from '@/data/mockProjects';
+
+// Dynamically glob all WebP files in the Portfolio Images directory
+const galleryGlob = import.meta.glob<{ default: string }>('../assets/Portfolio Images/**/*.webp', { eager: true });
+
+// Map project slugs to their respective asset subfolders
+const folderMapping: Record<string, string> = {
+  'albatross-edvisors-social-media-graphics': 'Albatross',
+  'daehan-links-social-media-ads-management': 'Daehan Links',
+  'hdo-pakistan-branding-graphics': 'HDO Pakistan',
+  'kingdom-watch-company-social-graphics': 'Kingdom Watch Company',
+  'nma-watch-guy-graphics-ads': 'Nma Watch Guy',
+  'sa-cosmetics-posters-video-boost': 'SA Cosmetics',
+  'sam-associates-study-abroad-graphics': 'SAM Associates',
+  'syloflow-complete-branding-service': 'Syloflow'
+};
 
 const renderPortableText = (blocks: any[] | undefined) => {
   if (!blocks || blocks.length === 0) return <p className="text-gray-400 text-lg leading-relaxed">Detailed content for this project will be available soon.</p>;
@@ -24,6 +40,14 @@ import SEO from '@/components/SEO';
 const CaseStudy = () => {
   const { slug } = useParams<{ slug: string }>();
   const activeProject = mockProjects.find(p => p.slug.current === slug);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  const activeFolder = activeProject ? folderMapping[activeProject.slug.current] : null;
+  const projectImages = activeFolder 
+    ? Object.keys(galleryGlob)
+        .filter(key => key.includes(`/Portfolio Images/${activeFolder}/`))
+        .map(key => galleryGlob[key].default)
+    : [];
   
   return (
     <div className="bg-[#030303] min-h-screen text-white selection:bg-green-500/30">
@@ -184,6 +208,34 @@ const CaseStudy = () => {
               </div>
             </div>
 
+            {/* Gallery Showcase Section */}
+            {projectImages.length > 0 && (
+              <AnimatedContent direction="up" delay={0.5}>
+                <section className="mt-24 sm:mt-32">
+                  <h2 className="text-white text-2xl font-bold mb-8 flex items-center gap-4">
+                    <span className="w-8 h-[1px] bg-green-500/30" />
+                    Project Deliverables & Creative Visuals
+                  </h2>
+                  <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+                    {projectImages.map((src, i) => (
+                      <div 
+                        key={i} 
+                        onClick={() => setSelectedImage(src)}
+                        className="break-inside-avoid rounded-2xl overflow-hidden border border-white/[0.08] hover:border-green-500/30 transition-all duration-300 group cursor-pointer bg-white/[0.02] shadow-lg"
+                      >
+                        <img 
+                          src={src} 
+                          alt={`Deliverable ${i + 1}`} 
+                          className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500" 
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </AnimatedContent>
+            )}
+
             {/* Next Project Link */}
             <AnimatedContent direction="up" delay={0.6}>
               <div className="mt-32 pt-20 border-t border-white/[0.06] flex justify-center">
@@ -212,6 +264,28 @@ const CaseStudy = () => {
           </div>
         )}
       </main>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 transition-all duration-300 animate-in fade-in"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white/60 hover:text-white cursor-pointer transition-colors p-2 rounded-full bg-white/5 border border-white/10"
+            aria-label="Close lightbox"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Full screen project deliverable preview" 
+            className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
       <Footer />
     </div>
   );

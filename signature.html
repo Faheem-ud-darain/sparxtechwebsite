@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPARX Studioz & Technologies - Email Signature Builder</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --brand-green: #22c55e;
+      --brand-blue: #4848FF;
+      --bg-dark: #030303;
+      --bg-card: #0c0c14;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #f5f5f7;
+      --text-secondary: #8b8b99;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0 0 10px 0;
+      background: linear-gradient(135deg, #fff 30%, var(--brand-green) 70%, var(--brand-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .instructions-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .instructions-card h3 {
+      font-family: 'Outfit', sans-serif;
+      margin-top: 0;
+      color: var(--brand-green);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instructions-card ol {
+      margin: 0;
+      padding-left: 20px;
+      color: #d1d1d6;
+      line-height: 1.6;
+    }
+
+    .instructions-card li {
+      margin-bottom: 8px;
+    }
+
+    .option-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .option-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .option-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-badge {
+      background: rgba(72, 72, 255, 0.15);
+      border: 1px solid rgba(72, 72, 255, 0.3);
+      color: #8c8cff;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    .preview-area {
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .bg-light {
+      background-color: #ffffff;
+    }
+
+    .bg-dark-preview {
+      background-color: #0d0d12;
+    }
+
+    .option-footer {
+      padding: 16px 24px;
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, var(--brand-green) 0%, #16a34a 100%);
+      border: none;
+      color: white;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+    }
+
+    .copy-btn:active {
+      transform: translateY(1px);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      background: #16a34a;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer.page-footer {
+      margin-top: auto;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-subtle);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Keep signature preview tables isolated */
+    .signature-container {
+      display: inline-block;
+    }
+
+    /* Option 3 CSS Variables defaults (Light Mode preview context) */
+    #sig-3 {
+      --sig3-bg: #fafafa;
+      --sig3-border: #e2e8f0;
+      --sig3-name: #0f172a;
+      --sig3-subtitle: #64748b;
+      --sig3-label: #0f172a;
+      --sig3-value: #475569;
+      --sig3-slogan: #64748b;
+      --sig3-personal: #64748b;
+      --sig3-divider: #cbd5e1;
+      --sig3-shadow: rgba(0,0,0,0.02);
+    }
+
+    /* Option 3 CSS Variables (Dark Mode preview context) */
+    #sig-3.dark-mode-sig3 {
+      --sig3-bg: #0b0b10;
+      --sig3-border: rgba(255, 255, 255, 0.08);
+      --sig3-name: #f8fafc;
+      --sig3-subtitle: #94a3b8;
+      --sig3-label: #f8fafc;
+      --sig3-value: #94a3b8;
+      --sig3-slogan: #94a3b8;
+      --sig3-personal: #94a3b8;
+      --sig3-divider: rgba(255, 255, 255, 0.12);
+      --sig3-shadow: rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Gmail Signature Builder</h1>
+    <p class="subtitle">Designed for Faheem Jadoon &bull; SPARX Studioz & Technologies</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- Setup Instructions -->
+    <div class="instructions-card">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        How to Set Up in Gmail
+      </h3>
+      <ol>
+        <li>Review the design options below and choose your favorite.</li>
+        <li>Use the <strong>Light / Dark Preview</strong> toggles to verify contrast on both backgrounds.</li>
+        <li>Click the green <strong>"Copy Signature"</strong> button. This copies the formatted rich text (including colors, links, and layout structures) directly.</li>
+        <li>Open your <strong>Gmail</strong>, click the <strong>Settings Cog</strong> ⚙️ &rarr; <strong>See all settings</strong>.</li>
+        <li>Scroll down to the <strong>Signature</strong> section and click <strong>Create new</strong> (or select your existing signature).</li>
+        <li>Paste the copied signature directly into the box using <strong>Ctrl + V</strong>.</li>
+        <li>Ensure the checkbox <i>"Insert signature before quoted text..."</i> is checked, then scroll to the bottom and click <strong>Save Changes</strong>.</li>
+      </ol>
+    </div>
+
+    <!-- Option 1: Minimalist Spark -->
+    <div class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 1: The Tech Spark
+          <span class="option-badge">Recommended</span>
+        </h2>
+        <span style="color: var(--text-secondary); font-size: 0.85rem;">Clean, professional, high-compatibility layout</span>
+      </div>
+      <div class="preview-area bg-light" id="preview-1">
+        <div class="signature-container" id="sig-1">
+          <!-- SIGNATURE 1 START -->
+          <table cellpadding="0" cellspacing="0" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; border-collapse: collapse; line-height: 1.4; max-width: 500px; color: #1f2937;">
+            <tr>
+              <!-- Profile / Logo Column -->
+              <td style="vertical-align: top; padding-right: 16px; width: 75px;">
+                <img src="https://sparxtechwebsite.vercel.app/logo.jpg" alt="SPARX" width="75" height="75" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; display: block; border: 2.5px solid #22c55e;" />
+              </td>
+              <!-- Vertical Divider Line -->
+              <td style="width: 3px; background-color: #22c55e; padding: 0; vertical-align: stretch;"></td>
+              <!-- Content Column -->
+              <td style="vertical-align: top; padding-left: 16px;">
+                <h2 style="margin: 0; font-size: 17px; font-weight: 700; color: #111827; letter-spacing: -0.01em;">Faheem Jadoon</h2>
+                <p style="margin: 1px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #4848FF; letter-spacing: 0.06em;">Founder & Director</p>
+                <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 500; color: #6b7280;">SPARX Studioz & Technologies</p>
+                
+                <!-- Contact info sub-table -->
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 11.5px; color: #4b5563;">
+                  <tr>
+                    <td style="padding: 1px 0;">
+                      <span style="color: #22c55e; font-weight: 600; margin-right: 3px;">P:</span> <a href="tel:+923095843733" style="color: #4b5563; text-decoration: none;">+92 309 5843733</a>
+                      <span style="color: #e5e7eb; margin: 0 6px;">|</span>
+                      <span style="color: #22c55e; font-weight: 600; margin-right: 3px;">W:</span> <a href="https://wa.me/905488281864" style="color: #4b5563; text-decoration: none;">+90 548 828 1864</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 1px 0;">
+                      <span style="color: #22c55e; font-weight: 600; margin-right: 3px;">E:</span> <a href="mailto:studiozsparx@gmail.com" style="color: #4848FF; text-decoration: none;">studiozsparx@gmail.com</a>
+                      <span style="color: #e5e7eb; margin: 0 6px;">|</span>
+                      <span style="color: #22c55e; font-weight: 600; margin-right: 3px;">Web:</span> <a href="https://sparxtechwebsite.vercel.app" style="color: #4848FF; text-decoration: none; font-weight: 600;">sparxtech.vercel.app</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Social and Personal Links -->
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 8px;">
+                  <tr>
+                    <td style="font-size: 11px;">
+                      <a href="https://www.linkedin.com/company/sparxtechnologies" style="color: #4848FF; text-decoration: none; font-weight: 600; margin-right: 10px;">Agency LI</a>
+                      <a href="https://www.instagram.com/sparxstudioz" style="color: #4848FF; text-decoration: none; font-weight: 600; margin-right: 10px;">Instagram</a>
+                      <span style="color: #d1d5db; margin-right: 10px;">•</span>
+                      <a href="https://www.linkedin.com/in/faheemuddarain/" style="color: #4b5563; text-decoration: none; font-weight: 500;">Faheem Jadoon (LI)</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Slogan Block -->
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 8px; width: 100%;">
+                  <tr>
+                    <td style="border-top: 1px solid #e5e7eb; padding-top: 5px; font-size: 10px; font-style: italic; color: #9ca3af; letter-spacing: 0.02em;">
+                      Technology That Sparks Tomorrow
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <!-- SIGNATURE 1 END -->
+        </div>
+      </div>
+      <div class="option-footer">
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setPreviewBg('1', 'light')">Light Theme</button>
+          <button class="toggle-btn" onclick="setPreviewBg('1', 'dark')">Dark Theme</button>
+        </div>
+        <button class="copy-btn" onclick="copySig('sig-1')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy Signature
+        </button>
+      </div>
+    </div>
+
+    <!-- Option 2: Elegant Blue-Green Horizon -->
+    <div class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 2: The Creative Horizon
+          <span class="option-badge" style="background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #4ade80;">Sleek Grid</span>
+        </h2>
+        <span style="color: var(--text-secondary); font-size: 0.85rem;">Stylish dual-column layout with horizontal styling</span>
+      </div>
+      <div class="preview-area bg-light" id="preview-2">
+        <div class="signature-container" id="sig-2">
+          <!-- SIGNATURE 2 START -->
+          <table cellpadding="0" cellspacing="0" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; border-collapse: collapse; line-height: 1.4; max-width: 500px; color: #2d3748;">
+            <tr>
+              <td>
+                <!-- Logo Top / Badge -->
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 8px;">
+                  <tr>
+                    <td style="padding-right: 8px; vertical-align: middle;">
+                      <img src="https://sparxtechwebsite.vercel.app/logo.jpg" alt="Logo" width="30" height="30" style="width: 30px; height: 30px; border-radius: 6px; display: block;" />
+                    </td>
+                    <td style="vertical-align: middle;">
+                      <span style="font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #1a202c; letter-spacing: 0.1em; display: block; line-height: 1;">SPARX STUDIOZ & TECHNOLOGIES</span>
+                    </td>
+                  </tr>
+                </table>
+                
+                <!-- Main Details -->
+                <h2 style="margin: 0; font-size: 18px; font-weight: 700; color: #1a202c; letter-spacing: -0.01em; line-height: 1.2;">Faheem Jadoon</h2>
+                <div style="font-size: 12px; color: #4848FF; font-weight: 600; margin-top: 1px; letter-spacing: 0.02em;">Founder & Agency Lead</div>
+                
+                <!-- Horizontal bar gradient effect using tables -->
+                <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; margin: 8px 0;">
+                  <tr>
+                    <td style="height: 2px; width: 60px; background-color: #22c55e; padding: 0;"></td>
+                    <td style="height: 2px; width: 40px; background-color: #4848FF; padding: 0;"></td>
+                    <td style="height: 2px; background-color: #e2e8f0; padding: 0;"></td>
+                  </tr>
+                </table>
+
+                <!-- Contacts info list -->
+                <div style="font-size: 11.5px; color: #4a5568; line-height: 1.6;">
+                  <div>
+                    <span style="color: #4848FF; font-weight: 600;">Office:</span> <a href="tel:+923095843733" style="color: #4a5568; text-decoration: none;">+92 309 5843733</a>
+                    <span style="color: #cbd5e0; margin: 0 4px;">|</span>
+                    <span style="color: #4848FF; font-weight: 600;">WhatsApp:</span> <a href="https://wa.me/905488281864" style="color: #4a5568; text-decoration: none;">+90 548 828 1864</a>
+                  </div>
+                  <div>
+                    <span style="color: #4848FF; font-weight: 600;">Email:</span> <a href="mailto:studiozsparx@gmail.com" style="color: #22c55e; text-decoration: none; font-weight: 500;">studiozsparx@gmail.com</a>
+                    <span style="color: #cbd5e0; margin: 0 4px;">|</span>
+                    <span style="color: #4848FF; font-weight: 600;">Agency:</span> <a href="https://sparxtechwebsite.vercel.app" style="color: #22c55e; text-decoration: none; font-weight: 500;">sparxtech.vercel.app</a>
+                  </div>
+                  <div style="color: #718096; font-size: 11px; margin-top: 4px;">
+                    Abbottabad, KPK, Pakistan
+                  </div>
+                </div>
+
+                <!-- Footer Social Row -->
+                <div style="margin-top: 10px; font-size: 11px; color: #718096;">
+                  <a href="https://www.linkedin.com/in/faheemuddarain/" style="color: #4848FF; text-decoration: none; font-weight: 600;">LinkedIn Profile</a>
+                  <span style="color: #cbd5e0; margin: 0 6px;">&bull;</span>
+                  <a href="https://www.instagram.com/sparxstudioz" style="color: #4848FF; text-decoration: none; font-weight: 600;">Agency Instagram</a>
+                  <span style="color: #cbd5e0; margin: 0 6px;">&bull;</span>
+                  <span style="font-style: italic; color: #a0aec0;">Technology That Sparks Tomorrow</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <!-- SIGNATURE 2 END -->
+        </div>
+      </div>
+      <div class="option-footer">
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setPreviewBg('2', 'light')">Light Theme</button>
+          <button class="toggle-btn" onclick="setPreviewBg('2', 'dark')">Dark Theme</button>
+        </div>
+        <button class="copy-btn" onclick="copySig('sig-2')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy Signature
+        </button>
+      </div>
+    </div>
+
+    <!-- Option 3: Modern Dark Vibe (Compact Box) -->
+    <div class="option-card">
+      <div class="option-header">
+        <h2 class="option-title">
+          Option 3: The Dark Accent
+          <span class="option-badge" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #d1d1d6;">Premium Dark</span>
+        </h2>
+        <span style="color: var(--text-secondary); font-size: 0.85rem;">Inspired directly by the website's dark-mode UI</span>
+      </div>
+      <div class="preview-area bg-light" id="preview-3">
+        <div class="signature-container" id="sig-3">
+          <!-- SIGNATURE 3 START -->
+          <table cellpadding="0" cellspacing="0" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; border-collapse: collapse; line-height: 1.4; max-width: 480px; width: 100%; border: 1px solid var(--sig3-border, #e2e8f0); border-radius: 12px; overflow: hidden; background-color: var(--sig3-bg, #fafafa); box-shadow: 0 4px 6px var(--sig3-shadow, rgba(0,0,0,0.02));">
+            <tr>
+              <td style="padding: 16px;">
+                <!-- Main layout grid -->
+                <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                  <tr>
+                    <!-- Info Column -->
+                    <td style="vertical-align: top;">
+                      <h2 style="margin: 0; font-size: 16px; font-weight: 700; color: var(--sig3-name, #0f172a); letter-spacing: -0.01em;">Faheem Jadoon</h2>
+                      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #22c55e; letter-spacing: 0.05em; margin-top: 1px;">Founder & Tech Director</div>
+                      <div style="font-size: 11.5px; color: var(--sig3-subtitle, #64748b); font-weight: 500; margin-top: 1px;">SPARX Studioz & Technologies</div>
+                      
+                      <!-- Links Block -->
+                      <div style="margin-top: 10px; font-size: 11.5px; color: var(--sig3-value, #475569); line-height: 1.6;">
+                        <div style="margin-bottom: 3px;">
+                          <img src="https://img.icons8.com/ios-filled/24/4848FF/whatsapp.png" alt="WhatsApp" width="13" height="13" style="width: 13px; height: 13px; margin-right: 6px; vertical-align: middle; display: inline-block; border: 0;" />
+                          <a href="https://wa.me/905488281864" style="color: var(--sig3-value, #475569); text-decoration: none; vertical-align: middle; display: inline-block;">+90 548 828 1864</a> 
+                        </div>
+                        <div>
+                          <img src="https://img.icons8.com/ios-filled/24/4848FF/globe.png" alt="Web" width="13" height="13" style="width: 13px; height: 13px; margin-right: 6px; vertical-align: middle; display: inline-block; border: 0;" />
+                          <a href="https://sparxtechwebsite.vercel.app" style="color: #4848FF; text-decoration: none; font-weight: 600; vertical-align: middle; display: inline-block;">sparxtech.vercel.app</a>
+                        </div>
+                      </div>
+
+                      <!-- Social Icons Row (replaces text links and buttons) -->
+                      <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top: 10px;">
+                        <tr>
+                          <td style="padding-right: 8px; vertical-align: middle;">
+                            <a href="https://www.linkedin.com/company/sparxtechnologies" target="_blank" style="text-decoration: none; display: inline-block;">
+                              <img src="https://img.icons8.com/ios-filled/24/4848FF/linkedin.png" alt="LinkedIn" width="16" height="16" style="width: 16px; height: 16px; display: block; border: 0;" />
+                            </a>
+                          </td>
+                          <td style="padding-right: 8px; vertical-align: middle;">
+                            <a href="https://www.instagram.com/sparxstudioz" target="_blank" style="text-decoration: none; display: inline-block;">
+                              <img src="https://img.icons8.com/ios-filled/24/4848FF/instagram-new.png" alt="Instagram" width="16" height="16" style="width: 16px; height: 16px; display: block; border: 0;" />
+                            </a>
+                          </td>
+                          <td style="padding-right: 8px; vertical-align: middle;">
+                            <a href="https://www.facebook.com/sparxstudiozandtechnologies" target="_blank" style="text-decoration: none; display: inline-block;">
+                              <img src="https://img.icons8.com/ios-filled/24/4848FF/facebook-new.png" alt="Facebook" width="16" height="16" style="width: 16px; height: 16px; display: block; border: 0;" />
+                            </a>
+                          </td>
+                          <td style="padding-right: 8px; vertical-align: middle; color: var(--sig3-divider, #cbd5e1); font-size: 11px;" class="divider-dot">•</td>
+                          <td style="vertical-align: middle;">
+                            <a href="https://www.linkedin.com/in/faheemuddarain/" target="_blank" style="font-size: 11px; color: var(--sig3-personal, #64748b); text-decoration: none; font-weight: 500; display: inline-block;">Personal Profile</a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    
+                    <!-- Circular Profile Column -->
+                    <td style="vertical-align: top; text-align: right; width: 60px; padding-left: 12px;">
+                      <img src="https://sparxtechwebsite.vercel.app/logo.jpg" alt="SST" width="60" height="60" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; display: inline-block; border: 2px solid #4848FF;" />
+                    </td>
+                  </tr>
+                </table>
+                
+                <!-- Bottom Banner Slogan -->
+                <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 12px; border-top: 1px dashed var(--sig3-divider, #cbd5e1); padding-top: 8px;">
+                  <tr>
+                    <td style="font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--sig3-slogan, #64748b); letter-spacing: 0.05em; padding-top: 6px;">
+                      ⚡ Technology That Sparks Tomorrow
+                    </td>
+                    <td style="font-size: 10px; text-align: right; color: var(--sig3-personal, #64748b); padding-top: 6px;">
+                      Abbottabad, Pakistan
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <!-- SIGNATURE 3 END -->
+        </div>
+      </div>
+      <div class="option-footer">
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setPreviewBg('3', 'light')">Light Theme</button>
+          <button class="toggle-btn" onclick="setPreviewBg('3', 'dark')">Dark Theme</button>
+        </div>
+        <button class="copy-btn" onclick="copySig('sig-3')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy Signature
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast">Signature copied! Ready to paste in Gmail settings.</div>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 SPARX Studioz & Technologies. Interactive Email Signature Tool.</p>
+  </footer>
+
+  <script>
+    function setPreviewBg(optionIndex, bgType) {
+      const previewArea = document.getElementById('preview-' + optionIndex);
+      const container = document.getElementById('sig-' + optionIndex);
+      
+      // Update toggle buttons active state
+      const buttons = previewArea.nextElementSibling.querySelectorAll('.toggle-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      if (bgType === 'light') {
+        previewArea.className = 'preview-area bg-light';
+        buttons[0].classList.add('active');
+        
+        if (optionIndex === '3') {
+          container.classList.remove('dark-mode-sig3');
+        }
+      } else {
+        previewArea.className = 'preview-area bg-dark-preview';
+        buttons[1].classList.add('active');
+        
+        if (optionIndex === '3') {
+          container.classList.add('dark-mode-sig3');
+        }
+      }
+    }
+
+    async function copySig(elementId) {
+      const element = document.getElementById(elementId);
+      
+      // Select the contents of the signature block
+      const range = document.createRange();
+      range.selectNode(element);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      
+      try {
+        // Execute copy command for Rich Text formatting (works across modern browsers)
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showToast();
+        } else {
+          alert('Failed to copy. Please select the signature and copy manually.');
+        }
+      } catch (err) {
+        console.error('Clipboard error:', err);
+        // Fallback for modern Clipboard API if needed
+        try {
+          const htmlContent = element.innerHTML;
+          const blob = new Blob([htmlContent], { type: 'text/html' });
+          const blobText = new Blob([element.innerText], { type: 'text/plain' });
+          const data = [new ClipboardItem({
+            'text/html': blob,
+            'text/plain': blobText
+          })];
+          await navigator.clipboard.write(data);
+          showToast();
+        } catch (e) {
+          alert('Copy failed. Please manually select the signature text and copy it.');
+        }
+      }
+      
+      // Clear selection
+      window.getSelection().removeAllRanges();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -12,6 +12,13 @@ import NMAImg from '@/assets/NMA Watch Guy.webp';
 import SparxWebsiteImg from '@/assets/Sparx tech Agency Website.webp';
 import GoldOfHimalayaImg from '@/assets/gold of himalaya.webp';
 
+// Graphics Design project assets
+import NMAWatchGraphics from '@/assets/nma_watch_graphics.png';
+import HDOPakistanBranding from '@/assets/hdo_pakistan_branding.png';
+import SACosmeticsBranding from '@/assets/sa_cosmetics_branding.png';
+import SAMAssociatesBranding from '@/assets/sam_associates_branding.png';
+import SyloFlowBrandIdentity from '@/assets/syloflow_brand_identity.png';
+
 export const mockProjects = [
   {
     _id: '1',
@@ -237,5 +244,80 @@ export const mockProjects = [
     ],
     image: AlbatrossImg,
     gridClass: 'md:col-span-2 md:row-span-1'
+  },
+  {
+    _id: '16',
+    title: 'NMA Watch Guy - Social Media Graphics & Ad Creatives',
+    slug: { current: 'nma-watch-guy-graphics-ads' },
+    category: 'Graphics Design',
+    techStack: ['Adobe Photoshop', 'Adobe Illustrator', 'Canva Pro', 'Figma'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'NMA Watch Guy, a prominent US-based luxury watch dealer, required visually captivating social media layout designs and target-driven ad creatives to showcase premium watches in a highly competitive online marketplace.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies designed customized, high-converting social media templates and ad creative sets. By using high-contrast typography, premium layout templates, and professional watch photography edits, we elevated their visual marketing and increased user engagement.' }] }
+    ],
+    image: NMAWatchGraphics,
+    gridClass: 'md:col-span-2 md:row-span-1'
+  },
+  {
+    _id: '17',
+    title: 'HDO Pakistan - Non-Profit Branding & Visual Identity',
+    slug: { current: 'hdo-pakistan-branding-graphics' },
+    category: 'Graphics Design',
+    techStack: ['Adobe Illustrator', 'Adobe Photoshop', 'Adobe InDesign', 'Canva Pro'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'HDO (Human Development Organization) Pakistan, a leading NGO working on social welfare, needed a consistent corporate identity and clean, impactful graphic designs for their annual reports, presentations, and social awareness campaigns.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We designed HDO Pakistan\'s corporate logo guidelines, annual impact report layouts, educational presentation decks, and social media flyers, helping them present their social missions professionally to global donors and local communities.' }] }
+    ],
+    image: HDOPakistanBranding,
+    gridClass: 'md:col-span-2 md:row-span-1'
+  },
+  {
+    _id: '18',
+    title: 'SA Cosmetics - Social Media Posters, TikTok Boost & Video Creation',
+    slug: { current: 'sa-cosmetics-posters-video-boost' },
+    category: 'Graphics Design',
+    techStack: ['Adobe Illustrator', 'Adobe Premiere Pro', 'Adobe After Effects', 'TikTok Ads Manager'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'SA Cosmetics needed high-quality social media posters, engaging promotional video clips, and targeted TikTok boost campaigns to launch a cosmetic product line and drive traffic to their store.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies designed custom beauty posters and produced highly engaging vertical video advertisements, combined with TikTok ad campaign setup and boost services that significantly increased brand visibility and sales conversions.' }] }
+    ],
+    image: SACosmeticsBranding,
+    gridClass: 'md:col-span-4 md:row-span-2'
+  },
+  {
+    _id: '19',
+    title: 'SAM Associates - Study Abroad Consultancy Social Media Graphics',
+    slug: { current: 'sam-associates-study-abroad-graphics' },
+    category: 'Graphics Design',
+    techStack: ['Adobe Photoshop', 'Adobe Illustrator', 'Canva Pro'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'SAM Associates, a study abroad consultancy helping students secure international university admissions, needed professional social media graphics to announce university partnerships, visa success stories, and student admissions tips.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We created custom study abroad consultancy social media graphics templates using premium styling, student-centric visuals, and clear call-to-action designs that established credibility and attracted student inquiries.' }] }
+    ],
+    image: SAMAssociatesBranding,
+    gridClass: 'md:col-span-2 md:row-span-1'
+  },
+  {
+    _id: '20',
+    title: 'SyloFlow - Complete SaaS Brand Identity & Design System',
+    slug: { current: 'syloflow-complete-branding-service' },
+    category: 'Graphics Design',
+    techStack: ['Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'Adobe After Effects'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'SyloFlow, a SaaS productivity platform, required a complete, modern branding package including logo variations, vector illustrations, design guidelines, and a design system to build a cohesive visual identity.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We designed SyloFlow\'s complete visual branding identity, including the primary logo, typographic guidelines, responsive brand assets, and custom illustrations for their web and marketing materials.' }] }
+    ],
+    image: SyloFlowBrandIdentity,
+    gridClass: 'md:col-span-2 md:row-span-2'
   }
 ];
