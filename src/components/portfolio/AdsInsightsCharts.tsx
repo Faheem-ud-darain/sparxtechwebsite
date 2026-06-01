@@ -162,7 +162,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
             </div>
 
             {/* Mobile View: Horizontal Progress Bars */}
-            <div className="space-y-4 sm:hidden py-4 font-mono">
+            <div className="space-y-4 md:hidden py-4 font-mono">
               {cplDataset.map((item, idx) => {
                 const maxCpl = 180;
                 const barWidthPercent = Math.min(100, (item.cpl / maxCpl) * 100);
@@ -188,7 +188,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
             </div>
 
             {/* Desktop View: Vertical Columns */}
-            <div className="hidden sm:flex h-56 items-end justify-between gap-2 px-2 relative pt-8">
+            <div className="hidden md:flex h-64 items-end justify-between gap-2 px-2 relative pt-8 pb-12">
               {cplDataset.map((item, idx) => {
                 const maxCpl = 180;
                 const colHeightPercent = Math.max(10, (item.cpl / maxCpl) * 100);
@@ -218,12 +218,11 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
                     <div className="w-full bg-white/[0.03] border border-white/[0.05] rounded-t-lg h-40 flex items-end overflow-hidden">
                       <motion.div
                         className={`w-full bg-gradient-to-t ${item.color} rounded-t-md opacity-70 group-hover:opacity-100 transition-opacity`}
-                        style={{ height: `${colHeightPercent}%` }}
+                        style={{ height: `${colHeightPercent}%`, originY: 1 }}
                         initial={{ scaleY: 0 }}
                         whileInView={{ scaleY: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.1 }}
-                        style={{ originY: 1 }}
                       />
                     </div>
                     <span className="text-[8px] font-medium text-gray-500 rotate-45 origin-top-left mt-2 block whitespace-nowrap group-hover:text-gray-300 font-mono">

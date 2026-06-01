@@ -93,7 +93,14 @@ export const mockProjects = [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies delivered a 360-degree digital marketing solution for Daehan Links. We produced 16 high-quality reels from concept to completion and managed their entire social media presence.' }] }
     ],
     image: DaehanImg,
-    gridClass: 'md:col-span-2 md:row-span-1'
+    gridClass: 'md:col-span-2 md:row-span-1',
+    videos: [
+      'DW4iaHgEa2V',
+      'DW1Px9EAnra',
+      'DWZfpSbjC0c',
+      'DWWk91njErs',
+      'DV6aaFvAuq6'
+    ]
   },
   {
     _id: '6',

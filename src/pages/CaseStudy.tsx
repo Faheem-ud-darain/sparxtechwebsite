@@ -216,6 +216,78 @@ const CaseStudy = () => {
               <AdsInsightsCharts slug={activeProject.slug.current} />
             )}
 
+            {/* Campaign Video Showcase */}
+            {activeProject && 'videos' in activeProject && Array.isArray((activeProject as any).videos) && (activeProject as any).videos.length > 0 && (
+              <AnimatedContent direction="up" delay={0.5}>
+                <section className="mt-24 sm:mt-32">
+                  <div className="flex flex-col mb-12">
+                    <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold tracking-widest uppercase self-start mb-4">
+                      Creative Deliverables
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight flex items-center gap-4">
+                      Campaign Reels & Video Creative Assets
+                    </h2>
+                    <p className="text-gray-400 mt-2 max-w-2xl leading-relaxed">
+                      Actual high-performing video creatives produced and managed for the campaigns. Scroll horizontally or swipe to view the dynamic content.
+                    </p>
+                  </div>
+
+                  {/* Horizontal Scroll Snap Container */}
+                  <div className="flex gap-6 overflow-x-auto pb-8 pt-4 px-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent snap-x snap-mandatory">
+                    {(activeProject as any).videos.map((video: any, idx: number) => {
+                      const isString = typeof video === 'string';
+                      const type = isString ? 'instagram' : video.type;
+                      const id = isString ? video : video.id;
+
+                      const embedUrl = type === 'instagram'
+                        ? `https://www.instagram.com/reel/${id}/embed/`
+                        : `https://www.tiktok.com/embed/v2/${id}`;
+
+                      return (
+                        <div 
+                          key={idx} 
+                          className="flex-shrink-0 w-[300px] snap-center flex flex-col"
+                        >
+                          {/* Glassmorphic Mobile Phone Mockup Frame */}
+                          <div className="relative mx-auto w-full aspect-[9/16] rounded-[2rem] border-[4px] border-white/10 bg-[#09090c] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden group hover:border-green-500/30 transition-all duration-500 flex flex-col justify-between">
+                            {/* Phone Speaker/Notch Decor */}
+                            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-16 h-3 bg-white/10 rounded-full z-20 flex items-center justify-center">
+                              <div className="w-8 h-[2px] bg-white/20 rounded-full" />
+                            </div>
+
+                            {/* Iframe container */}
+                            <div className="w-full h-full pt-8 pb-4 px-1 flex-1">
+                              <iframe 
+                                src={embedUrl}
+                                className="w-full h-full rounded-2xl bg-black border-0"
+                                scrolling="no"
+                                allowFullScreen={false}
+                                allow="encrypted-media"
+                                title={`Campaign Video Creative ${idx + 1}`}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Fallback / View Link */}
+                          <div className="mt-4 text-center">
+                            <a 
+                              href={type === 'instagram' ? `https://www.instagram.com/reel/${id}/` : `https://www.tiktok.com/video/${id}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-green-400 font-mono transition-colors"
+                            >
+                              <span>View on {type === 'instagram' ? 'Instagram' : 'TikTok'}</span>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              </AnimatedContent>
+            )}
+
             {/* Gallery Showcase Section */}
             {projectImages.length > 0 && (
               <AnimatedContent direction="up" delay={0.5}>
