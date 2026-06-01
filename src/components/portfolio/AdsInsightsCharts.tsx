@@ -421,15 +421,15 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Chart 1: Placement Distribution Donut */}
-          <div className="lg:col-span-7 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex flex-col justify-between flex-1 h-full">
-              <div>
-                <h3 className="text-lg font-bold text-white mb-2">Platform Distribution</h3>
-                <p className="text-xs text-gray-400 mb-6">Percentage share of delivery actions across Facebook and Instagram placements.</p>
-              </div>
+          <div className="lg:col-span-7 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between min-h-[380px]">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Platform Distribution</h3>
+              <p className="text-xs text-gray-400 mb-6">Percentage share of delivery actions across Facebook and Instagram placements.</p>
+            </div>
 
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-8 flex-1">
               {/* Legend list */}
-              <div className="space-y-3 font-mono">
+              <div className="space-y-2.5 font-mono w-full sm:w-3/5">
                 {placements.map((item, idx) => (
                   <div
                     key={idx}
@@ -441,94 +441,99 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
                     onMouseEnter={() => setHoveredSegment(idx)}
                     onMouseLeave={() => setHoveredSegment(null)}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                      <span className="text-gray-300 font-medium">{item.placement}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
+                      <span className="text-gray-300 text-[11px] font-medium">{item.placement}</span>
                     </div>
-                    <span className="text-white font-extrabold">
+                    <span className="text-white font-bold text-[11px] font-mono">
                       {item.volume.toLocaleString()} <span className="text-gray-500">({item.share.toFixed(2)}%)</span>
                     </span>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Circular Donut Diagram */}
-            <div className="relative flex items-center justify-center p-4">
-              <svg width={size} height={size} className="transform -rotate-90 select-none overflow-visible">
-                {placements.map((item, idx) => {
-                  const percent = item.share;
-                  const strokeDasharray = `${circumference} ${circumference}`;
-                  const strokeDashoffset = circumference - (percent / 100) * circumference;
-                  const rotationOffset = (cumulativePercent / 100) * 360;
-                  cumulativePercent += percent;
+              {/* Circular Donut Diagram */}
+              <div className="relative flex items-center justify-center p-4 w-full sm:w-2/5 min-h-[160px]">
+                <svg width={size} height={size} className="transform -rotate-90 select-none overflow-visible">
+                  {placements.map((item, idx) => {
+                    const percent = item.share;
+                    const strokeDasharray = `${circumference} ${circumference}`;
+                    const strokeDashoffset = circumference - (percent / 100) * circumference;
+                    const rotationOffset = (cumulativePercent / 100) * 360;
+                    cumulativePercent += percent;
 
-                  const isHovered = hoveredSegment === idx;
+                    const isHovered = hoveredSegment === idx;
 
-                  return (
-                    <g key={idx}>
-                      {/* Glow support */}
-                      {isHovered && (
-                        <circle
+                    return (
+                      <g key={idx}>
+                        {/* Glow support */}
+                        {isHovered && (
+                          <circle
+                            cx={center}
+                            cy={center}
+                            r={radius}
+                            fill="transparent"
+                            stroke={item.color}
+                            strokeWidth={strokeWidth + 4}
+                            strokeDasharray={strokeDasharray}
+                            strokeDashoffset={strokeDashoffset}
+                            transform={`rotate(${rotationOffset} ${center} ${center})`}
+                            className="opacity-20 blur-[2px] transition-all"
+                          />
+                        )}
+
+                        <motion.circle
                           cx={center}
                           cy={center}
                           r={radius}
                           fill="transparent"
                           stroke={item.color}
-                          strokeWidth={strokeWidth + 4}
+                          strokeWidth={isHovered ? strokeWidth + 2 : strokeWidth}
                           strokeDasharray={strokeDasharray}
                           strokeDashoffset={strokeDashoffset}
                           transform={`rotate(${rotationOffset} ${center} ${center})`}
-                          className="opacity-20 blur-[2px] transition-all"
+                          strokeLinecap="round"
+                          className="cursor-pointer transition-all duration-200"
+                          style={{ originX: 'center', originY: 'center' }}
+                          initial={{ strokeDashoffset: circumference }}
+                          whileInView={{ strokeDashoffset: strokeDashoffset }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, ease: 'easeOut', delay: idx * 0.1 }}
+                          onMouseEnter={(e) => {
+                            setHoveredSegment(idx);
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setActiveTooltip({
+                              x: rect.left + rect.width / 2,
+                              y: rect.top - 8,
+                              content: (
+                                <div className="text-left font-mono">
+                                  <p className="text-xs font-bold text-white mb-0.5">{item.placement}</p>
+                                  <p className="text-[10px] text-green-400 font-extrabold">{item.share.toFixed(2)}% Share</p>
+                                  <p className="text-[9px] text-gray-400">Total Volume: {item.volume.toLocaleString()}</p>
+                                </div>
+                              )
+                            });
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredSegment(null);
+                            setActiveTooltip(null);
+                          }}
                         />
-                      )}
-
-                      <motion.circle
-                        cx={center}
-                        cy={center}
-                        r={radius}
-                        fill="transparent"
-                        stroke={item.color}
-                        strokeWidth={isHovered ? strokeWidth + 2 : strokeWidth}
-                        strokeDasharray={strokeDasharray}
-                        strokeDashoffset={strokeDashoffset}
-                        transform={`rotate(${rotationOffset} ${center} ${center})`}
-                        strokeLinecap="round"
-                        className="cursor-pointer transition-all duration-200"
-                        style={{ originX: 'center', originY: 'center' }}
-                        initial={{ strokeDashoffset: circumference }}
-                        whileInView={{ strokeDashoffset: strokeDashoffset }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, ease: 'easeOut', delay: idx * 0.1 }}
-                        onMouseEnter={(e) => {
-                          setHoveredSegment(idx);
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          setActiveTooltip({
-                            x: rect.left + rect.width / 2,
-                            y: rect.top - 8,
-                            content: (
-                              <div className="text-left font-mono">
-                                <p className="text-xs font-bold text-white mb-0.5">{item.placement}</p>
-                                <p className="text-[10px] text-green-400 font-extrabold">{item.share.toFixed(2)}% Share</p>
-                                <p className="text-[9px] text-gray-400">Total Volume: {item.volume.toLocaleString()}</p>
-                              </div>
-                            )
-                          });
-                        }}
-                        onMouseLeave={() => {
-                          setHoveredSegment(null);
-                          setActiveTooltip(null);
-                        }}
-                      />
-                    </g>
-                  );
-                })}
-              </svg>
-              {/* Central text node */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center font-mono text-center pointer-events-none">
-                <span className="text-xl font-black text-white leading-none">3,148</span>
-                <span className="text-[8px] uppercase tracking-widest text-gray-500 mt-1 font-bold">Actions</span>
+                      </g>
+                    );
+                  })}
+                </svg>
+                {/* Central text node */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center font-mono text-center pointer-events-none">
+                  <span className="text-xl font-black text-white leading-none">3,148</span>
+                  <span className="text-[8px] uppercase tracking-widest text-gray-500 mt-1 font-bold">Actions</span>
+                </div>
               </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
+              <span>campaign delivery:</span>
+              <span className="text-emerald-400 font-bold font-mono">Facebook Placements generated 93.1% of reach volume</span>
             </div>
           </div>
 
