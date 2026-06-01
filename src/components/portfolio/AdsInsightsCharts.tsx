@@ -161,7 +161,34 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               <p className="text-xs text-gray-400 mb-6 font-medium">Lower is better. Highlighting cost acquisition efficiencies across creatives.</p>
             </div>
 
-            <div className="h-56 flex items-end justify-between gap-2 px-2 relative pt-8">
+            {/* Mobile View: Horizontal Progress Bars */}
+            <div className="space-y-4 sm:hidden py-4 font-mono">
+              {cplDataset.map((item, idx) => {
+                const maxCpl = 180;
+                const barWidthPercent = Math.min(100, (item.cpl / maxCpl) * 100);
+                
+                return (
+                  <div key={idx} className="flex flex-col gap-1.5">
+                    <div className="flex justify-between items-center text-[10px]">
+                      <span className="text-gray-300 font-medium truncate max-w-[180px]">{item.campaign}</span>
+                      <span className="text-white font-bold">{item.cpl.toFixed(2)} PKR</span>
+                    </div>
+                    <div className="h-2.5 rounded-full bg-white/[0.03] border border-white/[0.05] overflow-hidden p-0.5 relative">
+                      <motion.div
+                        className={`h-full rounded-full bg-gradient-to-r ${item.color}`}
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${barWidthPercent}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: idx * 0.05 }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop View: Vertical Columns */}
+            <div className="hidden sm:flex h-56 items-end justify-between gap-2 px-2 relative pt-8">
               {cplDataset.map((item, idx) => {
                 const maxCpl = 180;
                 const colHeightPercent = Math.max(10, (item.cpl / maxCpl) * 100);
