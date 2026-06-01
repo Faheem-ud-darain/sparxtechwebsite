@@ -68,8 +68,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
     { campaign: 'Dreaming Var 1 (Ad)', cpl: 35.71, cvr: 1.10, highlight: 'High CTR Ad Creative Set', color: 'from-blue-500 to-cyan-400' },
     { campaign: 'Dreaming Var 2 (Ad)', cpl: 58.25, cvr: 0.92, highlight: 'Moderate Audience Frequency Ad', color: 'from-indigo-500 to-blue-400' },
     { campaign: 'KR Your Master (Ad)', cpl: 61.48, cvr: 0.93, highlight: 'Niche Postgraduate Campaign Group', color: 'from-purple-500 to-indigo-400' },
-    { campaign: 'BREAKING (Boosted)', cpl: 69.62, cvr: 0.38, highlight: 'Low Budget / Organic Boost Test', color: 'from-amber-500 to-orange-400' },
-    { campaign: 'Worried (Boosted Reel)', cpl: 176.64, cvr: 0.27, highlight: 'Inefficient Direct Video Boost', color: 'from-red-500 to-rose-400' }
+    { campaign: 'BREAKING (Boosted)', cpl: 69.62, cvr: 0.38, highlight: 'Low Budget / Organic Boost Test', color: 'from-amber-500 to-orange-400' }
   ];
 
   const scaleDataset = [
@@ -109,7 +108,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
             Meta Ads Performance Insights
           </h2>
           <p className="text-gray-400 mt-2 max-w-2xl leading-relaxed">
-            Interactive metrics and CPL efficiency reports for the Daehan Links growth strategy, displaying a 7x cost-efficiency gain on optimized ad sets over standard boosted posts.
+            Interactive metrics and CPL efficiency reports for the Daehan Links growth strategy, displaying a significant cost-efficiency gain on optimized ad sets over standard boosted posts.
           </p>
         </div>
 
@@ -148,8 +147,8 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               ))}
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
-              <span>Overall Conversion Rate (CVR):</span>
+            <div className="mt-6 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Overall Conversion Rate (CVR):</span>
               <span className="text-green-400 font-bold font-mono">2.46% of engaged viewers became active leads</span>
             </div>
           </div>
@@ -164,7 +163,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
             {/* Mobile View: Horizontal Progress Bars */}
             <div className="space-y-4 md:hidden py-4 font-mono">
               {cplDataset.map((item, idx) => {
-                const maxCpl = 180;
+                const maxCpl = 80;
                 const barWidthPercent = Math.min(100, (item.cpl / maxCpl) * 100);
                 
                 return (
@@ -190,7 +189,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
             {/* Desktop View: Vertical Columns */}
             <div className="hidden md:flex h-64 items-end justify-between gap-2 px-2 relative pt-8 pb-12">
               {cplDataset.map((item, idx) => {
-                const maxCpl = 180;
+                const maxCpl = 80;
                 const colHeightPercent = Math.max(10, (item.cpl / maxCpl) * 100);
                 
                 return (
@@ -233,9 +232,9 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               })}
             </div>
 
-            <div className="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
-              <span>acquisition index:</span>
-              <span className="text-emerald-400 font-bold font-mono">Apr 05 Campaign lead (25.28 PKR) is 7x cheaper than boosted post</span>
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">acquisition index:</span>
+              <span className="text-emerald-400 font-bold font-mono">Apr 05 Campaign lead (25.28 PKR) is 2.7x cheaper than boosted post (69.62 PKR)</span>
             </div>
           </div>
 
@@ -409,8 +408,8 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               </div>
             </div>
 
-            <div className="mt-10 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
-              <span>scaling analysis:</span>
+            <div className="mt-10 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">scaling analysis:</span>
               <span className="text-blue-400 font-bold font-mono">Raising budgets from 300 to 800 PKR yielded exponential Lead gains</span>
             </div>
           </div>
@@ -555,8 +554,8 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
-              <span>campaign delivery:</span>
+            <div className="mt-6 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">campaign delivery:</span>
               <span className="text-emerald-400 font-bold font-mono">Facebook Placements generated 93.1% of reach volume</span>
             </div>
           </div>
@@ -622,8 +621,8 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-gray-400">
-              <span>progression impact:</span>
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">progression impact:</span>
               <span className="text-emerald-400 font-bold font-mono">Reach scaled by +500 accounts in the final campaign phase</span>
             </div>
           </div>
