@@ -11,6 +11,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import CookieConsent from '@/components/layout/CookieConsent';
 import Header from '@/components/layout/Header';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 
 import Home from '@/pages/Home';
 
@@ -87,6 +88,7 @@ function App() {
               <Header />
               <AnimatedRoutes isInitialLoading={loading} />
               <SpeedInsights />
+              <Analytics />
             </Router>
           </SmoothScroll>
         </main>
