@@ -395,10 +395,10 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
 
   // --- RENDERING GOLD OF HIMALAYA ---
   if (slug === 'gold-of-himalaya-shopify-meta-ads') {
-    // Circumference for donut chart radius 50: 2 * Math.PI * 50 = 314.16
-    const radius = 50;
-    const strokeWidth = 14;
-    const size = 140;
+    // Increased size and radius for better proportion
+    const radius = 60;
+    const strokeWidth = 16;
+    const size = 165;
     const center = size / 2;
     const circumference = 2 * Math.PI * radius;
 
@@ -453,7 +453,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
               </div>
 
               {/* Circular Donut Diagram */}
-              <div className="relative flex items-center justify-center p-4 w-full sm:w-2/5 min-h-[160px]">
+              <div className="relative flex items-center justify-center p-4 w-full sm:w-2/5 min-h-[180px]">
                 <svg width={size} height={size} className="transform -rotate-90 select-none overflow-visible">
                   {placements.map((item, idx) => {
                     const percent = item.share;
@@ -465,7 +465,7 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
                     const isHovered = hoveredSegment === idx;
 
                     return (
-                      <g key={idx}>
+                      <g key={idx} transform={`rotate(${rotationOffset}, ${center}, ${center})`}>
                         {/* Glow support */}
                         {isHovered && (
                           <circle
@@ -477,7 +477,6 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
                             strokeWidth={strokeWidth + 4}
                             strokeDasharray={strokeDasharray}
                             strokeDashoffset={strokeDashoffset}
-                            transform={`rotate(${rotationOffset} ${center} ${center})`}
                             className="opacity-20 blur-[2px] transition-all"
                           />
                         )}
@@ -491,7 +490,6 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
                           strokeWidth={isHovered ? strokeWidth + 2 : strokeWidth}
                           strokeDasharray={strokeDasharray}
                           strokeDashoffset={strokeDashoffset}
-                          transform={`rotate(${rotationOffset} ${center} ${center})`}
                           strokeLinecap="round"
                           className="cursor-pointer transition-all duration-200"
                           style={{ originX: 'center', originY: 'center' }}
