@@ -4,6 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import Footer from '@/components/layout/Footer';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import { mockProjects } from '@/data/mockProjects';
+import AdsInsightsCharts from '@/components/portfolio/AdsInsightsCharts';
 
 // Dynamically glob all WebP files in the Portfolio Images directory
 const galleryGlob = import.meta.glob<{ default: string }>('../assets/Portfolio Images/**/*.webp', { eager: true });
@@ -207,6 +208,11 @@ const CaseStudy = () => {
                 </AnimatedContent>
               </div>
             </div>
+
+            {/* Ads Insights Charts Showcase (Daehan Links Only) */}
+            {activeProject.slug.current === 'daehan-links-social-media-ads-management' && (
+              <AdsInsightsCharts />
+            )}
 
             {/* Gallery Showcase Section */}
             {projectImages.length > 0 && (
