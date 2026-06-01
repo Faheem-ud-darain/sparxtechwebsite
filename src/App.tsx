@@ -10,6 +10,7 @@ import PageLoader from '@/components/animations/PageLoader';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import CookieConsent from '@/components/layout/CookieConsent';
 import Header from '@/components/layout/Header';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Home from '@/pages/Home';
 
@@ -85,6 +86,7 @@ function App() {
               <CookieConsent />
               <Header />
               <AnimatedRoutes isInitialLoading={loading} />
+              <SpeedInsights />
             </Router>
           </SmoothScroll>
         </main>
