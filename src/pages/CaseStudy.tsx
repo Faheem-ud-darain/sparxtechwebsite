@@ -18,7 +18,8 @@ const folderMapping: Record<string, string> = {
   'nma-watch-guy-graphics-ads': 'Nma Watch Guy',
   'sa-cosmetics-posters-video-boost': 'SA Cosmetics',
   'sam-associates-study-abroad-graphics': 'SAM Associates',
-  'syloflow-complete-branding-service': 'Syloflow'
+  'syloflow-complete-branding-service': 'Syloflow',
+  'gold-of-himalaya-shopify-meta-ads': 'Gold Of Himalya'
 };
 
 const renderPortableText = (blocks: any[] | undefined) => {
@@ -209,9 +210,10 @@ const CaseStudy = () => {
               </div>
             </div>
 
-            {/* Ads Insights Charts Showcase (Daehan Links Only) */}
-            {activeProject.slug.current === 'daehan-links-social-media-ads-management' && (
-              <AdsInsightsCharts />
+            {/* Ads Insights Charts Showcase (Daehan Links or Gold of Himalaya) */}
+            {(activeProject.slug.current === 'daehan-links-social-media-ads-management' || 
+              activeProject.slug.current === 'gold-of-himalaya-shopify-meta-ads') && (
+              <AdsInsightsCharts slug={activeProject.slug.current} />
             )}
 
             {/* Gallery Showcase Section */}
