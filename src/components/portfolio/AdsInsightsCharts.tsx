@@ -641,5 +641,392 @@ export default function AdsInsightsCharts({ slug }: AdsInsightsChartsProps) {
     );
   }
 
+  // --- RENDERING TOOTH CLINIC MANSEHRA ---
+  if (slug === 'tooth-clinic-mansehra-meta-ads') {
+    const maxLeads = 600;
+    const maxCpl = 80;
+
+    return (
+      <section className="mt-24 sm:mt-32 relative z-20">
+        <div className="flex flex-col mb-12">
+          <span className="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-bold tracking-widest uppercase self-start mb-4">
+            Campaign Analytics
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Ads Campaign Optimization & Scaling
+          </h2>
+          <p className="text-gray-400 mt-2 max-w-2xl leading-relaxed">
+            Data insights from The Tooth Clinic campaigns, demonstrating the direct trade-off between lead acquisition scaling and unit-cost efficiencies.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Chart 1: Cost vs. Lead Volume Grouped Columns */}
+          <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between min-h-[350px]">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Cost vs. Lead Volume Comparison</h3>
+              <p className="text-xs text-gray-400 mb-6">Trade-off between campaign CPL (left axis) and total messaging conversions (right axis).</p>
+            </div>
+
+            <div className="flex justify-around items-end h-44 gap-8 px-4 relative pt-4 font-mono">
+              {/* Campaign 1 */}
+              <div className="flex-1 flex flex-col items-center gap-2 group relative">
+                <div className="flex gap-2 items-end w-full justify-center">
+                  {/* CPL Bar */}
+                  <div className="flex flex-col items-center">
+                    <span className="text-[9px] text-red-400 mb-1">Rs 76</span>
+                    <div className="w-8 bg-white/[0.03] border border-white/[0.05] rounded-t-lg h-28 flex items-end overflow-hidden">
+                      <motion.div
+                        className="w-full bg-gradient-to-t from-red-500 to-rose-400 rounded-t-md opacity-70 group-hover:opacity-100 transition-opacity"
+                        style={{ height: `${(75.81 / maxCpl) * 100}%`, originY: 1 }}
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                      />
+                    </div>
+                    <span className="text-[8px] text-gray-500 mt-1 uppercase font-bold">CPL</span>
+                  </div>
+                  {/* Leads Bar */}
+                  <div className="flex flex-col items-center">
+                    <span className="text-[9px] text-green-400 mb-1">579</span>
+                    <div className="w-8 bg-white/[0.03] border border-white/[0.05] rounded-t-lg h-28 flex items-end overflow-hidden">
+                      <motion.div
+                        className="w-full bg-gradient-to-t from-green-500 to-emerald-400 rounded-t-md opacity-70 group-hover:opacity-100 transition-opacity"
+                        style={{ height: `${(579 / maxLeads) * 100}%`, originY: 1 }}
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+                      />
+                    </div>
+                    <span className="text-[8px] text-gray-500 mt-1 uppercase font-bold">Leads</span>
+                  </div>
+                </div>
+                <span className="text-[10px] text-white font-bold mt-2">Campaign 1 (Scaling)</span>
+              </div>
+
+              {/* Campaign 2 */}
+              <div className="flex-1 flex flex-col items-center gap-2 group relative">
+                <div className="flex gap-2 items-end w-full justify-center">
+                  {/* CPL Bar */}
+                  <div className="flex flex-col items-center">
+                    <span className="text-[9px] text-red-400 mb-1">Rs 36</span>
+                    <div className="w-8 bg-white/[0.03] border border-white/[0.05] rounded-t-lg h-28 flex items-end overflow-hidden">
+                      <motion.div
+                        className="w-full bg-gradient-to-t from-emerald-500 to-green-400 rounded-t-md opacity-70 group-hover:opacity-100 transition-opacity"
+                        style={{ height: `${(36.21 / maxCpl) * 100}%`, originY: 1 }}
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+                      />
+                    </div>
+                    <span className="text-[8px] text-gray-500 mt-1 uppercase font-bold">CPL</span>
+                  </div>
+                  {/* Leads Bar */}
+                  <div className="flex flex-col items-center">
+                    <span className="text-[9px] text-green-400 mb-1">141</span>
+                    <div className="w-8 bg-white/[0.03] border border-white/[0.05] rounded-t-lg h-28 flex items-end overflow-hidden">
+                      <motion.div
+                        className="w-full bg-gradient-to-t from-blue-500 to-indigo-400 rounded-t-md opacity-70 group-hover:opacity-100 transition-opacity"
+                        style={{ height: `${(141 / maxLeads) * 100}%`, originY: 1 }}
+                        initial={{ scaleY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+                      />
+                    </div>
+                    <span className="text-[8px] text-gray-500 mt-1 uppercase font-bold">Leads</span>
+                  </div>
+                </div>
+                <span className="text-[10px] text-white font-bold mt-2">Campaign 2 (Efficiency)</span>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Optimization Trade-off:</span>
+              <span className="text-emerald-400 font-bold font-mono">Campaign 2 cut acquisition unit cost in half (Rs 36.21)</span>
+            </div>
+          </div>
+
+          {/* Chart 2: ROAS Showcase (Spend vs Revenue) */}
+          <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between min-h-[350px]">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Return on Ad Spend (ROAS)</h3>
+              <p className="text-xs text-gray-400 mb-6">Financial performance metrics showing total investment return architecture.</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 flex-1">
+              <div className="relative w-36 h-36 flex items-center justify-center">
+                {/* 3D Circular Progress */}
+                <svg width="144" height="144" className="transform -rotate-90">
+                  <circle cx="72" cy="72" r="54" fill="transparent" stroke="rgba(255,255,255,0.03)" strokeWidth="12" />
+                  <motion.circle
+                    cx="72"
+                    cy="72"
+                    r="54"
+                    fill="transparent"
+                    stroke="#10b981"
+                    strokeWidth="12"
+                    strokeDasharray={2 * Math.PI * 54}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 54 }}
+                    whileInView={{ strokeDashoffset: 2 * Math.PI * 54 * (1 - 43894 / 300000) }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center font-mono">
+                  <span className="text-2xl font-black text-white">6.8x</span>
+                  <span className="text-[8px] text-gray-500 uppercase tracking-wider font-bold">ROAS ROI</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 font-mono text-xs w-full sm:w-1/2">
+                <div className="flex justify-between items-center p-2 rounded-xl bg-white/[0.01] border border-white/[0.04]">
+                  <span className="text-gray-500">Ad Spend:</span>
+                  <span className="text-white font-bold">Rs <Counter value={43894} /></span>
+                </div>
+                <div className="flex justify-between items-center p-2 rounded-xl bg-green-500/5 border border-green-500/10">
+                  <span className="text-emerald-400">Revenue Gen:</span>
+                  <span className="text-emerald-400 font-extrabold">Rs <Counter value={300000} />+</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Financial Impact:</span>
+              <span className="text-green-400 font-bold font-mono">Generated over 3 Lacs revenue from Rs 44K budget</span>
+            </div>
+          </div>
+
+          {/* Chart 3: Top-of-Funnel Retargeting Funnel */}
+          <div className="lg:col-span-12 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between mt-6">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Patient Conversion Funnel</h3>
+              <p className="text-xs text-gray-400 mb-6">Complete step-down pipeline mapping impressions down to patients requesting bookings.</p>
+            </div>
+
+            <div className="space-y-6 py-4 max-w-3xl mx-auto w-full">
+              {[
+                { label: 'Total Views (Impressions)', value: 617246, percent: 100, sublabel: 'Massive brand reach', color: 'from-blue-500 to-indigo-400' },
+                { label: '3-Sec Video Plays', value: 184856, percent: 29.9, sublabel: 'High brand engagement', color: 'from-indigo-500 to-purple-400' },
+                { label: 'Link Clicks', value: 1951, percent: 0.32, sublabel: 'Active clinical interest', color: 'from-purple-500 to-pink-400' },
+                { label: 'Conversions (Leads)', value: 720, percent: 0.12, sublabel: 'Direct WhatsApp requests', color: 'from-pink-500 to-emerald-400' }
+              ].map((stage, idx) => (
+                <div key={idx} className="relative">
+                  <div className="flex justify-between items-end mb-2 text-xs font-mono">
+                    <span className="text-gray-300 font-bold">{stage.label}</span>
+                    <span className="text-white font-extrabold">
+                      {stage.value.toLocaleString()} <span className="text-gray-500">({stage.percent}%)</span>
+                    </span>
+                  </div>
+                  <div className="h-6 rounded-full bg-white/[0.03] border border-white/[0.05] overflow-hidden p-0.5 relative group">
+                    <motion.div
+                      className={`h-full rounded-full bg-gradient-to-r ${stage.color}`}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${stage.percent}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, ease: 'easeOut', delay: idx * 0.15 }}
+                    />
+                    <div className="absolute inset-0 flex items-center pl-3">
+                      <span className="text-[10px] font-medium text-white/50 group-hover:text-white transition-colors">
+                        {stage.sublabel}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Funnel Efficiency:</span>
+              <span className="text-blue-400 font-bold font-mono">37% click-to-conversation conversion rate indicates strong intent</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // --- RENDERING STERLING SMILES ---
+  if (slug === 'sterling-smiles') {
+    return (
+      <section className="mt-24 sm:mt-32 relative z-20">
+        <div className="flex flex-col mb-12">
+          <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold tracking-widest uppercase self-start mb-4">
+            Recruitment Campaign
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Targeted Recruitment Campaign Analytics
+          </h2>
+          <p className="text-gray-400 mt-2 max-w-2xl leading-relaxed">
+            Performance metrics for Sterling Smiles, showcasing extreme conversion velocity and cost efficiency in hiring.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Chart 1: Onboarding Velocity Timer */}
+          <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between min-h-[350px]">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Onboarding Velocity Timeline</h3>
+              <p className="text-xs text-gray-400 mb-6">Timeline showing immediate conversion from ad launch to sourcing the right candidate.</p>
+            </div>
+
+            <div className="space-y-6 py-4 relative font-mono">
+              {/* Node 1 */}
+              <div className="flex items-center gap-4 bg-white/[0.02] border border-white/[0.05] p-4 rounded-2xl relative">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 text-xs font-bold">
+                  0h
+                </div>
+                <div className="flex-1 flex flex-col">
+                  <span className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Campaign Launch</span>
+                  <span className="text-white text-sm font-extrabold">Ads delivering in Islamabad</span>
+                </div>
+              </div>
+
+              {/* Progress connector line */}
+              <div className="h-6 flex justify-center items-center">
+                <svg width="2" height="24" className="overflow-visible">
+                  <line x1="0" y1="0" x2="0" y2="24" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5" strokeDasharray="3 3" />
+                </svg>
+              </div>
+
+              {/* Node 2 */}
+              <div className="flex items-center gap-4 bg-white/[0.02] border border-white/[0.05] p-4 rounded-2xl relative">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 text-xs font-bold">
+                  +73
+                </div>
+                <div className="flex-1 flex flex-col">
+                  <span className="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Applications Sourced</span>
+                  <span className="text-white text-sm font-extrabold"><Counter value={73} /> Candidates Sourced</span>
+                </div>
+              </div>
+
+              {/* Progress connector line */}
+              <div className="h-6 flex justify-center items-center">
+                <svg width="2" height="24" className="overflow-visible">
+                  <line x1="0" y1="0" x2="0" y2="24" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <circle cx="0" cy="12" r="3" fill="#10b981" className="animate-ping" style={{ animationDuration: '2s' }} />
+                </svg>
+              </div>
+
+              {/* Node 3 */}
+              <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-500/5 to-transparent border border-emerald-500/20 p-4 rounded-2xl relative">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 text-xs font-bold">
+                  24h
+                </div>
+                <div className="flex-1 flex flex-col">
+                  <span className="text-[10px] uppercase tracking-wider text-emerald-500/50 font-bold">Candidate Contract Signed</span>
+                  <span className="text-emerald-400 text-sm font-black uppercase">Successfully Hired & Onboarded</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Hiring Speed:</span>
+              <span className="text-emerald-400 font-bold font-mono">First-day candidate hired in less than 24 hours</span>
+            </div>
+          </div>
+
+          {/* Chart 2: Candidate Acquisition Cost Ring */}
+          <div className="lg:col-span-6 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between min-h-[350px]">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">Hyper-Efficient Candidate Acquisition</h3>
+              <p className="text-xs text-gray-400 mb-6">Unit costs and total ad budget required to fill the clinical vacancy.</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 flex-1">
+              <div className="relative w-36 h-36 flex items-center justify-center">
+                <svg width="144" height="144" className="transform -rotate-90">
+                  <circle cx="72" cy="72" r="54" fill="transparent" stroke="rgba(255,255,255,0.03)" strokeWidth="12" />
+                  <motion.circle
+                    cx="72"
+                    cy="72"
+                    r="54"
+                    fill="transparent"
+                    stroke="#3b82f6"
+                    strokeWidth="12"
+                    strokeDasharray={2 * Math.PI * 54}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 54 }}
+                    whileInView={{ strokeDashoffset: 2 * Math.PI * 54 * (1 - 837.31 / 25000) }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center font-mono">
+                  <span className="text-base font-black text-white">Rs 11.47</span>
+                  <span className="text-[7px] text-gray-500 uppercase tracking-wider font-bold">Cost / Lead</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 font-mono text-xs w-full sm:w-1/2">
+                <div className="flex justify-between items-center p-2 rounded-xl bg-white/[0.01] border border-white/[0.04]">
+                  <span className="text-gray-500">Total Spend:</span>
+                  <span className="text-white font-bold">Rs <Counter value={837.31} /></span>
+                </div>
+                <div className="flex justify-between items-center p-2 rounded-xl bg-blue-500/5 border border-blue-500/10">
+                  <span className="text-blue-400">Total Leads:</span>
+                  <span className="text-blue-400 font-extrabold"><Counter value={73} /> Candidates</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Cost Efficiency:</span>
+              <span className="text-blue-400 font-bold font-mono">30x cheaper than traditional recruitment agency options</span>
+            </div>
+          </div>
+
+          {/* Chart 3: Click-to-Lead Funnel */}
+          <div className="lg:col-span-12 p-6 rounded-3xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md flex flex-col justify-between mt-6">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-2">High-Intent Recruitment Funnel</h3>
+              <p className="text-xs text-gray-400 mb-6">Transition levels showing the direct candidate qualification funnel breakdown.</p>
+            </div>
+
+            <div className="space-y-6 py-4 max-w-3xl mx-auto w-full">
+              {[
+                { label: 'Total Views (Impressions)', value: 3482, percent: 100, sublabel: 'Targeted reach in Islamabad area', color: 'from-blue-500 to-indigo-400' },
+                { label: 'Link Clicks', value: 159, percent: 4.56, sublabel: 'Clinical interest clicked through', color: 'from-purple-500 to-pink-400' },
+                { label: 'Completed Leads (Applications)', value: 73, percent: 2.09, sublabel: 'Form completed (45.9% conversion velocity)', color: 'from-pink-500 to-emerald-400' }
+              ].map((stage, idx) => (
+                <div key={idx} className="relative">
+                  <div className="flex justify-between items-end mb-2 text-xs font-mono">
+                    <span className="text-gray-300 font-bold">{stage.label}</span>
+                    <span className="text-white font-extrabold">
+                      {stage.value.toLocaleString()} <span className="text-gray-500">({stage.percent}%)</span>
+                    </span>
+                  </div>
+                  <div className="h-6 rounded-full bg-white/[0.03] border border-white/[0.05] overflow-hidden p-0.5 relative group">
+                    <motion.div
+                      className={`h-full rounded-full bg-gradient-to-r ${stage.color}`}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${stage.percent}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, ease: 'easeOut', delay: idx * 0.15 }}
+                    />
+                    <div className="absolute inset-0 flex items-center pl-3">
+                      <span className="text-[10px] font-medium text-white/50 group-hover:text-white transition-colors">
+                        {stage.sublabel}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 pt-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-gray-400">
+              <span className="font-semibold tracking-wider text-gray-500 uppercase text-[10px]">Funnel Engagement:</span>
+              <span className="text-emerald-400 font-bold font-mono">45.9% Click-to-Lead conversion rate represents extremely high intent</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return null;
 }

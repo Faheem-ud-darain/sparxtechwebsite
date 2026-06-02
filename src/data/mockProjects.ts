@@ -18,6 +18,7 @@ import HDOPakistanBranding from '@/assets/hdo_pakistan_branding.png';
 import SACosmeticsBranding from '@/assets/sa_cosmetics_branding.png';
 import SAMAssociatesBranding from '@/assets/sam_associates_branding.png';
 import SyloFlowBrandIdentity from '@/assets/syloflow_brand_identity.png';
+import SterlingSmilesImg from '@/assets/sterling_smiles.png';
 
 export const mockProjects = [
   {
@@ -29,11 +30,27 @@ export const mockProjects = [
     challenge: [
       { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'Tooth Clinic in Mansehra struggled with low patient appointments and minimal online visibility. Despite offering quality dental services, they had no digital marketing strategy to reach potential patients in their local area. Their revenue was stagnant, and they needed a cost-effective way to attract new clients and grow their practice.' }] }
     ],
+    challengeImage: undefined,
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed and executed a comprehensive Meta Ads campaign targeting local audiences in Mansehra and surrounding areas. We created compelling ad creatives highlighting the clinic\'s services, implemented precise audience targeting based on demographics and location, and continuously optimized campaigns based on performance metrics. Our data-driven approach included A/B testing ad copies, strategic bid management, and conversion tracking to maximize ROI. The results were exceptional - the clinic experienced a 200% increase in monthly revenue within the campaign period, with significantly higher patient bookings and enhanced brand recognition in the local market.' }] }
     ],
     image: EcomImg, // Mock image
     gridClass: 'md:col-span-4 md:row-span-2'
+  },
+  {
+    _id: '21',
+    title: 'Sterling Smiles Islamabad - Dental Clinic Recruitment Campaign',
+    slug: { current: 'sterling-smiles' },
+    category: 'Social Media Advertising',
+    techStack: ['Meta Ads Manager', 'Facebook Lead Forms', 'Canva / Photoshop', 'Audience Targeting', 'Meta Business Suite'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'Sterling Smiles, a premium dental clinic in Islamabad, faced challenges in scaling their administrative and clinical team quickly. They needed to hire a qualified dental assistant to support their growing patient volume, but traditional recruitment methods were slow and generated low-quality candidates. They needed a targeted, rapid solution to secure the right hire.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies designed and deployed a hyper-targeted recruitment campaign using Facebook Lead Forms. By targeting candidates with specific dental/clinical backgrounds in Islamabad and optimizing ad copy for immediate hiring, we generated 73 high-intent candidate leads within 24 hours at a minor cost of just Rs 11.47 per lead. This enabled the clinic to interview and hire a qualified candidate on the very first day of the campaign.' }] }
+    ],
+    image: SterlingSmilesImg,
+    gridClass: 'md:col-span-2 md:row-span-1'
   },
   {
     _id: '2',

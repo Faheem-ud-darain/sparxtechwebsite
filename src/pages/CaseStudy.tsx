@@ -19,7 +19,9 @@ const folderMapping: Record<string, string> = {
   'sa-cosmetics-posters-video-boost': 'SA Cosmetics',
   'sam-associates-study-abroad-graphics': 'SAM Associates',
   'syloflow-complete-branding-service': 'Syloflow',
-  'gold-of-himalaya-shopify-meta-ads': 'Gold Of Himalya'
+  'gold-of-himalaya-shopify-meta-ads': 'Gold Of Himalya',
+  'tooth-clinic-mansehra-meta-ads': 'Tooth Clinic',
+  'sterling-smiles': 'Sterling Smiles'
 };
 
 const renderPortableText = (blocks: any[] | undefined) => {
@@ -210,9 +212,11 @@ const CaseStudy = () => {
               </div>
             </div>
 
-            {/* Ads Insights Charts Showcase (Daehan Links or Gold of Himalaya) */}
+            {/* Ads Insights Charts Showcase */}
             {(activeProject.slug.current === 'daehan-links-social-media-ads-management' || 
-              activeProject.slug.current === 'gold-of-himalaya-shopify-meta-ads') && (
+              activeProject.slug.current === 'gold-of-himalaya-shopify-meta-ads' ||
+              activeProject.slug.current === 'tooth-clinic-mansehra-meta-ads' ||
+              activeProject.slug.current === 'sterling-smiles') && (
               <AdsInsightsCharts slug={activeProject.slug.current} />
             )}
 
