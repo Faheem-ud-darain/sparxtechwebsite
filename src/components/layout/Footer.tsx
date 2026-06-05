@@ -4,10 +4,11 @@ import { useContactForm } from '@/hooks/useContactForm';
 import { CONTACT_INFO, SOCIAL_LINKS } from '@/data/constants';
 
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
-import MagicRings from '@/components/animations/MagicRings';
 import BorderGlow from '@/components/animations/BorderGlow';
 import Logo from '@/assets/Full Logo Tranparent.webp';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+const MagicRings = React.lazy(() => import('@/components/animations/MagicRings'));
 
 const Footer = () => {
   const location = useLocation();
@@ -47,22 +48,24 @@ const Footer = () => {
       <div className="relative border-t border-white/[0.06] min-h-[500px]">
         {/* Magic Rings Background */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
-          <MagicRings
-            color="#55f78e"
-            colorTwo="#63f1c5"
-            ringCount={8}
-            speed={0.8}
-            attenuation={10}
-            lineThickness={1.5}
-            baseRadius={0.25}
-            radiusStep={0.15}
-            scaleRate={0.12}
-            opacity={0.6}
-            noiseAmount={0.05}
-            ringGap={1.2}
-            followMouse={true}
-            mouseInfluence={0.15}
-          />
+          <React.Suspense fallback={null}>
+            <MagicRings
+              color="#55f78e"
+              colorTwo="#63f1c5"
+              ringCount={8}
+              speed={0.8}
+              attenuation={10}
+              lineThickness={1.5}
+              baseRadius={0.25}
+              radiusStep={0.15}
+              scaleRate={0.12}
+              opacity={0.6}
+              noiseAmount={0.05}
+              ringGap={1.2}
+              followMouse={true}
+              mouseInfluence={0.15}
+            />
+          </React.Suspense>
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24">
