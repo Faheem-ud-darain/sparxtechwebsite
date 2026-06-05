@@ -1,8 +1,12 @@
+import { lazy } from 'react';
 import Footer from '@/components/layout/Footer';
 import PortfolioGrid from '@/components/sections/PortfolioGrid';
 import { motion } from 'framer-motion';
 import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import SEO from '@/components/SEO';
+import { LazySection } from '@/components/layout/LazySection';
+
+const LiveSiteShowcase = lazy(() => import('@/components/sections/LiveSiteShowcase'));
 
 const Portfolio = () => {
   return (
@@ -40,6 +44,10 @@ const Portfolio = () => {
         </div>
         
         <PortfolioGrid showViewAll={false} />
+
+        <LazySection>
+          <LiveSiteShowcase />
+        </LazySection>
       </main>
       <Footer />
     </div>

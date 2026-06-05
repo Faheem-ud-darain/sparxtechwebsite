@@ -128,17 +128,19 @@ const Hero = () => {
           {/* CTA Buttons */}
           <AnimatedContent direction="up" delay={0.2} className="pointer-events-auto">
             <div className="mt-12 flex flex-wrap items-center justify-center gap-5">
-              <button 
+              <StarBorder 
+                as="button"
                 onClick={() => handleSectionClick('/#contact')} 
+                color="#55f78e" 
+                speed="5s" 
+                borderRadius="12px"
                 className="bg-transparent border-none p-0 cursor-pointer group"
               >
-                <StarBorder color="#55f78e" speed="5s" borderRadius="12px">
-                  <span className="flex items-center justify-center gap-2 px-6 py-1">
-                    Let's Connect
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                  </span>
-                </StarBorder>
-              </button>
+                <span className="flex items-center justify-center gap-2 px-6 py-1">
+                  Let's Connect
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </StarBorder>
               <button
                 onClick={() => handleSectionClick('/#services')}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-medium text-white/80 border border-white/10 hover:border-white/20 hover:bg-white/[0.03] transition-all duration-300 bg-transparent"

@@ -8,6 +8,7 @@ import { LazySection } from '@/components/layout/LazySection';
 const LogoWall = lazy(() => import('@/components/animations/LogoWall').then(module => ({ default: module.LogoWall })));
 const Services = lazy(() => import('@/components/sections/Services'));
 const PortfolioGrid = lazy(() => import('@/components/sections/PortfolioGrid'));
+const LiveSiteShowcase = lazy(() => import('@/components/sections/LiveSiteShowcase'));
 const Process = lazy(() => import('@/components/sections/Process'));
 const Testimonials = lazy(() => import('@/components/sections/Testimonials'));
 const BlogHighlight = lazy(() => import('@/components/sections/BlogHighlight'));
@@ -32,6 +33,10 @@ const Home = () => {
 
         <LazySection>
           <PortfolioGrid />
+        </LazySection>
+
+        <LazySection>
+          <LiveSiteShowcase />
         </LazySection>
 
         <LazySection>
