@@ -203,3 +203,57 @@ body {
 .backface-hidden {
   backface-visibility: hidden;
 }
+
+/* ── Compositor-Threaded Loader Animations ──────────────────────── */
+@keyframes preloader-marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-1000px, 0, 0); }
+}
+
+.animate-preloader-marquee {
+  animation: preloader-marquee 20s linear infinite;
+  will-change: transform;
+}
+
+@keyframes preloader-cinematic-bg {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-2000px, 0, 0); }
+}
+
+.animate-preloader-cinematic-bg {
+  animation: preloader-cinematic-bg 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes preloader-line-right-fast {
+  0% { transform: translate3d(-100%, 0, 0) rotate(-15deg); }
+  75% { transform: translate3d(200%, 0, 0) rotate(-15deg); }
+  100% { transform: translate3d(200%, 0, 0) rotate(-15deg); }
+}
+
+.animate-line-right-fast {
+  animation: preloader-line-right-fast 2s linear infinite;
+  will-change: transform;
+}
+
+@keyframes preloader-line-left-medium {
+  0% { transform: translate3d(200%, 0, 0) rotate(15deg); }
+  90.9% { transform: translate3d(-200%, 0, 0) rotate(15deg); }
+  100% { transform: translate3d(-200%, 0, 0) rotate(15deg); }
+}
+
+.animate-line-left-medium {
+  animation: preloader-line-left-medium 2.2s linear infinite;
+  will-change: transform;
+}
+
+@keyframes preloader-line-right-slow {
+  0% { transform: translate3d(-100%, 0, 0) rotate(-5deg); }
+  60% { transform: translate3d(200%, 0, 0) rotate(-5deg); }
+  100% { transform: translate3d(200%, 0, 0) rotate(-5deg); }
+}
+
+.animate-line-right-slow {
+  animation: preloader-line-right-slow 2s linear infinite;
+  will-change: transform;
+}

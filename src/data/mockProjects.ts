@@ -4,20 +4,22 @@ import MobileImg from '@/assets/mobile-mockup.webp';
 
 // New specific project assets
 import AgencyManagementImg from '@/assets/Agency Management App.webp';
-import AlbatrossImg from '@/assets/Albatross Edvisors.webp';
+import AlbatrossImg from '@/assets/albatross_edvisors_featured.webp';
 import CarWashImg from '@/assets/Car wash App.webp';
-import DaehanImg from '@/assets/Daehan Links.webp';
+import DaehanImg from '@/assets/daehan_links_featured.webp';
 import KingdomImg from '@/assets/Kingdom Watch Company.webp';
 import NMAImg from '@/assets/NMA Watch Guy.webp';
 import SparxWebsiteImg from '@/assets/Sparx tech Agency Website.webp';
-import GoldOfHimalayaImg from '@/assets/gold of himalaya.webp';
+import GoldOfHimalayaImg from '@/assets/gold_of_himalaya_featured.webp';
+import ToothClinicImg from '@/assets/tooth_clinic_featured.webp';
+import WizStrapzImg from '@/assets/wizstrapz_featured.webp';
 
 // Graphics Design project assets
 import NMAWatchGraphics from '@/assets/nma_watch_graphics.png';
-import HDOPakistanBranding from '@/assets/hdo_pakistan_branding.png';
-import SACosmeticsBranding from '@/assets/sa_cosmetics_branding.png';
+import HDOPakistanBranding from '@/assets/hdo_pakistan_featured.webp';
+import SACosmeticsBranding from '@/assets/sa_cosmetics_featured.webp';
 import SAMAssociatesBranding from '@/assets/sam_associates_branding.png';
-import SyloFlowBrandIdentity from '@/assets/syloflow_brand_identity.png';
+import SyloFlowBrandIdentity from '@/assets/syloflow_featured.webp';
 import SterlingSmilesImg from '@/assets/sterling_smiles.png';
 
 export const mockProjects = [
@@ -34,7 +36,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed and executed a comprehensive Meta Ads campaign targeting local audiences in Mansehra and surrounding areas. We created compelling ad creatives highlighting the clinic\'s services, implemented precise audience targeting based on demographics and location, and continuously optimized campaigns based on performance metrics. Our data-driven approach included A/B testing ad copies, strategic bid management, and conversion tracking to maximize ROI. The results were exceptional - the clinic experienced a 200% increase in monthly revenue within the campaign period, with significantly higher patient bookings and enhanced brand recognition in the local market.' }] }
     ],
-    image: EcomImg, // Mock image
+    image: ToothClinicImg, // Mock image
     gridClass: 'md:col-span-4 md:row-span-2'
   },
   {
@@ -176,7 +178,7 @@ export const mockProjects = [
     solution: [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed a custom WordPress e-commerce website for WizStrapz using WooCommerce as the foundation.' }] }
     ],
-    image: EcomImg,
+    image: WizStrapzImg,
     gridClass: 'md:col-span-2 md:row-span-1'
   },
   {

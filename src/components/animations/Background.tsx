@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { m, useMotionValue, useSpring } from 'framer-motion';
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const Background = () => {
   const mouseX = useMotionValue(0);
@@ -7,6 +7,11 @@ const Background = () => {
 
   const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
+
+  const x1 = useTransform(springX, val => val * 100);
+  const y1 = useTransform(springY, val => val * 100);
+  const x2 = useTransform(springX, val => val * -100);
+  const y2 = useTransform(springY, val => val * -100);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -42,23 +47,20 @@ const Background = () => {
       <m.div
         className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-green-500/10 blur-[120px]"
         style={{
-          x: springX.get() * 100,
-          y: springY.get() * 100,
+          x: x1,
+          y: y1,
         }}
       />
       <m.div
         className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[120px]"
         style={{
-          x: springX.get() * -100,
-          y: springY.get() * -100,
+          x: x2,
+          y: y2,
         }}
       />
 
       {/* Grid Pattern */}
       <div className="absolute inset-0 grid-bg-fade opacity-30" />
-      
-      {/* Grain Overlay */}
-      <div className="absolute inset-0 noise-bg opacity-[0.02] mix-blend-overlay" />
     </div>
   );
 };

@@ -127,14 +127,22 @@ export default function MagicRings({
     const mount = mountRef.current;
     if (!mount) return;
 
+    let isVisible = false;
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.01 });
+    intersectionObserver.observe(mount);
+
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({ alpha: true });
     } catch {
+      intersectionObserver.disconnect();
       return;
     }
 
     if (!renderer.capabilities.isWebGL2) {
+      intersectionObserver.disconnect();
       renderer.dispose();
       return;
     }
@@ -210,6 +218,7 @@ export default function MagicRings({
     let frameId: number;
     const animate = (t: number) => {
       frameId = requestAnimationFrame(animate);
+      if (!isVisible) return; // Skip rendering when out of viewport
       const p = propsRef.current!;
 
       smoothMouseRef.current[0] += (mouseRef.current[0] - smoothMouseRef.current[0]) * 0.08;
@@ -248,6 +257,7 @@ export default function MagicRings({
       cancelAnimationFrame(frameId);
       window.removeEventListener('resize', resize);
       ro.disconnect();
+      intersectionObserver.disconnect();
       mount.removeEventListener('mousemove', onMouseMove);
       mount.removeEventListener('mouseenter', onMouseEnter);
       mount.removeEventListener('mouseleave', onMouseLeave);

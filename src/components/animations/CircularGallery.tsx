@@ -346,6 +346,7 @@ class App {
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf: number = 0;
+  isVisible: boolean = false;
 
   boundOnResize!: () => void;
   boundOnWheel!: (e: Event) => void;
@@ -377,8 +378,17 @@ class App {
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius);
-    this.update();
+    this.isVisible = false;
     this.addEventListeners();
+  }
+
+  setVisible(visible: boolean) {
+    const wasVisible = this.isVisible;
+    this.isVisible = visible;
+    if (visible && !wasVisible) {
+      window.cancelAnimationFrame(this.raf);
+      this.update();
+    }
   }
 
   createRenderer() {
@@ -493,6 +503,7 @@ class App {
   }
 
   update() {
+    if (!this.isVisible) return;
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
     if (this.medias) {
@@ -563,7 +574,15 @@ export default function CircularGallery({
       scrollSpeed,
       scrollEase
     });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      app.setVisible(entry.isIntersecting);
+    }, { threshold: 0.01 });
+
+    observer.observe(containerRef.current);
+
     return () => {
+      observer.disconnect();
       app.destroy();
     };
   }, [items, bend, textColor, borderRadius, scrollSpeed, scrollEase]);

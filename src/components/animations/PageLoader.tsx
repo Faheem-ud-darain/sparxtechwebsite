@@ -97,23 +97,17 @@ const PageLoader = ({ pathname = '/' }: { pathname?: string }) => {
           >
             {/* Animated Background Lines */}
             <div className="absolute inset-0 overflow-hidden opacity-20">
-              <motion.div
-                initial={{ x: "-100%", y: "25%", rotate: -15 }}
-                animate={{ x: "200%" }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear", repeatDelay: 0.5 }}
-                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-500/50 to-transparent"
+              <div
+                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-500/50 to-transparent animate-line-right-fast"
+                style={{ top: "25%" }}
               />
-              <motion.div
-                initial={{ x: "200%", y: "60%", rotate: 15 }}
-                animate={{ x: "-200%" }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 0.2 }}
-                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"
+              <div
+                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent animate-line-left-medium"
+                style={{ top: "60%" }}
               />
-              <motion.div
-                initial={{ x: "-100%", y: "85%", rotate: -5 }}
-                animate={{ x: "200%" }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "linear", repeatDelay: 0.8 }}
-                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
+              <div
+                className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-400/50 to-transparent animate-line-right-slow"
+                style={{ top: "85%" }}
               />
             </div>
 

@@ -26,8 +26,12 @@ const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   minSize = 2,
   maxSize = 6,
 }) => {
+  // Optimize for touch/mobile devices
+  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  const optimizedCount = isTouch ? Math.min(count, 8) : count;
+
   const particles: Particle[] = useMemo(() => {
-    return Array.from({ length: count }, (_, i) => ({
+    return Array.from({ length: optimizedCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -36,7 +40,7 @@ const FloatingParticles: React.FC<FloatingParticlesProps> = ({
       delay: Math.random() * 5,
       opacity: 0.3 + Math.random() * 0.5,
     }));
-  }, [count, minSize, maxSize]);
+  }, [optimizedCount, minSize, maxSize]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
@@ -50,7 +54,7 @@ const FloatingParticles: React.FC<FloatingParticlesProps> = ({
             width: p.size,
             height: p.size,
             background: color,
-            filter: `blur(${p.size > 4 ? 1 : 0}px)`,
+            filter: isTouch ? undefined : `blur(${p.size > 4 ? 1 : 0}px)`,
           }}
           animate={{
             y: [0, -100, 40, -80, 0],

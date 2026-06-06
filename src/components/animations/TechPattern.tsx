@@ -12,8 +12,11 @@ const TechPattern: React.FC<TechPatternProps> = ({
   color = 'rgba(34, 197, 94, 0.1)', 
   opacity = 0.5 
 }) => {
+  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  const optimizedCount = isTouch ? 5 : 15;
+
   const lines = useMemo(() => {
-    return Array.from({ length: 15 }).map((_, i) => ({
+    return Array.from({ length: optimizedCount }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -22,7 +25,7 @@ const TechPattern: React.FC<TechPatternProps> = ({
       duration: 10 + Math.random() * 20,
       delay: Math.random() * 5,
     }));
-  }, []);
+  }, [optimizedCount]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`} style={{ opacity }}>
@@ -45,7 +48,7 @@ const TechPattern: React.FC<TechPatternProps> = ({
             width: `${line.width}px`,
             height: `${line.height}px`,
             background: `linear-gradient(to bottom, transparent, ${color}, transparent)`,
-            boxShadow: `0 0 15px ${color}`,
+            boxShadow: isTouch ? undefined : `0 0 15px ${color}`,
           }}
           animate={{
             y: [-200, 800],

@@ -71,8 +71,9 @@ export default function LiveSiteShowcase() {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        if (entry.contentRect.width > 0) {
-          setContainerWidth(entry.contentRect.width);
+        const newWidth = entry.contentRect.width;
+        if (newWidth > 0) {
+          setContainerWidth(prev => prev === newWidth ? prev : newWidth);
         }
       }
     });
@@ -300,19 +301,21 @@ export default function LiveSiteShowcase() {
                 {/* MacBook Pro frame */}
                 {activeDevice === 'macbook' && (
                   <div className="w-full max-w-[620px] transition-all duration-500">
-                    {/* Laptop screen */}
-                    <div className="relative aspect-[16/10] bg-[#0c0c0f] border-[10px] border-[#1e1e24] rounded-t-2xl shadow-2xl overflow-hidden">
+                    {/* Laptop screen with Space Gray metallic gradient border */}
+                    <div className="relative aspect-[16/10] p-[10px] bg-gradient-to-b from-[#3a3b45] via-[#2a2a30] to-[#1b1c22] rounded-t-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden">
+                      {/* Inner Screen Border Shadow overlay */}
+                      <div className="absolute inset-[10px] border border-black/40 rounded-t-lg pointer-events-none z-20" />
                       {/* Top Notch Camera */}
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4 bg-[#1e1e24] rounded-b-lg z-30 flex items-center justify-center">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4 bg-gradient-to-b from-[#222328] to-[#1b1c22] rounded-b-lg z-30 flex items-center justify-center border-x border-b border-white/5">
                         <div className="w-2 h-2 bg-[#050505] rounded-full border border-blue-500/20" />
                       </div>
                       {/* Screen View */}
-                      <div ref={containerRef} className="w-full h-full relative">
+                      <div ref={containerRef} className="w-full h-full relative rounded-t-lg overflow-hidden bg-[#0c0c0f]">
                         <ScreenViewContent />
                       </div>
                     </div>
                     {/* Keyboard base */}
-                    <div className="w-[110%] h-3 bg-gradient-to-b from-[#2a2a30] to-[#16161b] rounded-b-2xl mx-auto border-t border-white/10 relative -left-[5%] shadow-xl flex justify-center">
+                    <div className="w-[110%] h-3 bg-gradient-to-b from-[#3a3b45] via-[#1b1c22] to-[#0d0e11] rounded-b-2xl mx-auto border-t border-white/10 relative -left-[5%] shadow-2xl flex justify-center">
                       <div className="w-16 h-1 bg-black/40 rounded-b-sm" />
                     </div>
                   </div>
@@ -321,12 +324,16 @@ export default function LiveSiteShowcase() {
                 {/* iPad Pro frame */}
                 {activeDevice === 'ipad' && (
                   <div className="w-full max-w-[440px] transition-all duration-500">
-                    <div className="relative aspect-[4/3] bg-[#0c0c0f] border-[14px] border-[#19191e] rounded-[2rem] shadow-2xl overflow-hidden">
-                      <div ref={containerRef} className="w-full h-full relative">
+                    {/* Tablet screen with Space Gray metallic gradient border */}
+                    <div className="relative aspect-[4/3] p-[14px] bg-gradient-to-tr from-[#1f2026] via-[#3c3d47] to-[#111215] rounded-[2rem] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden">
+                      {/* Inner Screen Border Shadow */}
+                      <div className="absolute inset-[14px] border border-black/40 rounded-[1.3rem] pointer-events-none z-20" />
+                      {/* Screen View */}
+                      <div ref={containerRef} className="w-full h-full relative rounded-[1.2rem] overflow-hidden bg-[#0c0c0f]">
                         <ScreenViewContent />
                       </div>
                       {/* Home bar indicator */}
-                      <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/20 rounded-full z-20" />
+                      <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/30 rounded-full z-20" />
                     </div>
                   </div>
                 )}
@@ -334,16 +341,20 @@ export default function LiveSiteShowcase() {
                 {/* iPhone 17 Pro frame */}
                 {activeDevice === 'iphone' && (
                   <div className="w-full max-w-[270px] transition-all duration-500">
-                    <div className="relative aspect-[9/19] bg-[#0c0c0f] border-[9px] border-[#17171b] rounded-[2.5rem] shadow-2xl overflow-hidden">
+                    {/* Phone screen with Space Gray metallic gradient border */}
+                    <div className="relative aspect-[9/19] p-[9px] bg-gradient-to-tr from-[#1b1c22] via-[#464856] to-[#0d0e11] rounded-[2.5rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9)] overflow-hidden">
+                      {/* Inner border glass highlights */}
+                      <div className="absolute inset-[9px] border border-black/40 rounded-[2.05rem] pointer-events-none z-20" />
                       {/* Dynamic Island Notch */}
-                      <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-4 bg-[#17171b] rounded-full z-30 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-[#050505] rounded-full absolute right-3" />
+                      <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-20 h-4 bg-[#0a0a0f] rounded-full z-30 flex items-center justify-center border border-white/5">
+                        <div className="w-2 h-2 bg-[#020204] rounded-full absolute right-3" />
                       </div>
-                      <div ref={containerRef} className="w-full h-full relative">
+                      {/* Screen View */}
+                      <div ref={containerRef} className="w-full h-full relative rounded-[1.95rem] overflow-hidden bg-[#0c0c0f]">
                         <ScreenViewContent />
                       </div>
                       {/* Bottom home bar */}
-                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-white/20 rounded-full z-20" />
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-20 h-1 bg-white/30 rounded-full z-20" />
                     </div>
                   </div>
                 )}

@@ -89,38 +89,28 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         >
           {/* Background Text Overlay — Cinematic Loop */}
           <div className="absolute inset-0 flex items-center overflow-hidden opacity-[0.02] select-none pointer-events-none whitespace-nowrap">
-            <motion.div 
-              animate={{ x: [0, -2000] }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className="flex gap-20 items-center"
-            >
+            <div className="flex gap-20 items-center animate-preloader-cinematic-bg">
               {[...Array(4)].map((_, i) => (
                 <h2 key={i} className="text-[20vw] font-black leading-none tracking-tighter uppercase">
                   SPARX Studioz & Technologies
                 </h2>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Cinematic Looping Lines */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              initial={{ x: "-100%", y: "25%", rotate: -15 }}
-              animate={{ x: "200%" }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear", repeatDelay: 0.5 }}
-              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-500/50 to-transparent"
+            <div
+              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-500/50 to-transparent animate-line-right-fast"
+              style={{ top: "25%" }}
             />
-            <motion.div
-              initial={{ x: "200%", y: "60%", rotate: 15 }}
-              animate={{ x: "-200%" }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 0.2 }}
-              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"
+            <div
+              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent animate-line-left-medium"
+              style={{ top: "60%" }}
             />
-            <motion.div
-              initial={{ x: "-100%", y: "85%", rotate: -5 }}
-              animate={{ x: "200%" }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "linear", repeatDelay: 0.8 }}
-              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-400/50 to-transparent"
+            <div
+              className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-400/50 to-transparent animate-line-right-slow"
+              style={{ top: "85%" }}
             />
           </div>
 
@@ -139,18 +129,14 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
             {/* Looping Marquee Text */}
             <div className="w-full overflow-hidden mb-6 py-2 border-y border-white/[0.03] bg-white/[0.01]">
-              <motion.div 
-                animate={{ x: [0, -1000] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="flex whitespace-nowrap gap-20 items-center"
-              >
+              <div className="flex whitespace-nowrap gap-20 items-center animate-preloader-marquee">
                 {[...Array(6)].map((_, i) => (
                   <span key={i} className="text-sm font-bold text-white/40 tracking-[0.6em] uppercase flex items-center gap-20">
                     SPARX Studioz & Technologies
                     <span className="w-2 h-2 bg-green-500 rounded-full opacity-50" />
                   </span>
                 ))}
-              </motion.div>
+              </div>
             </div>
             
             <div className="w-64 h-[1px] bg-white/5 relative overflow-hidden mt-2 shadow-[0_0_15px_rgba(255,255,255,0.02)]">
