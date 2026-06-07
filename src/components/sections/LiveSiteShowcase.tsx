@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NewspaiPreview from '@/assets/newspai_preview.png';
 import HairsaloonPreview from '@/assets/hairsaloon_preview.png';
+import ObsidianPreview from '@/assets/house3d_preview.webp';
 import NewspaiEditor from '@/assets/newspai_editor.png';
 import NewspaiLogin from '@/assets/newspai_login.png';
 
@@ -16,11 +17,12 @@ interface ProjectSite {
 }
 
 export default function LiveSiteShowcase() {
-  const [activeSite, setActiveSite] = useState<'newspai' | 'hairsaloon'>('newspai');
+  const [activeSite, setActiveSite] = useState<'newspai' | 'hairsaloon' | 'obsidian'>('newspai');
   const [activeDevice, setActiveDevice] = useState<'macbook' | 'ipad' | 'iphone'>('macbook');
-  const [sessionStarted, setSessionStarted] = useState<Record<string, boolean>>({
+  const [sessionStarted, setSessionStarted] = useState<Record<'newspai' | 'hairsaloon' | 'obsidian', boolean>>({
     newspai: false,
-    hairsaloon: false
+    hairsaloon: false,
+    obsidian: false
   });
   const [iframeLoading, setIframeLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'live' | 'walkthrough' | 'credentials'>('live');
@@ -31,7 +33,7 @@ export default function LiveSiteShowcase() {
   const [summarizing, setSummarizing] = useState(false);
   const [summaryResult, setSummaryResult] = useState('');
 
-  const sites: Record<'newspai' | 'hairsaloon', ProjectSite> = {
+  const sites: Record<'newspai' | 'hairsaloon' | 'obsidian', ProjectSite> = {
     newspai: {
       id: 'newspai',
       title: 'NewsPAI - Automated News & Formatting Portal',
@@ -49,6 +51,15 @@ export default function LiveSiteShowcase() {
       tech: ['HTML5', 'Vanilla CSS', 'JavaScript', 'Parallax Scrolling'],
       url: 'https://faheem-ud-darain.github.io/Hairsaloon-sample-web/?preview=true',
       previewImg: HairsaloonPreview
+    },
+    obsidian: {
+      id: 'obsidian',
+      title: 'The Obsidian - Luxury 3D Apartment Walkthrough',
+      tag: '3D Web Experience',
+      description: 'An immersive digital estate showcase allowing users to explore high-end apartment interiors in a 3D environment with seamless viewport scroll-framed transitions.',
+      tech: ['Next.js', 'React', 'Three.js', 'WebGL', 'GSAP ScrollTrigger'],
+      url: 'https://3-d-house-web-demo.vercel.app/',
+      previewImg: ObsidianPreview
     }
   };
 
@@ -144,7 +155,7 @@ export default function LiveSiteShowcase() {
           </div>
 
           {/* Site Selector Buttons */}
-          <div className="flex gap-2 bg-white/[0.02] border border-white/[0.06] p-1.5 rounded-2xl self-start md:self-auto">
+          <div className="flex flex-wrap gap-2 bg-white/[0.02] border border-white/[0.06] p-1.5 rounded-2xl self-start md:self-auto">
             <button
               onClick={() => setActiveSite('newspai')}
               className={`px-5 py-2.5 rounded-xl text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 ${
@@ -164,6 +175,16 @@ export default function LiveSiteShowcase() {
               }`}
             >
               Cut & Shave (Salon)
+            </button>
+            <button
+              onClick={() => setActiveSite('obsidian')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 ${
+                activeSite === 'obsidian'
+                  ? 'bg-yellow-500/10 border border-yellow-500/25 text-yellow-500 shadow-lg'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              The Obsidian (3D)
             </button>
           </div>
         </div>
@@ -228,6 +249,16 @@ export default function LiveSiteShowcase() {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0 mt-0.5"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                   <span>
                     <strong>Demo Privacy Active:</strong> Client telephone numbers and emails are automatically blurred in the sandbox via the `?preview=true` parameter.
+                  </span>
+                </div>
+              )}
+
+              {/* Obsidian 3D Information */}
+              {activeSite === 'obsidian' && (
+                <div className="p-4 rounded-2xl bg-yellow-500/5 border border-yellow-500/10 text-xs text-yellow-500/90 leading-relaxed font-mono flex items-start gap-2.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  <span>
+                    <strong>3D Scroll Walkthrough:</strong> Scroll the viewport inside the sandbox frame to explore the luxury apartment interior in full 3D space.
                   </span>
                 </div>
               )}
