@@ -7,6 +7,7 @@ import { AnimatedContent } from '@/components/animations/AnimatedContent';
 import BorderGlow from '@/components/animations/BorderGlow';
 import Logo from '@/assets/Full Logo Tranparent.webp';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Clock, CloudSun } from 'lucide-react';
 
 const MagicRings = React.lazy(() => import('@/components/animations/MagicRings'));
 
@@ -15,6 +16,23 @@ const Footer = () => {
   const navigate = useNavigate();
   const { formData, status, errorMessage, handleChange, handleSubmit, reset, setFormField } =
     useContactForm();
+
+  const [pakistanTime, setPakistanTime] = React.useState('');
+
+  React.useEffect(() => {
+    const updateTime = () => {
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Karachi',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      };
+      setPakistanTime(new Intl.DateTimeFormat('en-US', options).format(new Date()));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Track if we've already processed this specific message to avoid loops
   const prefilledRef = React.useRef<string | null>(null);
@@ -264,56 +282,225 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/[0.06]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <div className="flex items-center">
-            <img 
-              src={Logo} 
-              alt="SPARX Studioz" 
-              className="h-8 w-auto object-contain brightness-90 hover:brightness-100 transition-all"
-            />
-          </div>
-          <p className="text-gray-600 text-sm">
-            © {new Date().getFullYear()} SPARX Studioz & Technologies. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-4">
-              <a 
-                href={SOCIAL_LINKS.facebook} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-green-400 transition-colors"
-                aria-label="Facebook"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-              <a 
-                href={SOCIAL_LINKS.instagram} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-green-400 transition-colors"
-                aria-label="Instagram"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              </a>
-              <a 
-                href={SOCIAL_LINKS.linkedin} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-green-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
+      {/* Full-width Branded Dark Footer */}
+      <div className="relative border-t border-white/[0.06] bg-[#030303] text-[#f5f5f7] pt-16 pb-8 overflow-hidden">
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes strokeLoop {
+            0% {
+              stroke-dashoffset: 2200;
+            }
+            100% {
+              stroke-dashoffset: 0;
+            }
+          }
+        `}} />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Top Row: Links and Branding */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 mb-2">
+            {/* Branding Column */}
+            <div className="md:col-span-5 flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-black tracking-wider text-white mb-4">
+                  SPARX STUDIOZ & TECHNOLOGY
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                  An independent creative studio and digital technology partner. We design and build premium software solutions, web experiences, and creative brand assets.
+                </p>
+              </div>
             </div>
-            <div className="w-px h-4 bg-white/10 hidden sm:block" />
-            <div className="flex items-center gap-4">
-              <Link to="/privacy-policy" className="text-gray-600 hover:text-white transition-colors text-sm">Privacy</Link>
-              <Link to="/terms" className="text-gray-600 hover:text-white transition-colors text-sm">Terms</Link>
+
+            {/* Explore links */}
+            <div className="md:col-span-3">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-green-400 mb-4">
+                Explore
+              </h4>
+              <ul className="space-y-3 text-sm font-medium">
+                <li>
+                  <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                    Portfolio
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/team" className="text-gray-400 hover:text-white transition-colors">
+                    Team
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <a href="#contact" className="text-gray-400 hover:text-white transition-colors" onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}>
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Follow me (Social links) */}
+            <div className="md:col-span-4">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-green-400 mb-4">
+                Follow me
+              </h4>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
+                <a
+                  href={SOCIAL_LINKS.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 group text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/5 transition-all">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                    </svg>
+                  </span>
+                  <span>Facebook</span>
+                </a>
+
+                <a
+                  href={SOCIAL_LINKS.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 group text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/5 transition-all">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </span>
+                  <span>Instagram</span>
+                </a>
+
+                <a
+                  href={SOCIAL_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 group text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/5 transition-all">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                  </span>
+                  <span>LinkedIn</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 group text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center group-hover:border-green-500/30 group-hover:bg-green-500/5 transition-all">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-7.6 8.38 8.38 0 0 1 3.8.9L21 4.5z"/>
+                    </svg>
+                  </span>
+                  <span>WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
 
+          {/* Card Middle: Giant Text (Cropped bottom) */}
+          <div className="relative mt-0 select-none pointer-events-none w-full overflow-hidden z-0">
+          <svg viewBox="0 0 1000 65" className="w-full h-auto scale-[1.05] sm:scale-100">
+            <defs>
+              {/* Moving stroke gradient */}
+              <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#22c55e">
+                  <animate attributeName="stop-color" values="#22c55e; #10b981; #3b82f6; #22c55e" dur="6s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="50%" stopColor="#10b981">
+                  <animate attributeName="stop-color" values="#10b981; #3b82f6; #22c55e; #10b981" dur="6s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="100%" stopColor="#3b82f6">
+                  <animate attributeName="stop-color" values="#3b82f6; #22c55e; #10b981; #3b82f6" dur="6s" repeatCount="indefinite" />
+                </stop>
+              </linearGradient>
+
+              {/* Soft glow filter (reduced stdDeviation to make glow subtle) */}
+              <filter id="textGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Animated glowing border stroke (behind the solid fill to hide inner joints and only show outer glow) */}
+            <text
+              x="50%"
+              y="105"
+              textAnchor="middle"
+              className="font-black text-[115px] fill-none stroke-[url(#glowGradient)] stroke-[1.5px] uppercase"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                filter: 'url(#textGlow)',
+                strokeDasharray: '2200',
+                animation: 'strokeLoop 15s linear infinite',
+                letterSpacing: '0.06em',
+                opacity: 0.45
+              }}
+            >
+              SPARX STUDIOZ
+            </text>
+
+            {/* Base solid text in front (White text as requested) */}
+            <text
+              x="50%"
+              y="105"
+              textAnchor="middle"
+              className="font-black text-[115px] fill-white uppercase"
+              style={{ fontFamily: "'Inter', sans-serif", letterSpacing: '0.06em' }}
+            >
+              SPARX STUDIOZ
+            </text>
+          </svg>
+          </div>
+        </div>
+
+        {/* Card Bottom Row: Copyright + Time/Weather */}
+        <div className="border-t border-white/[0.06] relative z-10 bg-[#030303]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-gray-500 font-medium justify-center sm:justify-start">
+              <span>SPARX © {new Date().getFullYear()}</span>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+            
+            {/* Clock & Weather Widget */}
+            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-1.5 text-xs text-gray-500 font-medium">
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                Abbottabad, PK
+              </span>
+              <span className="w-1.5 h-1.5 bg-white/10 rounded-full hidden sm:block" />
+              <span className="flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-gray-400" />
+                {pakistanTime || '...'}
+              </span>
+              <span className="w-1.5 h-1.5 bg-white/10 rounded-full" />
+              <span className="flex items-center gap-1">
+                <CloudSun className="w-3.5 h-3.5 text-amber-500" />
+                24°C Sunny
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
