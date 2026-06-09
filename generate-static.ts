@@ -306,6 +306,29 @@ const routes: Route[] = [
     ogType: 'website'
   },
   {
+    path: '/services',
+    title: `Our Digital Services & Capabilities | ${SITE_NAME}`,
+    description: 'Explore our complete suite of 19 specialized services including Web Development, UI/UX Design, Web Scraping, Social Media Marketing, and Quality Assurance.',
+    keywords: 'digital services, web development, software engineering, uiux design, social ads, ecommerce store management, sparx',
+    ogImage: '/logo.jpg',
+    ogType: 'website',
+    bodyHtml: `
+      <main class="services-index-prerender">
+        <h1>Our Digital Services &amp; Capabilities</h1>
+        <p>We engineer and execute premium digital experiences across 19 specialized capabilities to scale your operations, build brand trust, and drive conversions.</p>
+        <div class="services-grid">
+          ${Object.values(SERVICES_DETAIL).map(service => `
+            <div class="service-card">
+              <h2>${service.title}</h2>
+              <p>${service.metaDescription}</p>
+              <a href="/services/${service.slug}">Explore Service &rarr;</a>
+            </div>
+          `).join('\n')}
+        </div>
+      </main>
+    `.trim()
+  },
+  {
     path: '/terms',
     title: `Terms of Service | ${SITE_NAME}`,
     description: 'Read the terms of service and conditions for working with SPARX Studioz & Technologies.',
@@ -498,7 +521,7 @@ const sitemapUrls = routes.map(route => {
   if (route.path === '/') {
     priority = '1.0';
     changefreq = 'weekly';
-  } else if (route.path.startsWith('/services/')) {
+  } else if (route.path.startsWith('/services/') || route.path === '/services') {
     priority = '0.9';
     changefreq = 'weekly';
   } else if (route.path === '/portfolio' || route.path === '/blog') {

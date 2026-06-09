@@ -9,7 +9,7 @@ import { SOCIAL_LINKS } from '@/data/constants';
 import { Home, Layers, Info, Briefcase, Users, Mail } from 'lucide-react';
 
 const navLinks = [
-  { label: "Services", href: "/#services", icon: <Layers size={20} /> },
+  { label: "Services", href: "/services", icon: <Layers size={20} /> },
   { label: "About", href: "/about", icon: <Info size={20} /> },
   { label: "Portfolio", href: "/portfolio", icon: <Briefcase size={20} /> },
   { label: "Team", href: "/team", icon: <Users size={20} /> },

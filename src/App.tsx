@@ -25,6 +25,7 @@ const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const ServiceDetail = lazy(() => import('@/pages/ServiceDetail'));
+const ServicesIndex = lazy(() => import('@/pages/ServicesIndex'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
@@ -45,6 +46,7 @@ function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
             <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
             <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
             <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+            <Route path="/services" element={<PageTransition><ServicesIndex /></PageTransition>} />
             <Route path="/services/:slug" element={<PageTransition><ServiceDetail /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
