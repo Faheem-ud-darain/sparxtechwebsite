@@ -1,5 +1,6 @@
 import EcomImg from '@/assets/ecommerce-mockup.webp';
 import CarProductsDemoPreview from '@/assets/carproducts_demo_preview.webp';
+import CarWashDemoPreview from '@/assets/carwash_demo_preview.webp';
 import SaasImg from '@/assets/saas-mockup.webp';
 import MobileImg from '@/assets/mobile-mockup.webp';
 
@@ -229,17 +230,17 @@ export const mockProjects = [
   },
   {
     _id: '13',
-    title: 'Car Wash Pro - Complete Management Application',
-    slug: { current: 'car-wash-pro-management-app' },
-    category: 'SaaS Application',
-    techStack: ['React.js / Next.js', 'Node.js / Express', 'MongoDB', 'Stripe'],
+    title: 'Car Wash Booking & Services Page',
+    slug: { current: 'car-wash-web-demo' },
+    category: 'Web Development',
+    techStack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Web Design', 'GitHub Pages'],
     challenge: [
-      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'Car wash businesses often struggle with managing multiple aspects of their operations. The market needed an affordable, comprehensive management solution.' }] }
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'A demo application developed to showcase premium car wash and detailing service packages, presenting booking forms, pricing tiers, and service details in a clean responsive layout.' }] }
     ],
     solution: [
-      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed Car Wash Pro, a comprehensive management application tailored for car wash businesses of all sizes.' }] }
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We built an interactive, high-performance web landing page using clean HTML, custom CSS, and vanilla JavaScript. The site features package selector cards, scheduling interfaces, and slick responsive styling designed to capture leads.' }] }
     ],
-    image3D: CarWashImg,
+    image: CarWashDemoPreview,
     liveUrl: 'https://faheem-ud-darain.github.io/Car-Wash-Web-Demo/',
     gridClass: 'md:col-span-2 md:row-span-2'
   },
