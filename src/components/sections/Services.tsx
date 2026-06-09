@@ -92,13 +92,10 @@ const Services = () => {
                   {/* Footer Link */}
                   <div className="pt-6 border-t border-white/[0.06] mt-auto">
                     <Link
-                      to="/#contact"
-                      state={{ 
-                        message: `Hi SPARX! I'm interested in your ${service.title} services. Could you please provide more details on how we can get started?`
-                      }}
+                      to={`/services/${service.title.toLowerCase().replace(/\//g, '-').replace(/ & /g, '-').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
                       className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 group-hover:text-green-400 transition-colors"
                     >
-                      Discuss Project
+                      Explore Service
                       <svg
                         width="16"
                         height="16"

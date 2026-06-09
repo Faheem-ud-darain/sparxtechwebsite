@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
+import { SERVICES_DETAIL } from './src/data/servicesData';
 
 // Get current directory in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -21,39 +22,230 @@ if (!fs.existsSync(templatePath)) {
 
 const baseTemplate = fs.readFileSync(templatePath, 'utf-8');
 
+/**
+ * Lightweight synchronous markdown-to-HTML converter
+ */
+function markdownToHtml(md: string): string {
+  let html = md.trim();
+
+  // Escape HTML tags first to prevent syntax breakage
+  html = html
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  const lines = html.split('\n');
+  let inTable = false;
+  let inList = false;
+  let inNumberedList = false;
+  let tableRows: string[] = [];
+  const parsedLines: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    // 1. Parse tables
+    if (line.startsWith('|') && line.endsWith('|')) {
+      if (line.match(/^\|[\s-:-|]+\|$/)) {
+        continue; // skip separator lines like |---|---|
+      }
+      const cells = line.split('|').slice(1, -1).map(c => c.trim());
+      const cellTag = !inTable ? 'th' : 'td';
+      const row = `<tr>${cells.map(c => `<${cellTag}>${c}</${cellTag}>`).join('')}</tr>`;
+      
+      if (!inTable) {
+        inTable = true;
+        tableRows.push('<thead>' + row + '</thead><tbody>');
+      } else {
+        tableRows.push(row);
+      }
+      continue;
+    } else {
+      if (inTable) {
+        tableRows.push('</tbody>');
+        parsedLines.push(`<table>${tableRows.join('')}</table>`);
+        tableRows = [];
+        inTable = false;
+      }
+    }
+
+    // 2. Parse bulleted lists
+    if (line.startsWith('- ') || line.startsWith('* ')) {
+      const content = line.substring(2).trim();
+      if (!inList) {
+        inList = true;
+        parsedLines.push('<ul>');
+      }
+      parsedLines.push(`<li>${content}</li>`);
+      continue;
+    } else {
+      if (inList) {
+        parsedLines.push('</ul>');
+        inList = false;
+      }
+    }
+
+    // 3. Parse numbered lists
+    if (line.match(/^\d+\.\s+/)) {
+      const content = line.replace(/^\d+\.\s+/, '').trim();
+      if (!inNumberedList) {
+        inNumberedList = true;
+        parsedLines.push('<ol>');
+      }
+      parsedLines.push(`<li>${content}</li>`);
+      continue;
+    } else {
+      if (inNumberedList) {
+        parsedLines.push('</ol>');
+        inNumberedList = false;
+      }
+    }
+
+    // 4. Parse blockquotes
+    if (line.startsWith('> ')) {
+      parsedLines.push(`<blockquote>${line.substring(2).trim()}</blockquote>`);
+      continue;
+    }
+
+    parsedLines.push(lines[i]);
+  }
+
+  // Close any open lists or tables at the end of the text
+  if (inTable) {
+    tableRows.push('</tbody>');
+    parsedLines.push(`<table>${tableRows.join('')}</table>`);
+  }
+  if (inList) {
+    parsedLines.push('</ul>');
+  }
+  if (inNumberedList) {
+    parsedLines.push('</ol>');
+  }
+
+  html = parsedLines.join('\n');
+
+  // Headers
+  html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>');
+  html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+
+  // Bold & Italic
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+  html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+  // Links
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
+
+  // Horizontal rules
+  html = html.replace(/^---$/gm, '<hr />');
+
+  // Paragraphs: Wrap text segments that aren't already block elements
+  const blocks = html.split(/\n\n+/);
+  const finishedBlocks = blocks.map(block => {
+    const trimmed = block.trim();
+    if (!trimmed) return '';
+    if (
+      trimmed.startsWith('<h') ||
+      trimmed.startsWith('<ul') ||
+      trimmed.startsWith('<ol') ||
+      trimmed.startsWith('<table') ||
+      trimmed.startsWith('<blockquote') ||
+      trimmed.startsWith('<hr') ||
+      trimmed.startsWith('<div')
+    ) {
+      return trimmed;
+    }
+    return `<p>${trimmed.replace(/\n/g, '<br />')}</p>`;
+  });
+
+  return finishedBlocks.join('\n');
+}
+
+/**
+ * Parses PortableText block text from mockProjects.ts to HTML
+ */
+function parseBlocksToHtml(blockText: string): string {
+  if (!blockText) return '';
+  
+  const blockRegex = /\{\s*_type:\s*['"]block['"][\s\S]*?\}/g;
+  const blocks = [...blockText.matchAll(blockRegex)];
+  
+  if (blocks.length === 0) {
+    // Fallback: extract all text strings directly
+    const textRegex = /text:\s*['"]([\s\S]*?)['"]/g;
+    const matches = [...blockText.matchAll(textRegex)];
+    return matches.map(m => `<p>${m[1].replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\n/g, '<br />')}</p>`).join('\n');
+  }
+  
+  return blocks.map(b => {
+    const blockContent = b[0];
+    const styleMatch = blockContent.match(/style:\s*['"]([^'"]+)['"]/);
+    const style = styleMatch ? styleMatch[1] : 'normal';
+    
+    const textRegex = /text:\s*['"]([\s\S]*?)['"]/g;
+    const textMatches = [...blockContent.matchAll(textRegex)];
+    const text = textMatches.map(tm => tm[1]).join('');
+    
+    const cleanText = text.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\n/g, '<br />');
+    if (!cleanText) return '';
+    
+    if (style === 'h2') return `<h2>${cleanText}</h2>`;
+    if (style === 'h3') return `<h3>${cleanText}</h3>`;
+    return `<p>${cleanText}</p>`;
+  }).filter(Boolean).join('\n');
+}
+
 // 2. Parse projects from mockProjects.ts
 const projectsFile = fs.readFileSync(path.resolve(__dirname, './src/data/mockProjects.ts'), 'utf-8');
 const projectBlocks = projectsFile.split(/_id:\s*['"]\d+['"]/);
-const projects: Array<{ title: string; slug: string; category: string }> = [];
+const projects: Array<{ title: string; slug: string; category: string; challengeHtml: string; solutionHtml: string }> = [];
 
 for (const block of projectBlocks) {
   const titleMatch = block.match(/title:\s*['"]([^'"]+)['"]/);
   const slugMatch = block.match(/slug:\s*\{\s*current:\s*['"]([^'"]+)['"]\s*\}/);
   const categoryMatch = block.match(/category:\s*['"]([^'"]+)['"]/);
+  const challengeMatch = block.match(/challenge:\s*\[([\s\S]*?)\]/);
+  const solutionMatch = block.match(/solution:\s*\[([\s\S]*?)\]/);
   
   if (titleMatch && slugMatch) {
+    let challengeHtml = '';
+    if (challengeMatch) {
+      challengeHtml = parseBlocksToHtml(challengeMatch[1]);
+    }
+    let solutionHtml = '';
+    if (solutionMatch) {
+      solutionHtml = parseBlocksToHtml(solutionMatch[1]);
+    }
+
     projects.push({
       title: titleMatch[1],
       slug: slugMatch[1],
-      category: categoryMatch ? categoryMatch[1] : 'Case Study'
+      category: categoryMatch ? categoryMatch[1] : 'Case Study',
+      challengeHtml,
+      solutionHtml
     });
   }
 }
 
 // 3. Parse blogs from Markdown files
 const blogDir = path.resolve(__dirname, './src/content/blog');
-const blogs: Array<{ slug: string; title: string; excerpt: string; image: string }> = [];
+const blogs: Array<{ slug: string; title: string; excerpt: string; image: string; author: string; date: string; content: string }> = [];
 
 if (fs.existsSync(blogDir)) {
   const blogFiles = fs.readdirSync(blogDir).filter(file => file.endsWith('.md'));
   for (const file of blogFiles) {
     const content = fs.readFileSync(path.join(blogDir, file), 'utf-8');
-    const { data } = matter(content);
+    const { data, content: markdownBody } = matter(content);
     blogs.push({
       slug: file.replace('.md', ''),
       title: data.title || 'Blog Post',
       excerpt: data.excerpt || data.description || 'Read our latest blog post on SPARX Studioz & Technologies.',
-      image: data.image || '/og-image.jpg'
+      image: data.image || '/og-image.jpg',
+      author: data.author || 'Sparx AI Research',
+      date: data.date || '',
+      content: markdownBody
     });
   }
 }
@@ -66,6 +258,8 @@ interface Route {
   keywords: string;
   ogImage: string;
   ogType: string;
+  bodyHtml?: string;
+  schema?: any;
 }
 
 // 4. Construct all routes
@@ -128,23 +322,100 @@ const routes: Route[] = [
     ogType: 'website'
   },
   // Case Studies
-  ...projects.map(proj => ({
-    path: `/project/${proj.slug}`,
-    title: `${proj.title} | Case Study | ${SITE_NAME}`,
-    description: `Case Study: ${proj.title}. Discover how SPARX Studioz & Technologies engineered success for this project in the ${proj.category} space.`,
-    keywords: `${proj.category}, case study, portfolio, ${proj.techStack ? proj.techStack.join(', ') : 'software solutions'}`,
-    ogImage: '/logo.jpg', // Default to logo or specific fallback
-    ogType: 'article'
-  } as Route)),
+  ...projects.map(proj => {
+    const caseStudyHtml = `
+      <main class="case-study-prerender">
+        <article>
+          <h1>${proj.title}</h1>
+          <p><strong>Category:</strong> ${proj.category} - Case Study</p>
+          <section>
+            <h2>The Challenge</h2>
+            <div>${proj.challengeHtml}</div>
+          </section>
+          <section>
+            <h2>The Solution</h2>
+            <div>${proj.solutionHtml}</div>
+          </section>
+        </article>
+      </main>
+    `.trim();
+
+    return {
+      path: `/project/${proj.slug}`,
+      title: `${proj.title} | Case Study | ${SITE_NAME}`,
+      description: `Case Study: ${proj.title}. Discover how SPARX Studioz & Technologies engineered success for this project in the ${proj.category} space.`,
+      keywords: `${proj.category}, case study, portfolio, software solutions`,
+      ogImage: '/logo.jpg',
+      ogType: 'article',
+      bodyHtml: caseStudyHtml
+    };
+  }),
   // Blog Posts
-  ...blogs.map(blog => ({
-    path: `/blog/${blog.slug}`,
-    title: `${blog.title} | Blog | ${SITE_NAME}`,
-    description: blog.excerpt,
-    keywords: 'tech blog, web development, digital insights, artificial intelligence, design trends',
-    ogImage: blog.image.startsWith('http') ? blog.image : blog.image,
-    ogType: 'article'
-  }))
+  ...blogs.map(blog => {
+    const blogHtml = `
+      <main class="blog-prerender">
+        <article>
+          <h1>${blog.title}</h1>
+          <p class="meta"><strong>Published by:</strong> ${blog.author} | <strong>Date:</strong> ${blog.date}</p>
+          <div class="content">
+            ${markdownToHtml(blog.content)}
+          </div>
+        </article>
+      </main>
+    `.trim();
+
+    return {
+      path: `/blog/${blog.slug}`,
+      title: `${blog.title} | Blog | ${SITE_NAME}`,
+      description: blog.excerpt,
+      keywords: 'tech blog, web development, digital insights, artificial intelligence, design trends',
+      ogImage: blog.image.startsWith('http') ? blog.image : blog.image,
+      ogType: 'article',
+      bodyHtml: blogHtml
+    };
+  }),
+  // Service Pages
+  ...Object.values(SERVICES_DETAIL).map(service => {
+    const serviceHtml = `
+      <main class="services-prerender">
+        <article>
+          <h1>${service.h1}</h1>
+          <p class="primary-keyword"><strong>Core Expertise:</strong> ${service.primaryKeyword}</p>
+          <div class="description">
+            ${service.longDescription.split('\n\n').map(p => `<p>${p}</p>`).join('\n')}
+          </div>
+          
+          <section class="tech-stack">
+            <h2>Technologies &amp; Tools</h2>
+            <ul>
+              ${service.techStack.map(tech => `<li>${tech}</li>`).join('\n')}
+            </ul>
+          </section>
+
+          <section class="faqs">
+            <h2>Frequently Asked Questions</h2>
+            ${service.faqs.map(faq => `
+              <div class="faq-item">
+                <h3>${faq.question}</h3>
+                <p>${faq.answer}</p>
+              </div>
+            `).join('\n')}
+          </section>
+        </article>
+      </main>
+    `.trim();
+
+    return {
+      path: `/services/${service.slug}`,
+      title: service.metaTitle,
+      description: service.metaDescription,
+      keywords: [service.primaryKeyword, ...service.secondaryKeywords].join(', '),
+      ogImage: '/logo.jpg',
+      ogType: 'website',
+      bodyHtml: serviceHtml,
+      schema: service.schema
+    };
+  })
 ];
 
 console.log(`Generating SEO files for ${routes.length} routes...`);
@@ -155,7 +426,7 @@ routes.forEach(route => {
   const ogImgUrl = route.ogImage.startsWith('http') ? route.ogImage : `${SITE_URL}${route.ogImage}`;
   
   // Format the SEO tags replacement
-  const seoTags = `
+  let seoTags = `
     <!-- Primary Meta Tags -->
     <meta name="title" content="${route.title}" />
     <meta name="description" content="${route.description}" />
@@ -185,10 +456,19 @@ routes.forEach(route => {
     <meta name="googlebot" content="index, follow" />
   `.trim();
 
+  if (route.schema) {
+    seoTags += `\n\n    <!-- Structured Data Schema -->\n    <script type="application/ld+json">\n      ${JSON.stringify(route.schema, null, 2)}\n    </script>`;
+  }
+
   // Replace placeholders in base template
   let pageContent = baseTemplate
     .replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
     .replace(/<meta name="seo-placeholder" content="true"\s*\/?>/, seoTags);
+
+  // Inject prerendered body inside the React mounting point
+  if (route.bodyHtml) {
+    pageContent = pageContent.replace('<div id="root"></div>', `<div id="root">${route.bodyHtml}</div>`);
+  }
 
   if (route.path === '/') {
     // Write directly to index.html
@@ -202,5 +482,53 @@ routes.forEach(route => {
     console.log(`✓ Generated: ${route.path} -> dist${route.path}/index.html`);
   }
 });
-
 console.log('Static SEO pages generation complete!');
+
+// 6. Generate dynamic sitemap.xml
+const sitemapPathPublic = path.resolve(__dirname, './public/sitemap.xml');
+const sitemapPathDist = path.resolve(distDir, 'sitemap.xml');
+
+const today = new Date().toISOString().split('T')[0];
+
+const sitemapUrls = routes.map(route => {
+  const fullUrl = `${SITE_URL}${route.path === '/' ? '' : route.path}`;
+  let priority = '0.5';
+  let changefreq = 'monthly';
+
+  if (route.path === '/') {
+    priority = '1.0';
+    changefreq = 'weekly';
+  } else if (route.path.startsWith('/services/')) {
+    priority = '0.9';
+    changefreq = 'weekly';
+  } else if (route.path === '/portfolio' || route.path === '/blog') {
+    priority = '0.8';
+    changefreq = 'daily';
+  } else if (route.path.startsWith('/project/')) {
+    priority = '0.7';
+    changefreq = 'monthly';
+  } else if (route.path.startsWith('/blog/')) {
+    priority = '0.7';
+    changefreq = 'monthly';
+  } else if (route.path === '/about' || route.path === '/team') {
+    priority = '0.7';
+    changefreq = 'monthly';
+  }
+
+  return `  <url>
+    <loc>${fullUrl}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}).join('\n');
+
+const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls}
+</urlset>
+`;
+
+fs.writeFileSync(sitemapPathPublic, sitemapContent, 'utf-8');
+fs.writeFileSync(sitemapPathDist, sitemapContent, 'utf-8');
+console.log('✓ Dynamic sitemap.xml successfully generated and written!');

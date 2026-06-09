@@ -1,8 +1,5 @@
 {
-  "rewrites": [
-    { "source": "/assets/(.*)", "destination": "/assets/$1" },
-    { "source": "/((?!assets/).*)", "destination": "/index.html" }
-  ],
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/assets/(.*)",
