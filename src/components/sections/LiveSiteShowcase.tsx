@@ -5,7 +5,9 @@ import HairsaloonPreview from '@/assets/hairsaloon_preview.png';
 import ObsidianPreview from '@/assets/house3d_preview.webp';
 import NewspaiEditor from '@/assets/newspai_editor.png';
 import NewspaiLogin from '@/assets/newspai_login.png';
-
+import CarWashDemoPreview from '@/assets/carwash_demo_preview.webp';
+import CarProductsDemoPreview from '@/assets/carproducts_demo_preview.webp';
+ 
 interface ProjectSite {
   id: string;
   title: string;
@@ -15,25 +17,27 @@ interface ProjectSite {
   url: string;
   previewImg: string;
 }
-
+ 
 export default function LiveSiteShowcase() {
-  const [activeSite, setActiveSite] = useState<'newspai' | 'hairsaloon' | 'obsidian'>('newspai');
+  const [activeSite, setActiveSite] = useState<'newspai' | 'hairsaloon' | 'obsidian' | 'carproduct' | 'carwash'>('newspai');
   const [activeDevice, setActiveDevice] = useState<'macbook' | 'ipad' | 'iphone'>('macbook');
-  const [sessionStarted, setSessionStarted] = useState<Record<'newspai' | 'hairsaloon' | 'obsidian', boolean>>({
+  const [sessionStarted, setSessionStarted] = useState<Record<'newspai' | 'hairsaloon' | 'obsidian' | 'carproduct' | 'carwash', boolean>>({
     newspai: false,
     hairsaloon: false,
-    obsidian: false
+    obsidian: false,
+    carproduct: false,
+    carwash: false
   });
   const [iframeLoading, setIframeLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'live' | 'walkthrough' | 'credentials'>('live');
   const [copiedField, setCopiedField] = useState<'email' | 'password' | null>(null);
-
+ 
   // For the AI summarizer simulation
   const [summaryInput, setSummaryInput] = useState('');
   const [summarizing, setSummarizing] = useState(false);
   const [summaryResult, setSummaryResult] = useState('');
-
-  const sites: Record<'newspai' | 'hairsaloon' | 'obsidian', ProjectSite> = {
+ 
+  const sites: Record<'newspai' | 'hairsaloon' | 'obsidian' | 'carproduct' | 'carwash', ProjectSite> = {
     newspai: {
       id: 'newspai',
       title: 'NewsPAI - Automated News & Formatting Portal',
@@ -60,6 +64,24 @@ export default function LiveSiteShowcase() {
       tech: ['Next.js', 'React', 'Three.js', 'WebGL', 'GSAP ScrollTrigger'],
       url: 'https://3-d-house-web-demo.vercel.app/',
       previewImg: ObsidianPreview
+    },
+    carproduct: {
+      id: 'carproduct',
+      title: 'Elite Motors - Car Products Website Demo',
+      tag: 'Web Catalog Demo',
+      description: 'An elegant presentation page for car products such as cleaners, polishes, shampoos, and detailing kits, featuring specification grids, product benefits, and responsive design.',
+      tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Web Design', 'GitHub Pages'],
+      url: 'https://faheem-ud-darain.github.io/Car-Product-Sale-Web-Demo/',
+      previewImg: CarProductsDemoPreview
+    },
+    carwash: {
+      id: 'carwash',
+      title: 'Car Wash Booking & Services Page',
+      tag: 'Service Portal Demo',
+      description: 'An interactive online service catalog for premium car care services, complete with detailed service options, pricing packages, and fully responsive client layouts.',
+      tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Web Design', 'GitHub Pages'],
+      url: 'https://faheem-ud-darain.github.io/Car-Wash-Web-Demo/',
+      previewImg: CarWashDemoPreview
     }
   };
 
@@ -186,9 +208,29 @@ export default function LiveSiteShowcase() {
             >
               The Obsidian (3D)
             </button>
+            <button
+              onClick={() => setActiveSite('carproduct')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 ${
+                activeSite === 'carproduct'
+                  ? 'bg-orange-500/10 border border-orange-500/25 text-orange-400 shadow-lg'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Elite Motors (Products)
+            </button>
+            <button
+              onClick={() => setActiveSite('carwash')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-bold font-mono tracking-wider uppercase transition-all duration-300 ${
+                activeSite === 'carwash'
+                  ? 'bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 shadow-lg'
+                  : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Car Wash (Booking)
+            </button>
           </div>
         </div>
-
+ 
         {/* Workspace Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
           
@@ -200,7 +242,7 @@ export default function LiveSiteShowcase() {
                 <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">{currentSite.title}</h3>
                 <p className="text-sm text-gray-400 leading-relaxed">{currentSite.description}</p>
               </div>
-
+ 
               {/* Tech Badges */}
               <div className="flex flex-wrap gap-1.5 pt-2">
                 {currentSite.tech.map((t, idx) => (
@@ -209,7 +251,7 @@ export default function LiveSiteShowcase() {
                   </span>
                 ))}
               </div>
-
+ 
               {/* NewsPAI Custom Controls (Tabs) */}
               {activeSite === 'newspai' && (
                 <div className="space-y-3 pt-4 border-t border-white/[0.05]">
@@ -242,7 +284,7 @@ export default function LiveSiteShowcase() {
                   </div>
                 </div>
               )}
-
+ 
               {/* Hair Salon Blur Warning */}
               {activeSite === 'hairsaloon' && (
                 <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-xs text-amber-400 leading-relaxed font-mono flex items-start gap-2.5">
@@ -252,13 +294,23 @@ export default function LiveSiteShowcase() {
                   </span>
                 </div>
               )}
-
+ 
               {/* Obsidian 3D Information */}
               {activeSite === 'obsidian' && (
                 <div className="p-4 rounded-2xl bg-yellow-500/5 border border-yellow-500/10 text-xs text-yellow-500/90 leading-relaxed font-mono flex items-start gap-2.5">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                   <span>
                     <strong>3D Scroll Walkthrough:</strong> Scroll the viewport inside the sandbox frame to explore the luxury apartment interior in full 3D space.
+                  </span>
+                </div>
+              )}
+ 
+              {/* Car Wash Booking / Car Products Demo Info */}
+              {(activeSite === 'carwash' || activeSite === 'carproduct') && (
+                <div className="p-4 rounded-2xl bg-green-500/5 border border-green-500/20 text-xs text-green-400 leading-relaxed font-mono flex items-start gap-2.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <span>
+                    <strong>Responsive Design:</strong> Try switching device views below. This demo automatically updates layout parameters to adapt perfectly to mobile and tablet viewports.
                   </span>
                 </div>
               )}

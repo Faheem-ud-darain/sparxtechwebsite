@@ -1,4 +1,5 @@
 import EcomImg from '@/assets/ecommerce-mockup.webp';
+import CarProductsDemoPreview from '@/assets/carproducts_demo_preview.webp';
 import SaasImg from '@/assets/saas-mockup.webp';
 import MobileImg from '@/assets/mobile-mockup.webp';
 
@@ -239,6 +240,7 @@ export const mockProjects = [
       { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'SPARX Studioz & Technologies developed Car Wash Pro, a comprehensive management application tailored for car wash businesses of all sizes.' }] }
     ],
     image3D: CarWashImg,
+    liveUrl: 'https://faheem-ud-darain.github.io/Car-Wash-Web-Demo/',
     gridClass: 'md:col-span-2 md:row-span-2'
   },
   {
@@ -345,5 +347,21 @@ export const mockProjects = [
     ],
     image: SyloFlowBrandIdentity,
     gridClass: 'md:col-span-2 md:row-span-2'
+  },
+  {
+    _id: '22',
+    title: 'Elite Motors - Car Products Website Demo',
+    slug: { current: 'car-product-sale-web-demo' },
+    category: 'Web Development',
+    techStack: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Web Design', 'GitHub Pages'],
+    challenge: [
+      { _type: 'block', _key: '1', style: 'normal', children: [{ _type: 'span', text: 'A demo application developed to showcase premium car care products (cleaners, polishes, shampoos, and detailing accessories), presenting product details, specifications, usage guides, and pricing in a clean responsive layout.' }] }
+    ],
+    solution: [
+      { _type: 'block', _key: '2', style: 'normal', children: [{ _type: 'span', text: 'We built a high-performance web catalog and presentation platform using clean HTML, custom CSS, and vanilla JavaScript. The site features interactive product cards, responsive layouts, and elegant hover animations designed to enhance user engagement.' }] }
+    ],
+    image: CarProductsDemoPreview,
+    liveUrl: 'https://faheem-ud-darain.github.io/Car-Product-Sale-Web-Demo/',
+    gridClass: 'md:col-span-2 md:row-span-1'
   }
 ];

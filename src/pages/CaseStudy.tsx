@@ -174,6 +174,27 @@ const CaseStudy = () => {
                   </div>
                 </AnimatedContent>
 
+                {activeProject.liveUrl && (
+                  <AnimatedContent direction="up" delay={0.45}>
+                    <a
+                      href={activeProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative flex items-center justify-between p-6 rounded-3xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 hover:from-green-500/20 hover:to-emerald-500/20 border border-green-500/30 hover:border-green-500/50 transition-all duration-300 shadow-[0_0_20px_rgba(34,197,94,0.05)] hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] overflow-hidden"
+                    >
+                      {/* Decorative glowing gradient effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.15)_0%,transparent_70%)]" />
+                      <div className="relative z-10 flex flex-col">
+                        <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest mb-1">Live Application</span>
+                        <span className="text-lg font-bold text-white group-hover:text-green-300 transition-colors">Visit Live Demo</span>
+                      </div>
+                      <div className="relative z-10 p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:bg-green-500 group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                      </div>
+                    </a>
+                  </AnimatedContent>
+                )}
+
                 <AnimatedContent direction="up" delay={0.5}>
                   <div className="p-8 rounded-3xl bg-gradient-to-br from-green-500/10 to-transparent border border-green-500/20">
                     <h3 className="text-sm font-bold text-green-400 uppercase tracking-widest mb-4">The Impact</h3>
