@@ -62,7 +62,6 @@ export const TECH_STACK = [
   { name: "Firebase", color: "#FFCA28" },
   { name: "MongoDB", color: "#47A248" },
   { name: "GraphQL", color: "#E10098" },
-  { name: "Sanity", color: "#F03E2F" },
   { name: "Framer Motion", color: "#0055FF" },
   { name: "Vite", color: "#646CFF" },
   { name: "AWS", color: "#FF9900" },

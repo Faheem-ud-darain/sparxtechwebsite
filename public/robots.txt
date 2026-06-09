@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /studio
 
 Sitemap: https://sparxtechwebsite.vercel.app/sitemap.xml
