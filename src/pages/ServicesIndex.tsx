@@ -27,7 +27,7 @@ const ServicesIndex = () => {
     <div className="relative min-h-screen text-white selection:bg-green-500/30 overflow-hidden">
       <SEO
         title="Our Digital Services & Capabilities | SPARX Studioz"
-        description="Explore our complete suite of 19 specialized services including Web Development, UI/UX Design, Web Scraping, Social Media Marketing, and Quality Assurance."
+        description="Explore our complete suite of 20 specialized services including Web Development, UI/UX Design, Web Scraping, Digital Marketing, and Quality Assurance."
         keywords="digital services, web development, software engineering, uiux design, social ads, ecommerce store management, sparx"
         ogType="website"
       />
@@ -60,12 +60,12 @@ const ServicesIndex = () => {
                 Specialized Digital <span className="text-green-500">Solutions</span>
               </h1>
               <p className="text-gray-400 text-lg sm:text-xl leading-relaxed">
-                We engineer and execute premium digital experiences across 19 specialized capabilities to scale your operations, build brand trust, and drive conversions.
+                We engineer and execute premium digital experiences across 20 specialized capabilities to scale your operations, build brand trust, and drive conversions.
               </p>
             </AnimatedContent>
           </header>
 
-          {/* Grid Layout of all 19 Services */}
+          {/* Grid Layout of all 20 Services */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-24">
             {SERVICES.map((service, index) => {
               const slug = service.title

@@ -629,44 +629,44 @@ We follow strict security protocols to keep your information safe. From e-commer
       "areaServed": "Worldwide"
     }
   },
-  "social-media-ads": {
-    slug: "social-media-ads",
-    title: "Social Media Ads",
-    primaryKeyword: "social media advertising services",
-    secondaryKeywords: ["targeted ads on Meta, Google, TikTok", "paid social campaigns"],
-    metaTitle: "Social Media Ads | Meta, Google & TikTok Advertising | SPARX",
-    metaDescription: "Targeted advertising on Meta, Google, and TikTok. Maximize ROI with data‑driven ad campaigns. Start advertising today.",
-    h1: "Social Media Ads – Targeted Campaigns That Convert",
-    h2s: ["Platform Breakdown (Facebook, Instagram, Google, TikTok)", "Ad Management Process", "Case Studies"],
-    longDescription: `Organic social reach is declining, making targeted advertising essential to reach new customers at scale. Our social media advertising services help you launch high-ROI campaigns across Meta (Facebook & Instagram), Google, and TikTok. We design and manage ads that connect with buyers at every stage of the funnel.
+  "digital-marketing": {
+    slug: "digital-marketing",
+    title: "Digital Marketing",
+    primaryKeyword: "digital marketing services",
+    secondaryKeywords: ["Meta and Google ads", "social media marketing", "search engine marketing", "digital campaign management", "paid ads copywriting"],
+    metaTitle: "Digital Marketing Services | Meta & Google Ads | SPARX",
+    metaDescription: "Scale your business with professional digital marketing services. We handle Meta ads, Google PPC, TikTok ads, creative design, copywriting, and analytics.",
+    h1: "Digital Marketing Services – Drive Growth with Data-Driven Paid Ads & Creative Campaigns",
+    h2s: ["Our Digital Marketing Methodology", "Meta, Google & Social Advertising", "Ad Copywriting & Creative Design", "FAQ"],
+    longDescription: `Running profitable paid ad campaigns is about more than just boosting posts; it requires a structured, data-driven approach combining persuasive copywriting, eye-catching creative design, and precise audience targeting. At SPARX, our digital marketing services handle the entire lifecycle of your advertising across Meta (Facebook & Instagram), Google (Search, Display, Shopping, YouTube), and TikTok.
 
-We handle audience research, split-testing, visual design, and copywriting. By monitoring analytics and adjusting bids, we scale high-performing ads to keep your acquisition costs low and maximize returns.`,
-    techStack: ["Meta Ads Manager", "Google Ads", "TikTok Ads Manager", "Google Analytics", "Figma", "CapCut"],
+We don't just set up the campaigns—we build the assets. Our cross-functional team designs high-converting ad graphics, edits engaging video ads, and writes compelling, psychology-backed ad copy designed to stop the scroll and drive conversions. We set up robust tracking frameworks (including Meta Pixel, Conversions API, and Google Tag Manager), map out multi-stage retargeting funnels, run rigorous A/B tests, and scale budgets efficiently to maximize your Return on Ad Spend (ROAS).`,
+    techStack: ["Meta Ads Manager", "Google Ads", "TikTok Ads Manager", "Google Tag Manager", "Figma", "Premiere Pro / CapCut", "Google Analytics 4"],
     faqs: [
       {
-        question: "What does a Facebook ads management agency do?",
-        answer: "We manage audience targeting, test different ad creatives, write copy, set up conversion tracking, optimize budgets, and compile weekly performance reports to ensure you hit your sales targets."
+        question: "Do you design the ad graphics and edit the video ads?",
+        answer: "Yes, absolutely. We offer full-service creative production. This means we design all the image assets, write the ad copy (headlines, primary text, descriptions), and edit high-engagement video ads or reels. You do not need to hire a separate designer or copywriter."
       },
       {
-        question: "How can TikTok advertising services help ecommerce brands?",
-        answer: "TikTok ads use trends and engaging video formats to drive impulse purchases. We create organic-style video ads that showcase your products naturally, attracting younger demographics and driving traffic."
+        question: "How do you decide between advertising on Meta or Google?",
+        answer: "Meta Ads (Facebook & Instagram) are ideal for visual products, brand awareness, and demand generation by targeting users based on interests, behaviors, and demographics. Google Ads are intent-based, meaning we capture users who are actively searching for your product or service right now (Search/Shopping). For most brands, a hybrid approach combining search and social ads yields the highest overall conversion rates."
       },
       {
-        question: "How do you set up a Google Shopping ad campaign?",
-        answer: "We connect your store product feed to Google Merchant Center, structure your campaigns, set bid strategies, and optimize descriptions to place your products directly in Google search results."
+        question: "What is your setup process for tracking and attribution?",
+        answer: "Before launching any budget, we verify that tracking is 100% accurate. We set up the Meta Pixel and Conversions API (server-side tracking) to bypass iOS cookie limitations. For Google, we configure Google Tag Manager to track form submissions, purchase events, and phone calls, ensuring every dollar spent is accurately measured."
       }
     ],
     schema: {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Social Media Ads",
+      "name": "Digital Marketing",
       "provider": {
         "@type": "LocalBusiness",
         "name": "SPARX Studioz",
         "url": "https://sparxtechwebsite.vercel.app"
       },
-      "description": "Targeted advertising on Meta, Google, and TikTok.",
-      "serviceType": "Social Media Ads Manager",
+      "description": "Paid advertising, campaign setup, copy/creatives, and scaling on Meta, Google, and TikTok.",
+      "serviceType": "Digital Marketing Services",
       "areaServed": "Worldwide"
     }
   },
@@ -790,6 +790,47 @@ We analyze your current processes, identify technical debt, and build a technolo
       },
       "description": "Expert guidance for digital transformation and strategy.",
       "serviceType": "Digital Transformation Consulting",
+      "areaServed": "Worldwide"
+    }
+  },
+  "custom-app-development": {
+    slug: "custom-app-development",
+    title: "Custom App Development",
+    primaryKeyword: "custom app development services",
+    secondaryKeywords: ["mobile app development", "hybrid app development", "iOS and Android app development", "cross-platform mobile apps"],
+    metaTitle: "Custom App Development Services | Mobile & Hybrid Apps | SPARX",
+    metaDescription: "Professional custom app development services. We design and build secure, fast, and feature-rich iOS & Android apps. Claim your free consultation.",
+    h1: "Custom App Development Services – Build Fast, Scalable Mobile & Hybrid Apps",
+    h2s: ["Our App Development Lifecycle", "Native vs. Cross-Platform App Development", "Why Invest in a Custom Mobile Application?", "FAQ"],
+    longDescription: `In today's mobile-first world, a custom mobile application is one of the most powerful touchpoints for client engagement, retention, and brand loyalty. At SPARX, our custom app development services focus on turning your vision into high-performance, secure, and user-friendly mobile applications. We build native iOS and Android apps, as well as high-efficiency cross-platform (hybrid) mobile apps that deliver native-like performance from a single codebase.
+
+Our development workflow starts with intensive UI/UX design collaboration, followed by robust architectural planning. We focus on writing clean, maintainable code, implementing offline-first syncing capabilities, optimizing battery usage, and ensuring super-fast launch times. Whether you need a startup MVP, a customer loyalty app, a secure fintech portal, or a complex enterprise management app, we handle the entire process—from design to App Store and Google Play publication.`,
+    techStack: ["React Native", "Flutter", "Swift/SwiftUI", "Kotlin/Jetpack Compose", "TypeScript", "Node.js", "Firebase", "Supabase", "App Store Connect", "Google Play Console"],
+    faqs: [
+      {
+        question: "Should I build a native or cross-platform (hybrid) app?",
+        answer: "Native apps (built with Swift for iOS or Kotlin for Android) offer maximum performance, access to advanced device sensors, and native UI transitions. Cross-platform apps (built with Flutter or React Native) use a single codebase for both iOS and Android, which reduces development time and costs by up to 40% while still delivering near-native performance. We will evaluate your requirements and recommend the optimal approach."
+      },
+      {
+        question: "How long does it take to develop a custom mobile app?",
+        answer: "A simple Minimum Viable Product (MVP) app typically takes 8 to 12 weeks to design, build, and deploy. More complex projects with extensive backend integrations, user authentication, payment processing, or real-time communication can take 16 to 24 weeks. We follow agile development methodologies, providing weekly progress builds for your review."
+      },
+      {
+        question: "Do you handle App Store and Google Play submissions?",
+        answer: "Yes, our team manages the entire deployment process. We configure App Store Connect and Google Play Console accounts, set up privacy policies, prepare app store graphics and metadata, run closed testing tracks, and submit the applications to Apple and Google for final review and approval."
+      }
+    ],
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Custom App Development",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "SPARX Studioz",
+        "url": "https://sparxtechwebsite.vercel.app"
+      },
+      "description": "Professional custom app development services for iOS and Android.",
+      "serviceType": "Custom App Development",
       "areaServed": "Worldwide"
     }
   }

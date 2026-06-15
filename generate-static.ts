@@ -308,14 +308,14 @@ const routes: Route[] = [
   {
     path: '/services',
     title: `Our Digital Services & Capabilities | ${SITE_NAME}`,
-    description: 'Explore our complete suite of 19 specialized services including Web Development, UI/UX Design, Web Scraping, Social Media Marketing, and Quality Assurance.',
+    description: 'Explore our complete suite of 20 specialized services including Web Development, UI/UX Design, Web Scraping, Digital Marketing, and Quality Assurance.',
     keywords: 'digital services, web development, software engineering, uiux design, social ads, ecommerce store management, sparx',
     ogImage: '/logo.jpg',
     ogType: 'website',
     bodyHtml: `
       <main class="services-index-prerender">
         <h1>Our Digital Services &amp; Capabilities</h1>
-        <p>We engineer and execute premium digital experiences across 19 specialized capabilities to scale your operations, build brand trust, and drive conversions.</p>
+        <p>We engineer and execute premium digital experiences across 20 specialized capabilities to scale your operations, build brand trust, and drive conversions.</p>
         <div class="services-grid">
           ${Object.values(SERVICES_DETAIL).map(service => `
             <div class="service-card">

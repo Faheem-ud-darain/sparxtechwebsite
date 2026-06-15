@@ -14,16 +14,17 @@ export const SERVICES = [
   { number: "13", title: "Academic Writing", description: "Thesis, Paper & Assignment Writing by professionals.", icon: "📚", lucideIcon: "BookOpen" },
   { number: "14", title: "Virtual Assistant", description: "Dedicated virtual assistants for your daily tasks.", icon: "🤖", lucideIcon: "Headset" },
   { number: "15", title: "Data Entry Services", description: "Fast, accurate, and secure data entry services.", icon: "⌨️", lucideIcon: "LayoutList" },
-  { number: "16", title: "Social Media Ads", description: "Targeted advertising on Meta, Google, and TikTok.", icon: "🎯", lucideIcon: "Target" },
+  { number: "16", title: "Digital Marketing", description: "Paid advertising, campaign setup, copy/creatives, and scaling on Meta, Google, and TikTok.", icon: "🎯", lucideIcon: "Target" },
   { number: "17", title: "Web Management", description: "Maintenance, updates, and support for your websites.", icon: "⚙️", lucideIcon: "Settings" },
   { number: "18", title: "Quality Assurance", description: "Rigorous testing to ensure flawless digital products.", icon: "✅", lucideIcon: "ShieldCheck" },
   { number: "19", title: "Consulting Services", description: "Expert guidance for digital transformation and strategy.", icon: "💡", lucideIcon: "MessageCircle" },
+  { number: "20", title: "Custom App Development", description: "Building high-performance native and cross-platform mobile applications.", icon: "📲", lucideIcon: "Smartphone" },
 ];
 
 export const STATS = [
   { value: "17+", label: "Projects Delivered" },
   { value: "10+", label: "Happy Clients" },
-  { value: "19+", label: "Services Offered" },
+  { value: "20+", label: "Services Offered" },
   { value: "2+", label: "Years Experience" },
 ];
 
