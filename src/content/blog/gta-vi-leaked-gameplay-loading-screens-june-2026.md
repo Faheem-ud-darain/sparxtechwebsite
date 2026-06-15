@@ -82,7 +82,7 @@ As of posting (June 16, 2026), Rockstar has not issued a statement. However, Tak
 
 The original Instagram reel is embedded below. **Watch it quickly – it may disappear.**
 
-<iframe src="https://www.instagram.com/reel/DUyMiSnj18v/embed" width="400" height="480" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+[Watch the GTA VI Leak Video](https://www.instagram.com/reel/DUyMiSnj18v/)
 
 If the embed stops working, you can find mirrors on **Reddit** (r/GamingLeaksAndRumours) and **Twitter**. Be cautious of malware – never download unknown files.
 
@@ -130,28 +130,3 @@ A: No – only glimpses. But community modders are stitching together coordinate
 *We’ll update this article as more information becomes available. Bookmark this page and follow us on Instagram for real‑time gaming news.*
 
 **Last updated:** June 16, 2026 (1:30 PM PST)
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  "headline": "GTA VI Leaked Gameplay & Loading Screens (June 2026)",
-  "description": "New GTA VI leaked gameplay and loading screens reveal map details and UI. Watch the footage before Rockstar takes it down.",
-  "author": {
-    "@type": "Organization",
-    "name": "SPARX Studioz"
-  },
-  "datePublished": "2026-06-16",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://sparxtechwebsite.vercel.app/blog/gta-vi-leaked-gameplay-loading-screens-june-2026"
-  },
-  "video": {
-    "@type": "VideoObject",
-    "name": "GTA VI Leaked Gameplay (Instagram Reel)",
-    "uploadDate": "2026-06-16",
-    "contentUrl": "https://www.instagram.com/reel/DUyMiSnj18v/",
-    "embedUrl": "https://www.instagram.com/reel/DUyMiSnj18v/embed/"
-  }
-}
-</script>

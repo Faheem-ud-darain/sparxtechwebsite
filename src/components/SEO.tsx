@@ -81,6 +81,18 @@ const SEO = ({
         "@id": activeCanonical
       }
     };
+
+    if (location.pathname.includes('gta-vi-leaked-gameplay-loading-screens-june-2026')) {
+      (schema as any).video = {
+        "@type": "VideoObject",
+        "name": "GTA VI Leaked Gameplay & Loading Screens Leak",
+        "description": "GTA VI leaked gameplay footage and loading screens analysis from Leonida and Vice City.",
+        "uploadDate": "2026-06-16",
+        "thumbnailUrl": `${siteUrl}/blog/gta_vi_leak.png`,
+        "contentUrl": "https://www.instagram.com/reel/DUyMiSnj18v/",
+        "embedUrl": "https://www.instagram.com/reel/DUyMiSnj18v/embed/"
+      };
+    }
   } else if (location.pathname.startsWith('/project/')) {
     schema = {
       "@context": "https://schema.org",

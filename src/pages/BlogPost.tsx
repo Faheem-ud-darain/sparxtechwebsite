@@ -119,7 +119,7 @@ const BlogPost = () => {
           </AnimatedContent>
 
           {/* Content */}
-          <div className="prose prose-invert prose-green max-w-none mb-24">
+          <div className="prose prose-invert prose-green max-w-none mb-24 font-normal">
             <ReactMarkdown 
               components={{
                 h2: ({node, ...props}) => <h2 className="text-3xl font-bold mt-16 mb-8 text-white tracking-tight" {...props} />,
@@ -135,7 +135,25 @@ const BlogPost = () => {
                 blockquote: ({node, ...props}) => (
                   <blockquote className="border-l-4 border-green-500 bg-green-500/5 px-8 py-10 my-12 rounded-r-3xl italic text-xl text-white font-medium" {...props} />
                 ),
-                strong: ({node, ...props}) => <strong className="text-green-400 font-bold" {...props} />
+                strong: ({node, ...props}) => <strong className="text-green-400 font-bold" {...props} />,
+                a: ({node, href, children, ...props}) => {
+                  if (href?.includes('instagram.com/reel/')) {
+                    const reelId = href.split('/reel/')[1]?.split('/')[0];
+                    return (
+                      <div className="w-full flex justify-center my-12">
+                        <div className="w-full max-w-[400px] aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_35px_rgba(34,197,94,0.2)] bg-white/5 relative">
+                          <iframe
+                            src={`https://www.instagram.com/reel/${reelId}/embed`}
+                            className="w-full h-full border-0 absolute inset-0"
+                            scrolling="no"
+                            allowTransparency={true}
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
+                  return <a href={href} className="text-green-400 hover:underline transition-colors" {...props}>{children}</a>;
+                }
               }}
             >
               {post.content}
