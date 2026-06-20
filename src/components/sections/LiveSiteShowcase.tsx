@@ -251,6 +251,18 @@ export default function LiveSiteShowcase() {
                   </span>
                 ))}
               </div>
+
+              {/* Direct Live Site Link */}
+              <div className="pt-2">
+                <a
+                  href={currentSite.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500/10 to-green-500/10 hover:from-blue-500/20 hover:to-green-500/20 border border-white/[0.08] hover:border-white/[0.15] text-xs font-bold font-mono text-white transition-all cursor-pointer shadow-sm hover:shadow-md"
+                >
+                  🌐 Check Live Website ↗
+                </a>
+              </div>
  
               {/* NewsPAI Custom Controls (Tabs) */}
               {activeSite === 'newspai' && (
@@ -478,12 +490,22 @@ export default function LiveSiteShowcase() {
                         </p>
                       </div>
                       
-                      <button
-                        onClick={startSession}
-                        className="w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 text-black text-xs font-black tracking-wide uppercase transition-all duration-300 transform active:scale-95 shadow-[0_4px_20px_rgba(16,185,129,0.25)] cursor-pointer"
-                      >
-                        Start Session ⚡
-                      </button>
+                      <div className="flex flex-col gap-2">
+                        <button
+                          onClick={startSession}
+                          className="w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 text-black text-xs font-black tracking-wide uppercase transition-all duration-300 transform active:scale-95 shadow-[0_4px_20px_rgba(16,185,129,0.25)] cursor-pointer"
+                        >
+                          Start Session ⚡
+                        </button>
+                        <a
+                          href={currentSite.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] hover:border-white/[0.15] text-white text-xs font-bold tracking-wide uppercase transition-all duration-300 text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          Open in New Tab ↗
+                        </a>
+                      </div>
                     </motion.div>
                   </div>
                 )}
