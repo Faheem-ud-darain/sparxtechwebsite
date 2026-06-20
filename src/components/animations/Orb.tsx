@@ -270,8 +270,8 @@ export default function Orb({
       targetHover = 0;
     };
 
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
+    container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     let isVisible = true;
     const intersectionObserver = new IntersectionObserver(([entry]) => {

@@ -20,15 +20,17 @@ export const BlobCursor: React.FC = () => {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest('a, button, [role="button"], .interactive')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+      const shouldHover = !!target.closest('a, button, [role="button"], .interactive');
+      setIsHovering(prev => {
+        if (prev !== shouldHover) {
+          return shouldHover;
+        }
+        return prev;
+      });
     };
 
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);

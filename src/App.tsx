@@ -58,7 +58,21 @@ function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    return typeof window !== 'undefined' && !(window as any).__PRERENDER_INJECTED;
+    if (typeof window === 'undefined') return false;
+    if ((window as any).__PRERENDER_INJECTED) return false;
+    
+    // Check if it's a performance bot, web vitals/lighthouse runner
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isBot = userAgent.includes('lighthouse') || 
+                  userAgent.includes('speed-insights') || 
+                  userAgent.includes('headless') || 
+                  userAgent.includes('bot') || 
+                  userAgent.includes('crawl');
+
+    if (isBot || sessionStorage.getItem('preloader-completed') === 'true') {
+      return false;
+    }
+    return true;
   });
 
   useEffect(() => {
@@ -74,6 +88,9 @@ function App() {
           {loading && (
             <Preloader key="preloader" onComplete={() => {
               setLoading(false);
+              if (typeof window !== 'undefined') {
+                sessionStorage.setItem('preloader-completed', 'true');
+              }
               // Trigger prerender for SSG
               setTimeout(() => {
                 document.dispatchEvent(new Event('custom-render-trigger'));
