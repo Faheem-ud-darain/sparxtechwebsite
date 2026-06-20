@@ -58,18 +58,30 @@ function AnimatedRoutes({ isInitialLoading }: { isInitialLoading: boolean }) {
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    if (typeof window === 'undefined') return false;
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
     if ((window as any).__PRERENDER_INJECTED) return false;
     
-    // Check if it's a performance bot, web vitals/lighthouse runner
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isBot = userAgent.includes('lighthouse') || 
-                  userAgent.includes('speed-insights') || 
-                  userAgent.includes('headless') || 
-                  userAgent.includes('bot') || 
-                  userAgent.includes('crawl');
+    // Check if it's a performance bot, web vitals/lighthouse runner safely
+    let isBot = false;
+    try {
+      const userAgent = (navigator.userAgent || '').toLowerCase();
+      isBot = userAgent.includes('lighthouse') || 
+              userAgent.includes('speed-insights') || 
+              userAgent.includes('headless') || 
+              userAgent.includes('bot') || 
+              userAgent.includes('crawl');
+    } catch (e) {
+      // fallback if userAgent cannot be accessed
+    }
 
-    if (isBot || sessionStorage.getItem('preloader-completed') === 'true') {
+    let preloaderCompleted = false;
+    try {
+      preloaderCompleted = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('preloader-completed') === 'true';
+    } catch (e) {
+      // fallback for private/sandboxed windows
+    }
+
+    if (isBot || preloaderCompleted) {
       return false;
     }
     return true;
@@ -88,8 +100,12 @@ function App() {
           {loading && (
             <Preloader key="preloader" onComplete={() => {
               setLoading(false);
-              if (typeof window !== 'undefined') {
-                sessionStorage.setItem('preloader-completed', 'true');
+              try {
+                if (typeof sessionStorage !== 'undefined') {
+                  sessionStorage.setItem('preloader-completed', 'true');
+                }
+              } catch (e) {
+                // Ignore storage errors
               }
               // Trigger prerender for SSG
               setTimeout(() => {
