@@ -11,6 +11,7 @@ import ZainImg from '@/assets/Zain Jadoon.webp';
 import IbaadImg from '@/assets/Ibaad Jadoon.jpeg';
 import AraizImg from '@/assets/Araiz Jadoon.webp';
 import RajaImg from '@/assets/Raja Abdullah.webp';
+import SibghatImg from '@/assets/Sibghatullah Khattak.webp';
 
 const TEAM_MEMBERS = [
   {
@@ -62,6 +63,16 @@ const TEAM_MEMBERS = [
     image: RajaImg,
     instagram: 'https://instagram.com/ok._.abdullah1',
     linkedin: 'https://www.linkedin.com/in/raja-abdullah-khan-b902421b6/',
+  },
+  {
+    id: 6,
+    name: 'Sibghatullah',
+    title: 'Chief Marketing Officer (CMO)',
+    handle: 'smkhattak95',
+    status: 'On Strategy',
+    image: SibghatImg,
+    instagram: 'https://www.instagram.com/smkhattak95/',
+    linkedin: 'https://www.linkedin.com/in/smkhattak/',
   }
 ];
 
